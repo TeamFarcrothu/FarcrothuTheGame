@@ -58,11 +58,13 @@ namespace Fartrothu
             {
                 if (asteroid.boundingBox.Intersects(this.p.boundingBox))
                 {
+                    this.p.health -= 20;
                     asteroid.isVisible = false;
                 }
 
                 if (asteroid.boundingBox.Intersects(this.p2.boundingBox))
                 {
+                    this.p2.health -= 20;
                     asteroid.isVisible = false;
                 }
 
@@ -118,8 +120,8 @@ namespace Fartrothu
         public void LoadAsteroids()
         {
             var newRand = new Random();
-            int randomX = this.random.Next(0, 2000) - newRand.Next(0, 20);
-            int randomY = this.random.Next(-1000, -50) + newRand.Next(0, 100);
+            int randomX = this.random.Next(0, 1200) - newRand.Next(0, 20);
+            int randomY = this.random.Next(-700, -50) + newRand.Next(0, 100);
 
             if (this.asteroids.Count < 15)
             {

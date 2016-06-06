@@ -25,8 +25,8 @@
             this.position = newPosition;
             this.texture = newTexture;
             this.speed = 4;
-            this.randomX = this.randomSpawn.Next(0, 2000);
-            this.randomY = this.randomSpawn.Next(-1000, -50);
+            this.randomX = this.randomSpawn.Next(0, 1200);
+            this.randomY = this.randomSpawn.Next(-700, -50);
             this.isVisible = true;
         }
 

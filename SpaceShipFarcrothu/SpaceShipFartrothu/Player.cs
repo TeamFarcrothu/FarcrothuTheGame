@@ -11,11 +11,12 @@ namespace Fartrothu
 {
     public class Player
     {
-        public Texture2D texture, bulletTexture;
-        public Vector2 position;
+        public Texture2D texture, bulletTexture, healthTexture;
+        public Vector2 position, healthBarPosition;
         public int speed;
+        public int health;
         public float bulletDelay;
-        public Rectangle boundingBox;
+        public Rectangle boundingBox, healthRectangle;
         public bool isColiding;
         public List<Bullet> bulletList;
 
@@ -27,15 +28,20 @@ namespace Fartrothu
             bulletDelay = 20;
             speed = 10;
             isColiding = false;
+            this.health = 200;
+            this.healthBarPosition = new Vector2(50, 50);
         }
         public void LoadContent(ContentManager Content)
         {
             texture = Content.Load<Texture2D>("ship_p1");
             bulletTexture = Content.Load<Texture2D>("bullet");
+            this.healthTexture = Content.Load<Texture2D>("healthbar");
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.Draw(this.healthTexture, this.healthRectangle, Color.White);
+
             foreach (Bullet b in bulletList)
             {
                 b.Draw(spriteBatch);
@@ -50,6 +56,11 @@ namespace Fartrothu
                 (int)this.position.Y,
                 this.texture.Width,
                 this.texture.Height);
+
+            this.healthRectangle = new Rectangle(
+                (int)this.healthBarPosition.X,
+                (int)this.healthBarPosition.Y,
+                this.health, 25);
 
             if (keyState.IsKeyDown(Keys.LeftAlt))
             {
