@@ -1,55 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-
-namespace SpaceShipFartrothu
+﻿namespace SpaceShipFartrothu
 {
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
+    using Microsoft.Xna.Framework.Graphics;
+
     public class Asteroid
     {
         public Rectangle boundingBox;
         public Texture2D texture;
         public Vector2 position;
         public Vector2 origin;
+        public float rotationAngle;
         public int speed;
-        public bool isColiding, destroyed;
+        public bool isColliding;
+        public bool isDestroyed;
 
         public Asteroid()
         {
-            position = new Vector2(400, -50);
-            texture = null;
-            speed = 4;
-            isColiding = false;
-            destroyed = false;
+            this.position = new Vector2(400, -50);
+            this.texture = null;
+            this.speed = 4;
+            this.isColliding = false;
+            this.isDestroyed = false;
         }
-        public void LoadContent(ContentManager Content)
-        {
-            texture = Content.Load<Texture2D>("asteroid");
-            origin.X = texture.Width / 2;
-            origin.Y = texture.Height / 2;
-        }
-        public void Update(GameTime gameTime)
-        {
-            boundingBox = new Rectangle((int)position.X, (int)position.Y, 45, 45);
 
-            position.Y = position.Y + speed;
-            if (position.Y >= 768)
-            {
-                position.Y = -50;
-            }
+        public void LoadContent(ContentManager content)
+        {
+            this.texture = content.Load<Texture2D>("asteroid");
+            this.origin.X = this.texture.Width / 2;
+            this.origin.Y = this.texture.Height / 2;
+
         }
+
+        public void Update(GameTime gemeTime)
+        {
+            this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, 45, 45);
+
+            this.position.Y += this.speed;
+            if (this.position.Y >= 950)
+            {
+                this.position.Y = -50;
+            }
+
+            float elapsed = (float)gemeTime.ElapsedGameTime.TotalSeconds;
+            this.rotationAngle += elapsed;
+            float circle = MathHelper.Pi * 2;
+            this.rotationAngle %= circle;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (!destroyed)
+            if (!this.isDestroyed)
             {
-                spriteBatch.Draw(texture, position, Color.White);
+                spriteBatch.Draw(
+                    this.texture,
+                    this.position,
+                    null,
+                    null,
+                    this.origin,
+                    this.rotationAngle,
+                    null,
+                    Color.White,
+                    SpriteEffects.FlipVertically);
             }
         }
-
     }
 }
