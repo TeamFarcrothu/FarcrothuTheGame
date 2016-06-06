@@ -46,6 +46,13 @@ namespace Fartrothu
         public void Update(GameTime gameTime)
         {
             KeyboardState keyState = Keyboard.GetState();
+
+            this.boundingBox = new Rectangle(
+                (int)this.position.X,
+                (int)this.position.Y,
+                this.texture.Width,
+                this.texture.Height);
+
             if (keyState.IsKeyDown(Keys.RightAlt))
             {
                 Shoot();
@@ -128,6 +135,12 @@ namespace Fartrothu
         {
             foreach (Bullet b in bulletList)
             {
+                b.boundingBox = new Rectangle(
+                (int)b.position.X,
+                (int)b.position.Y,
+                b.texture.Width,
+                b.texture.Height);
+
                 b.position.Y = b.position.Y - b.speed;
                 if (b.position.Y <= 0)
                 {

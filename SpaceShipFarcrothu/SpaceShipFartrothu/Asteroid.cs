@@ -1,5 +1,6 @@
 ﻿namespace SpaceShipFartrothu
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
@@ -10,18 +11,23 @@
         public Texture2D texture;
         public Vector2 position;
         public Vector2 origin;
+
         public float rotationAngle;
         public int speed;
-        public bool isColliding;
-        public bool isDestroyed;
+        public bool isVisible;
 
-        public Asteroid()
+        Random randomSpawn = new Random();
+        public float randomX;
+        public float randomY;
+
+        public Asteroid(Texture2D newTexture, Vector2 newPosition)
         {
-            this.position = new Vector2(400, -50);
-            this.texture = null;
+            this.position = newPosition;
+            this.texture = newTexture;
             this.speed = 4;
-            this.isColliding = false;
-            this.isDestroyed = false;
+            this.randomX = this.randomSpawn.Next(0, 2000);
+            this.randomY = this.randomSpawn.Next(-1000, -50);
+            this.isVisible = true;
         }
 
         public void LoadContent(ContentManager content)
@@ -29,7 +35,6 @@
             this.texture = content.Load<Texture2D>("asteroid");
             this.origin.X = this.texture.Width / 2;
             this.origin.Y = this.texture.Height / 2;
-
         }
 
         public void Update(GameTime gemeTime)
@@ -50,7 +55,7 @@
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (!this.isDestroyed)
+            if (this.isVisible)
             {
                 spriteBatch.Draw(
                     this.texture,

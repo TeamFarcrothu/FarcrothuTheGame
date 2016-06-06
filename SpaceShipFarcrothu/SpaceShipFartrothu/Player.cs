@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -45,8 +43,14 @@ namespace Fartrothu
         }
         public void Update(GameTime gameTime)
         {
-
             KeyboardState keyState = Keyboard.GetState();
+
+            this.boundingBox = new Rectangle(
+                (int)this.position.X,
+                (int)this.position.Y,
+                this.texture.Width,
+                this.texture.Height);
+
             if (keyState.IsKeyDown(Keys.LeftAlt))
             {
                 Shoot();
@@ -93,7 +97,7 @@ namespace Fartrothu
             {
                 position.Y = 0;
             }
-            if (position.Y >= 768 - texture.Height )
+            if (position.Y >= 768 - texture.Height)
             {
                 position.Y = 768 - texture.Height;
             }
@@ -128,6 +132,12 @@ namespace Fartrothu
         {
             foreach (Bullet b in bulletList)
             {
+                b.boundingBox = new Rectangle(
+                (int)b.position.X,
+                (int)b.position.Y,
+                b.texture.Width,
+                b.texture.Height);
+
                 b.position.Y = b.position.Y - b.speed;
                 if (b.position.Y <= 0)
                 {
