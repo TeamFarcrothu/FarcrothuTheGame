@@ -50,6 +50,8 @@ namespace Fartrothu
             {
                 Shoot();
             }
+
+            this.UpdateBullets();
             //Moving faster
             if (keyState.IsKeyDown(Keys.Space))
             {
@@ -95,6 +97,7 @@ namespace Fartrothu
                 position.Y = 768 - texture.Height;
             }
         }
+
         public void Shoot()
         {
             if (bulletDelay >= 0)
@@ -119,6 +122,10 @@ namespace Fartrothu
             {
                 bulletDelay = 20;
             }
+        }
+
+        public void UpdateBullets()
+        {
             foreach (Bullet b in bulletList)
             {
                 b.position.Y = b.position.Y - b.speed;
@@ -137,6 +144,5 @@ namespace Fartrothu
                 }
             }
         }
-
     }
 }

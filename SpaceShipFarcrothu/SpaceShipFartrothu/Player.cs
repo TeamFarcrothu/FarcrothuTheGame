@@ -51,6 +51,8 @@ namespace Fartrothu
             {
                 Shoot();
             }
+
+            this.UpdateBullets();
             //Moving faster
             if (keyState.IsKeyDown(Keys.Space))
             {
@@ -120,6 +122,10 @@ namespace Fartrothu
             {
                 bulletDelay = 20;
             }
+        }
+
+        public void UpdateBullets()
+        {
             foreach (Bullet b in bulletList)
             {
                 b.position.Y = b.position.Y - b.speed;
@@ -138,26 +144,6 @@ namespace Fartrothu
                 }
             }
         }
-       //public void UpdateBullets()
-       //{
-       //    foreach (Bullet b in bulletList)
-       //    {
-       //        b.position.Y = b.position.Y - b.speed; 
-       //        if (b.position.Y <= 0)
-       //        {
-       //            b.isVisible = false;
-       //        }
-       //    }
-       //
-       //    for (int i = 0; i < bulletList.Count; i++)
-       //    {
-       //        if (!bulletList[i].isVisible)
-       //        {
-       //            bulletList.RemoveAt(i);
-       //            i--;
-       //        }
-       //    }
-       //}
 
     }
 }
