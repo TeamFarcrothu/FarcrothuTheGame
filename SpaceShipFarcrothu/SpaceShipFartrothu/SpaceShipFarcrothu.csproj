@@ -38,14 +38,14 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Asteroid.cs" />
-    <Compile Include="Bullet.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="GameObjects\Asteroid.cs" />
+    <Compile Include="GameObjects\Bullet.cs" />
+    <Compile Include="Core\GameEngine.cs" />
+    <Compile Include="Players\Player.cs" />
     <Compile Include="GameMain.cs" />
-    <Compile Include="Player2.cs" />
+    <Compile Include="Players\Player2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StarField.cs" />
+    <Compile Include="GameObjects\StarField.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
