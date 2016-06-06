@@ -7,9 +7,7 @@ using SpaceShipFartrothu;
 
 namespace Fartrothu
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
+
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -18,6 +16,7 @@ namespace Fartrothu
         Player2 p2 = new Player2();
         Player p = new Player();
         StarField sf = new StarField();
+        Asteroid asteroid = new Asteroid();
 
         public Game1()
         {
@@ -39,6 +38,7 @@ namespace Fartrothu
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            asteroid.LoadContent(Content);
             p2.LoadContent(Content);
             p.LoadContent(Content);
             sf.LoadContent(Content);
@@ -52,6 +52,7 @@ namespace Fartrothu
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            asteroid.Update(gameTime);
             p2.Update(gameTime);
             p.Update(gameTime);
             sf.Update(gameTime);
@@ -64,6 +65,7 @@ namespace Fartrothu
             spriteBatch.Begin();
 
             sf.Draw(spriteBatch);
+            asteroid.Draw(spriteBatch);
             p.Draw(spriteBatch);
             p2.Draw(spriteBatch);
             spriteBatch.End();
