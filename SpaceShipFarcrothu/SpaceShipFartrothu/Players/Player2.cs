@@ -51,73 +51,70 @@
         }
         public void Update(GameTime gameTime)
         {
-            if (isAlive)
+            var keyState = Keyboard.GetState();
+
+            this.BoundingBox = new Rectangle(
+                (int)this.Position.X,
+                (int)this.Position.Y,
+                this.Texture.Width,
+                this.Texture.Height);
+
+            this.HealthRectangle = new Rectangle(
+                (int)this.HealthBarPosition.X,
+                (int)this.HealthBarPosition.Y,
+                this.Health,
+                25);
+
+            if (keyState.IsKeyDown(Keys.RightAlt))
             {
-                var keyState = Keyboard.GetState();
+                this.Shoot();
+            }
 
-                this.BoundingBox = new Rectangle(
-                    (int)this.Position.X,
-                    (int)this.Position.Y,
-                    this.Texture.Width,
-                    this.Texture.Height);
+            this.UpdateBullets();
 
-                this.HealthRectangle = new Rectangle(
-                    (int)this.HealthBarPosition.X,
-                    (int)this.HealthBarPosition.Y,
-                    this.Health,
-                    25);
-
-                if (keyState.IsKeyDown(Keys.RightAlt))
-                {
-                    this.Shoot();
-                }
-
-                this.UpdateBullets();
-
-                //Moving faster
-                if (keyState.IsKeyDown(Keys.Space))
-                {
-                    this.Speed = 10;
-                }
-                if (keyState.IsKeyUp(Keys.Space))
-                {
-                    this.Speed = 5;
-                }
+            //Moving faster
+            if (keyState.IsKeyDown(Keys.Space))
+            {
+                this.Speed = 10;
+            }
+            if (keyState.IsKeyUp(Keys.Space))
+            {
+                this.Speed = 5;
+            }
 
 
-                if (keyState.IsKeyDown(Keys.Up))
-                {
-                    this.Position.Y = this.Position.Y - this.Speed;
-                }
-                if (keyState.IsKeyDown(Keys.Left))
-                {
-                    this.Position.X = this.Position.X - this.Speed;
-                }
-                if (keyState.IsKeyDown(Keys.Down))
-                {
-                    this.Position.Y = this.Position.Y + this.Speed;
-                }
-                if (keyState.IsKeyDown(Keys.Right))
-                {
-                    this.Position.X = this.Position.X + this.Speed;
-                }
+            if (keyState.IsKeyDown(Keys.Up))
+            {
+                this.Position.Y = this.Position.Y - this.Speed;
+            }
+            if (keyState.IsKeyDown(Keys.Left))
+            {
+                this.Position.X = this.Position.X - this.Speed;
+            }
+            if (keyState.IsKeyDown(Keys.Down))
+            {
+                this.Position.Y = this.Position.Y + this.Speed;
+            }
+            if (keyState.IsKeyDown(Keys.Right))
+            {
+                this.Position.X = this.Position.X + this.Speed;
+            }
 
-                if (this.Position.X <= 0)
-                {
-                    this.Position.X = 0;
-                }
-                if (this.Position.X >= 1366 - this.Texture.Width)
-                {
-                    this.Position.X = 1366 - this.Texture.Width;
-                }
-                if (this.Position.Y <= 0)
-                {
-                    this.Position.Y = 0;
-                }
-                if (this.Position.Y >= 768 - this.Texture.Height)
-                {
-                    this.Position.Y = 768 - this.Texture.Height;
-                }
+            if (this.Position.X <= 0)
+            {
+                this.Position.X = 0;
+            }
+            if (this.Position.X >= 1366 - this.Texture.Width)
+            {
+                this.Position.X = 1366 - this.Texture.Width;
+            }
+            if (this.Position.Y <= 0)
+            {
+                this.Position.Y = 0;
+            }
+            if (this.Position.Y >= 768 - this.Texture.Height)
+            {
+                this.Position.Y = 768 - this.Texture.Height;
             }
         }
 

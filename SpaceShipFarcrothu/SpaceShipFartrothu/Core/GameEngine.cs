@@ -118,9 +118,16 @@
 
                     asteroid.Update(gameTime);
                 }
-
-                this.player2.Update(gameTime);
-                this.player.Update(gameTime);
+                // if player2 is still alive - update
+                if (this.player2.isAlive)
+                {
+                    this.player2.Update(gameTime);
+                }
+                // if player is still alive - update
+                if (this.player.isAlive)
+                {
+                    this.player.Update(gameTime);
+                }
                 this.starfield.Update(gameTime);
                 this.LoadAsteroids();
             //[end of] if one of the players is alive, keep going
