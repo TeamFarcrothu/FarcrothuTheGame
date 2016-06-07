@@ -57,46 +57,74 @@
                 this.Exit();
             }
 
-            foreach (var asteroid in this.asteroids)
+            // if one of the players is alive, keep going
+            if(player.isAlive || player2.isAlive)
             {
-                if (asteroid.BoundingBox.Intersects(this.player.BoundingBox))
+                foreach (var asteroid in this.asteroids)
                 {
-                    this.player.Health -= 20;
-                    asteroid.IsVisible = false;
-                }
-
-                if (asteroid.BoundingBox.Intersects(this.player2.BoundingBox))
-                {
-                    this.player2.Health -= 20;
-                    asteroid.IsVisible = false;
-                }
-
-                foreach (var bullet in this.player.BulletList)
-                {
-                    if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
+                    if (asteroid.BoundingBox.Intersects(this.player.BoundingBox))
                     {
+                        // if the player has helth left, subtract
+                        if (this.player.Health >= 20)
+                        {
+                            this.player.Health -= 20;
+                        }
+                        // else set the health to 0, set the player state to dead
+                        // and position him at the bottom left
+                        else
+                        {
+                            this.player.Health = 0;
+                            this.player.isAlive = false;
+                            this.player.Position = new Vector2(200, 600);
+                        }
                         asteroid.IsVisible = false;
-                        bullet.IsVisible = false;
                     }
-                }
 
-                foreach (var bullet in this.player2.BulletList)
-                {
-                    if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
+                    if (asteroid.BoundingBox.Intersects(this.player2.BoundingBox))
                     {
+                        // if the player has helth left, subtract
+                        if (this.player2.Health >= 20)
+                        {
+                            this.player2.Health -= 20;
+                        }
+                        // else set the health to 0, set the player state to dead
+                        // and position him at the bottom left
+                        else
+                        {
+                            this.player2.Health = 0;
+                            this.player2.isAlive = false;
+                            this.player2.Position = new Vector2(1000, 600);
+                        }
                         asteroid.IsVisible = false;
-                        bullet.IsVisible = false;
                     }
+
+                    foreach (var bullet in this.player.BulletList)
+                    {
+                        if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
+                        {
+                            asteroid.IsVisible = false;
+                            bullet.IsVisible = false;
+                        }
+                    }
+
+                    foreach (var bullet in this.player2.BulletList)
+                    {
+                        if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
+                        {
+                            asteroid.IsVisible = false;
+                            bullet.IsVisible = false;
+                        }
+                    }
+
+                    asteroid.Update(gameTime);
                 }
 
-                asteroid.Update(gameTime);
+                this.player2.Update(gameTime);
+                this.player.Update(gameTime);
+                this.starfield.Update(gameTime);
+                this.LoadAsteroids();
+            //[end of] if one of the players is alive, keep going
             }
-
-            this.player2.Update(gameTime);
-            this.player.Update(gameTime);
-            this.starfield.Update(gameTime);
-            this.LoadAsteroids();
-
             base.Update(gameTime);
         }
 
