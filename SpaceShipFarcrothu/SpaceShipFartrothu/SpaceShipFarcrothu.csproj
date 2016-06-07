@@ -41,6 +41,7 @@
     <Compile Include="GameObjects\Asteroid.cs" />
     <Compile Include="GameObjects\Bullet.cs" />
     <Compile Include="Core\GameEngine.cs" />
+    <Compile Include="GameObjects\Enemy.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="GameMain.cs" />
     <Compile Include="Players\Player2.cs" />
@@ -59,6 +60,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\bullet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\enemy_ship.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\ship_p1.png">
