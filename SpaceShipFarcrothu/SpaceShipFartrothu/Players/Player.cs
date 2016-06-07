@@ -99,14 +99,19 @@
                 this.Position.X = this.Position.X + this.Speed;
             }
 
-            if (this.Position.X <= 0)
+            // Moving left and right through screen borders
+            if (this.Position.X <= -30 || this.Position.X >= 1366)
             {
-                this.Position.X = 0;
+                if (this.Position.X > 1366)
+                {
+                    this.Position.X = -30;
+                }
+                else if (this.Position.X < -30)
+                {
+                    this.Position.X = 1366;
+                }
             }
-            if (this.Position.X >= 1366 - this.Texture.Width)
-            {
-                this.Position.X = 1366 - this.Texture.Width;
-            }
+
             if (this.Position.Y <= 0)
             {
                 this.Position.Y = 0;
