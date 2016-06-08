@@ -98,6 +98,9 @@
                             player.BulletList[i].IsVisible = false;
                             enemy.isVisible = false;
                         }
+                    }
+                    for (int i = 0; i < player2.BulletList.Count; i++)
+                    {
                         if (player2.BulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                         {
                             player2.BulletList[i].IsVisible = false;
