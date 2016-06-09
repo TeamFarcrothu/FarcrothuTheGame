@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core\HUD.cs" />
     <Compile Include="GameObjects\Asteroid.cs" />
     <Compile Include="GameObjects\Bullet.cs" />
     <Compile Include="Core\GameEngine.cs" />

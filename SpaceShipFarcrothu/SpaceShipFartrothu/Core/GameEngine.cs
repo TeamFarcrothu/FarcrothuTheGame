@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Players;
-    
+        
     public class GameEngine : Game
     {
         private SpriteBatch spriteBatch;
@@ -18,6 +18,7 @@
         private readonly StarField starfield = new StarField();
         private readonly List<Asteroid> asteroids = new List<Asteroid>();
         private readonly List<Enemy> enemyList = new List<Enemy>();
+        private readonly HUD hud = new HUD();
 
         public int enemyBulletDamage;
 
@@ -44,6 +45,7 @@
         {
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
 
+            hud.LoadContent(this.Content);
             this.player2.LoadContent(this.Content);
             this.player.LoadContent(this.Content);
             this.starfield.LoadContent(this.Content);
@@ -68,12 +70,34 @@
                 {
                     if (enemy.boundingBox.Intersects(player.BoundingBox))
                     {
-                        player.Health -= 40;
+                        if(player.Health >= 40)
+                        {
+                            player.Health -= 40;
+                            hud.playerscore += 20;
+                        }
+                        else
+                        {
+                            hud.playerscore += 20;
+                            this.player.Health = 0;
+                            this.player.isAlive = false;
+                            this.player.Position = new Vector2(200, 600);
+                        }
                         enemy.isVisible = false;
                     }
                     if (enemy.boundingBox.Intersects(player2.BoundingBox))
                     {
-                        player2.Health -= 40;
+                        if (player2.Health >= 40)
+                        {
+                            player2.Health -= 40;
+                            hud.player2score += 20;
+                        }
+                        else
+                        {
+                            hud.player2score += 20;
+                            player2.Health = 0;
+                            this.player2.isAlive = false;
+                            this.player2.Position = new Vector2(1000, 600);
+                        }
                         enemy.isVisible = false;
                     }
 
@@ -95,6 +119,7 @@
                     {
                         if (player.BulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                         {
+                            hud.playerscore += 20;
                             player.BulletList[i].IsVisible = false;
                             enemy.isVisible = false;
                         }
@@ -103,6 +128,7 @@
                     {
                         if (player2.BulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                         {
+                            hud.player2score += 20;
                             player2.BulletList[i].IsVisible = false;
                             enemy.isVisible = false;
                         }
@@ -118,11 +144,13 @@
                         if (this.player.Health >= 20)
                         {
                             this.player.Health -= 20;
+                            hud.playerscore += 5;
                         }
                         // else set the health to 0, set the player state to dead
                         // and position him at the bottom left
                         else
                         {
+                            hud.playerscore += 5;
                             this.player.Health = 0;
                             this.player.isAlive = false;
                             this.player.Position = new Vector2(200, 600);
@@ -136,11 +164,13 @@
                         if (this.player2.Health >= 20)
                         {
                             this.player2.Health -= 20;
+                            hud.player2score += 5;
                         }
                         // else set the health to 0, set the player2 state to dead
                         // and position him at the bottom left
                         else
                         {
+                            hud.player2score += 5;
                             this.player2.Health = 0;
                             this.player2.isAlive = false;
                             this.player2.Position = new Vector2(1000, 600);
@@ -152,6 +182,7 @@
                     {
                         if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
                         {
+                            hud.playerscore += 5;
                             asteroid.IsVisible = false;
                             bullet.IsVisible = false;
                         }
@@ -161,6 +192,7 @@
                     {
                         if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
                         {
+                            hud.player2score += 5;
                             asteroid.IsVisible = false;
                             bullet.IsVisible = false;
                         }
@@ -168,6 +200,7 @@
 
                     asteroid.Update(gameTime);
                 }
+                this.hud.Update(gameTime);
                 // if player2 is still alive - update
                 if (this.player2.isAlive)
                 {
@@ -206,6 +239,7 @@
                 enemy.Draw(this.spriteBatch);
             }
 
+            this.hud.Draw(this.spriteBatch);
             this.spriteBatch.End();
 
             base.Draw(gameTime);
