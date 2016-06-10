@@ -145,3 +145,5 @@ C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFartrothu\bin\Windows\x86
 C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFartrothu\bin\Windows\x86\Debug\SharpDX.RawInput.xml
 C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFartrothu\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFartrothu\obj\x86\Debug\SpaceShipFarcrothu.csprojResolveAssemblyReference.cache
+C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFartrothu\bin\Windows\x86\Debug\Content\enemy_ship.png
+C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFartrothu\bin\Windows\x86\Debug\Content\georgia.xnb
