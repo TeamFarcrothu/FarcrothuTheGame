@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Players;
-        
+    using Effects;
     public class GameEngine : Game
     {
         private SpriteBatch spriteBatch;
@@ -19,6 +19,7 @@
         private readonly List<Asteroid> asteroids = new List<Asteroid>();
         private readonly List<Enemy> enemyList = new List<Enemy>();
         private readonly HUD hud = new HUD();
+        private readonly List<Explosion> explosionList = new List<Explosion>();
 
         public int enemyBulletDamage;
 
@@ -119,6 +120,7 @@
                     {
                         if (player.BulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                         {
+                            explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(enemy.position.X, enemy.position.Y)));
                             hud.playerscore += 20;
                             player.BulletList[i].IsVisible = false;
                             enemy.isVisible = false;
@@ -128,6 +130,7 @@
                     {
                         if (player2.BulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                         {
+                            explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(enemy.position.X, enemy.position.Y)));
                             hud.player2score += 20;
                             player2.BulletList[i].IsVisible = false;
                             enemy.isVisible = false;
@@ -135,7 +138,10 @@
                     }
                     enemy.Update(gameTime);
                 }
-
+                foreach (var explosion in explosionList)
+                {
+                    explosion.Update(gameTime);
+                }
                 foreach (var asteroid in this.asteroids)
                 {
                     if (asteroid.BoundingBox.Intersects(this.player.BoundingBox))
@@ -182,6 +188,7 @@
                     {
                         if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
                         {
+                            explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(asteroid.Position.X, asteroid.Position.Y)));
                             hud.playerscore += 5;
                             asteroid.IsVisible = false;
                             bullet.IsVisible = false;
@@ -192,6 +199,7 @@
                     {
                         if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
                         {
+                            explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(asteroid.Position.X, asteroid.Position.Y)));
                             hud.player2score += 5;
                             asteroid.IsVisible = false;
                             bullet.IsVisible = false;
@@ -212,6 +220,7 @@
                     this.player.Update(gameTime);
                 }
                 this.starfield.Update(gameTime);
+                this.ManageExplosions();
                 this.LoadAsteroids();
                 this.LoadEnemies();
             //[end of] if one of the players is alive, keep going
@@ -228,7 +237,10 @@
             this.starfield.Draw(this.spriteBatch);
             this.player.Draw(this.spriteBatch);
             this.player2.Draw(this.spriteBatch);
-
+            foreach (var explosion in explosionList)
+            {
+                explosion.Draw(spriteBatch);
+            }
             foreach (var asteroid in this.asteroids)
             {
                 asteroid.Draw(this.spriteBatch);
@@ -287,6 +299,17 @@
                 if (!this.enemyList[i].isVisible)
                 {
                     this.enemyList.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+        public void ManageExplosions()
+        {
+            for (int i = 0; i < explosionList.Count; i++)
+            {
+                if (!explosionList[i].isVisible)
+                {
+                    explosionList.RemoveAt(i);
                     i--;
                 }
             }
