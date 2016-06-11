@@ -69,6 +69,9 @@
     <Compile Include="GameObjects\StarField.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Sound\SoundManager.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -92,6 +95,9 @@
     </Content>
     <Content Include="Content\healthbar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\playershoot.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\ship_p1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using SpaceShipFartrothu.Core;
 using SpaceShipFartrothu.Effects;
 using SpaceShipFartrothu.GameObjects;
 using SpaceShipFartrothu.Players;
+using SpaceShipFartrothu.Sound;
 
 public class GameEngine : Game
 {
@@ -28,6 +30,7 @@ public class GameEngine : Game
 
     private int enemyBulletDamage;
     private int bossBulletDamage;
+    SoundManager sm = new SoundManager();
 
     public GameEngine()
     {
@@ -57,6 +60,8 @@ public class GameEngine : Game
         this.player2.LoadContent(this.Content);
         this.player.LoadContent(this.Content);
         this.starfield.LoadContent(this.Content);
+        sm.LoadContent(Content);
+        MediaPlayer.Play(sm.bgMusic);
     }
 
     protected override void UnloadContent()
@@ -113,6 +118,7 @@ public class GameEngine : Game
                 {
                     if (this.player.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                     {
+                        sm.explodeSound.Play();
                         this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"), new Vector2(enemy.position.X, enemy.position.Y)));
                         this.hud.playerscore += 20;
                         this.player.bulletList[i].IsVisible = false;
@@ -212,10 +218,12 @@ public class GameEngine : Game
         this.starfield.Draw(this.spriteBatch);
         this.player.Draw(this.spriteBatch);
         this.player2.Draw(this.spriteBatch);
+        //Update explosions
         foreach (var explosion in this.explosionList)
         {
             explosion.Draw(this.spriteBatch);
         }
+        //Update asteroids and check for collisions
         foreach (var asteroid in this.asteroids)
         {
             if (this.boss == null || !this.boss.isVisible)
@@ -290,6 +298,7 @@ public class GameEngine : Game
             }
         }
     }
+
     public void ManageExplosions()
     {
         for (int i = 0; i < this.explosionList.Count; i++)

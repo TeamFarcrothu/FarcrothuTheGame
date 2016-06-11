@@ -1,12 +1,16 @@
-﻿namespace SpaceShipFartrothu.Players
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using SpaceShipFartrothu.Sound;
+
+namespace SpaceShipFartrothu.Players
 {
-    using System.Collections.Generic;
-    using System.Linq;
+
     using GameObjects;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
-    using Microsoft.Xna.Framework.Graphics;
-    using Microsoft.Xna.Framework.Input;
+
 
     public class PlayerNew
     {
@@ -21,7 +25,9 @@
         public float bulletDelay;
         public bool isColiding;
         public bool isAlive;
+        SoundManager sm = new SoundManager();
 
+        //Constructor method
         public PlayerNew(string newShipTextureFile, Vector2 newPosition, int newId)
         {
             this.id = newId;
@@ -51,6 +57,7 @@
             texture = content.Load<Texture2D>(shipTextureFile);
             bulletTexture = content.Load<Texture2D>("bullet");
             healthTexture = content.Load<Texture2D>("healthbar");
+            sm.LoadContent(content);
         }
 
         // Player draw method
@@ -158,6 +165,7 @@
 
             if (bulletDelay <= 0)
             {
+                sm.playerShootSound.Play();
                 Bullet newBullet = new Bullet(bulletTexture);
                 newBullet.Position = new Vector2(
                     position.X + 32 - newBullet.Texture.Width / 2,
@@ -173,7 +181,7 @@
             }
             if (bulletDelay == 0)
             {
-                bulletDelay = 20;
+                bulletDelay = 10;
             }
         }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>D:/Programing/SVN/New folder (14)/trunk/SpaceShipFarcrothu/SpaceShipFarcrothu/Content/georgia.spritefont</SourceFile>
-  <SourceTime>2016-06-11T22:15:36.2205273+03:00</SourceTime>
-  <DestFile>D:/Programing/SVN/New folder (14)/trunk/SpaceShipFarcrothu/SpaceShipFarcrothu/Content/bin/Windows/georgia.xnb</DestFile>
-  <DestTime>2016-06-11T22:18:12.4039107+03:00</DestTime>
+  <SourceFile>C:/Users/milensk1/Documents/GitHub/FarcrothuTheGame_Local/SpaceShipFarcrothu/SpaceShipFartrothu/Content/georgia.spritefont</SourceFile>
+  <SourceTime>2016-06-11T23:22:32.791187+03:00</SourceTime>
+  <DestFile>C:/Users/milensk1/Documents/GitHub/FarcrothuTheGame_Local/SpaceShipFarcrothu/SpaceShipFartrothu/Content/bin/Windows/georgia.xnb</DestFile>
+  <DestTime>2016-06-11T23:24:50.2518998+03:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
