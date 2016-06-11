@@ -164,9 +164,9 @@
 
                     asteroid.Update(gameTime);
                 }
-                this.hud.Update(gameTime);
                 this.player2.Update(gameTime);
                 this.player.Update(gameTime);
+                this.hud.Update(gameTime);
                 this.starfield.Update(gameTime);
                 this.ManageExplosions();
                 this.LoadAsteroids();
@@ -181,10 +181,7 @@
             this.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             this.spriteBatch.Begin();
-
             this.starfield.Draw(this.spriteBatch);
-            this.player.Draw(this.spriteBatch);
-            this.player2.Draw(this.spriteBatch);
             foreach (var explosion in explosionList)
             {
                 explosion.Draw(spriteBatch);
@@ -198,7 +195,8 @@
             {
                 enemy.Draw(this.spriteBatch);
             }
-
+            this.player.Draw(this.spriteBatch);
+            this.player2.Draw(this.spriteBatch);
             this.hud.Draw(this.spriteBatch);
             this.spriteBatch.End();
 
