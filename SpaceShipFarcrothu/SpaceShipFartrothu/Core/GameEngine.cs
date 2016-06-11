@@ -27,7 +27,7 @@
         {
             this.graphics = new GraphicsDeviceManager(this)
             {
-                IsFullScreen = false,
+                IsFullScreen = true,
                 PreferredBackBufferWidth = 1366,
                 PreferredBackBufferHeight = 768
             };
