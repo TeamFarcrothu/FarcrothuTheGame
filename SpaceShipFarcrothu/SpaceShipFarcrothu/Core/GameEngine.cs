@@ -10,6 +10,7 @@ using SpaceShipFartrothu.Players;
 
 public class GameEngine : Game
 {
+
     private SpriteBatch spriteBatch;
     private readonly GraphicsDeviceManager graphics;
     private readonly Random random = new Random();
@@ -71,7 +72,7 @@ public class GameEngine : Game
         }
 
         // boss logic
-        if (this.hud.playerscore >= 100 || this.hud.player2score >= 100)
+        if (this.hud.playerscore >= 10 || this.hud.player2score >= 10)
         {
             this.boss.Update(gameTime);
         }
@@ -174,6 +175,7 @@ public class GameEngine : Game
 
                 asteroid.Update(gameTime);
             }
+
             this.hud.Update(gameTime);
             this.player2.Update(gameTime);
             this.player.Update(gameTime);
@@ -190,11 +192,11 @@ public class GameEngine : Game
     private void LoadBoss()
     {
         // Singleton
-        if (!this.bossHasInstance && (this.hud.playerscore >= 100 || this.hud.player2score >= 100))
+        if (!this.bossHasInstance && (this.hud.playerscore >= 10 || this.hud.player2score >= 10))
         {
             this.boss = new Boss(
-                this.Content.Load<Texture2D>("space_Boss_Level_1"),
-                new Vector2(0, 0),
+                this.Content.Load<Texture2D>("space_Boss_level_1"),
+                new Vector2(501, -600),
                 this.Content.Load<Texture2D>("bullet"));
 
             this.bossHasInstance = true;

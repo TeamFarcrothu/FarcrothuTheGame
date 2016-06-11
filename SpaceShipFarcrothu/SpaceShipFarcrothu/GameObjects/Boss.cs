@@ -7,19 +7,20 @@
     public class Boss
     {
         private const int DefaultHealth = 50;
-        private const int DefaultSpeed = 1;
-        private const int DefaultBulletDelay = 20;
-        private const int ScreenWidth = 1000;
+        private const int DefaultSpeed = 2;
+        private const int DefaultBulletDelay = 60;
+        private const int ScreenWidth = 1181;
 
         private List<Bullet> bulletList;
         private Rectangle boundingBox;
         private Texture2D texture;
         private Texture2D bulletTexture;
         public Vector2 position;
-        
+
         private int health;
         private int bulletDelay;
         private int speed;
+        public bool isAtTheRightBorder;
         public bool isVisible;
 
         public Boss(Texture2D newTexture, Vector2 newPosition, Texture2D newBulletTexture)
@@ -32,7 +33,7 @@
             this.speed = DefaultSpeed;
             this.isVisible = true;
             this.bulletList = new List<Bullet>();
-
+            this.isAtTheRightBorder = true;
         }
 
         public void Update(GameTime gameTime)
@@ -43,17 +44,32 @@
                 this.texture.Width,
                 this.texture.Height);
 
-            this.position.X += this.speed;
-            if (this.position.X >= ScreenWidth)
+            // Showing the Boss slowly from top of the screen
+            if (this.position.Y <= 31)
             {
+                this.position.Y += this.speed;
+                return;
+            }
+
+            // Moving  the Boss automaticaly left and right
+            if (this.position.X <= ScreenWidth && isAtTheRightBorder)
+            {
+                if (this.position.X == ScreenWidth)
+                {
+                    isAtTheRightBorder = false;
+                }
+                this.position.X += this.speed;
+            }
+            else if (this.position.X >= -171 && !isAtTheRightBorder)
+            {
+                if (this.position.X == -171)
+                {
+                    isAtTheRightBorder = true;
+                }
                 this.position.X -= this.speed;
             }
 
-            if (this.position.X <= 0)
-            {
-                this.position.X += this.speed;
-            }
-
+            
             if (this.health <= 0)
             {
                 this.isVisible = false;
