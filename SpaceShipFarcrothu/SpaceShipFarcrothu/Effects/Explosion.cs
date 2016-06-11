@@ -17,7 +17,7 @@ namespace SpaceShipFartrothu.Effects
         public float timer;
         public float interval;
         public Vector2 origin;
-        public int currentFrame, spriteWidth, spriteHeight;
+        public int frameRow, frameCol, spriteWidth, spriteHeight;
         public Rectangle sourceRect;
         public bool isVisible;
 
@@ -26,10 +26,10 @@ namespace SpaceShipFartrothu.Effects
             position = newPosition;
             texture = newTexture;
             timer = 0f;
-            interval = 20f;
-            currentFrame = 1;
-            spriteWidth = 128;
-            spriteHeight = 128;
+            interval = 20;
+            frameRow = 1;
+            spriteWidth = 100;
+            spriteHeight = 100;
             isVisible = true;
         }
         public void LoadContent(ContentManager Content)
@@ -42,15 +42,20 @@ namespace SpaceShipFartrothu.Effects
 
             if (timer > interval)
             {
-                currentFrame++;
+                frameCol++;
                 timer = 0f;
             }
-            if (currentFrame == 5)
+            if (frameCol == 8)
             {
-                isVisible = false;
-                currentFrame = 0;
+                if (frameRow == 8)
+                {
+                    frameRow = 0;
+                    isVisible = false;
+                }
+                frameRow++;
+                frameCol = 0;
             }
-            sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
+            sourceRect = new Rectangle(frameCol * spriteWidth, frameRow * spriteHeight, spriteWidth, spriteHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
         }
         public void Draw(SpriteBatch spriteBatch)

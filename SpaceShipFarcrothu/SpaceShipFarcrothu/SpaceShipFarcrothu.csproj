@@ -87,7 +87,7 @@
     <Content Include="Content\enemy_ship.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\explosion.jpg">
+    <Content Include="Content\explosion.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\healthbar.png">
