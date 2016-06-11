@@ -13,8 +13,10 @@
         private SpriteBatch spriteBatch;
         private readonly GraphicsDeviceManager graphics;
         private readonly Random random = new Random();
-        private readonly Player player = new Player();
-        private readonly Player2 player2 = new Player2();
+        //private readonly Player player = new Player();
+        private readonly PlayerNew player = new PlayerNew("ship_p1", new Vector2(600, 600), 1);
+        //private readonly Player2 player2 = new Player2();
+        private readonly PlayerNew player2 = new PlayerNew("ship_p2", new Vector2(700, 600), 2);
         private readonly StarField starfield = new StarField();
         private readonly List<Asteroid> asteroids = new List<Asteroid>();
         private readonly List<Enemy> enemyList = new List<Enemy>();
@@ -27,7 +29,7 @@
         {
             this.graphics = new GraphicsDeviceManager(this)
             {
-                IsFullScreen = true,
+                IsFullScreen = false,
                 PreferredBackBufferWidth = 1366,
                 PreferredBackBufferHeight = 768
             };
@@ -69,70 +71,50 @@
             {
                 foreach(Enemy enemy in this.enemyList)
                 {
-                    if (enemy.boundingBox.Intersects(player.BoundingBox))
+                    if (enemy.boundingBox.Intersects(player.boundingBox))
                     {
-                        if(player.Health >= 40)
-                        {
-                            player.Health -= 40;
-                            hud.playerscore += 20;
-                        }
-                        else
-                        {
-                            hud.playerscore += 20;
-                            this.player.Health = 0;
-                            this.player.isAlive = false;
-                            this.player.Position = new Vector2(200, 600);
-                        }
+                        player.health -= 40;
+                        hud.playerscore += 20;
                         enemy.isVisible = false;
                     }
-                    if (enemy.boundingBox.Intersects(player2.BoundingBox))
+                    if (enemy.boundingBox.Intersects(player2.boundingBox))
                     {
-                        if (player2.Health >= 40)
-                        {
-                            player2.Health -= 40;
-                            hud.player2score += 20;
-                        }
-                        else
-                        {
-                            hud.player2score += 20;
-                            player2.Health = 0;
-                            this.player2.isAlive = false;
-                            this.player2.Position = new Vector2(1000, 600);
-                        }
+                        player2.health -= 40;
+                        hud.player2score += 20;
                         enemy.isVisible = false;
                     }
 
                     for (int i = 0; i < enemy.bulletList.Count; i++)
                     {
-                        if (player.BoundingBox.Intersects(enemy.bulletList[i].BoundingBox))
+                        if (player.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
                         {
-                            player.Health -= enemyBulletDamage;
+                            player.health -= enemyBulletDamage;
                             enemy.bulletList[i].IsVisible = false;
                         }
-                        if (player2.BoundingBox.Intersects(enemy.bulletList[i].BoundingBox))
+                        if (player2.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
                         {
-                            player2.Health -= enemyBulletDamage;
+                            player2.health -= enemyBulletDamage;
                             enemy.bulletList[i].IsVisible = false;
                         }
                     }
                     // player bullet lists colliding with enemy ships
-                    for (int i = 0; i < player.BulletList.Count; i++)
+                    for (int i = 0; i < player.bulletList.Count; i++)
                     {
-                        if (player.BulletList[i].BoundingBox.Intersects(enemy.boundingBox))
+                        if (player.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                         {
                             explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(enemy.position.X, enemy.position.Y)));
                             hud.playerscore += 20;
-                            player.BulletList[i].IsVisible = false;
+                            player.bulletList[i].IsVisible = false;
                             enemy.isVisible = false;
                         }
                     }
-                    for (int i = 0; i < player2.BulletList.Count; i++)
+                    for (int i = 0; i < player2.bulletList.Count; i++)
                     {
-                        if (player2.BulletList[i].BoundingBox.Intersects(enemy.boundingBox))
+                        if (player2.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                         {
                             explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(enemy.position.X, enemy.position.Y)));
                             hud.player2score += 20;
-                            player2.BulletList[i].IsVisible = false;
+                            player2.bulletList[i].IsVisible = false;
                             enemy.isVisible = false;
                         }
                     }
@@ -142,49 +124,23 @@
                 {
                     explosion.Update(gameTime);
                 }
-                foreach (var asteroid in this.asteroids)
+                foreach (var asteroid in asteroids)
                 {
-                    if (asteroid.BoundingBox.Intersects(this.player.BoundingBox))
+                    if (asteroid.BoundingBox.Intersects(player.boundingBox))
                     {
-                        // if the player has health left, subtract
-                        if (this.player.Health >= 20)
-                        {
-                            this.player.Health -= 20;
-                            hud.playerscore += 5;
-                        }
-                        // else set the health to 0, set the player state to dead
-                        // and position him at the bottom left
-                        else
-                        {
-                            hud.playerscore += 5;
-                            this.player.Health = 0;
-                            this.player.isAlive = false;
-                            this.player.Position = new Vector2(200, 600);
-                        }
+                        hud.playerscore += 5;
                         asteroid.IsVisible = false;
+                        player.health -= 20;
                     }
 
-                    if (asteroid.BoundingBox.Intersects(this.player2.BoundingBox))
+                    if (asteroid.BoundingBox.Intersects(this.player2.boundingBox))
                     {
-                        // if the player2 has health left, subtract
-                        if (this.player2.Health >= 20)
-                        {
-                            this.player2.Health -= 20;
-                            hud.player2score += 5;
-                        }
-                        // else set the health to 0, set the player2 state to dead
-                        // and position him at the bottom left
-                        else
-                        {
-                            hud.player2score += 5;
-                            this.player2.Health = 0;
-                            this.player2.isAlive = false;
-                            this.player2.Position = new Vector2(1000, 600);
-                        }
                         asteroid.IsVisible = false;
+                        player2.health -= 20;
+                        hud.player2score += 5;
                     }
 
-                    foreach (var bullet in this.player.BulletList)
+                    foreach (var bullet in this.player.bulletList)
                     {
                         if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
                         {
@@ -195,7 +151,7 @@
                         }
                     }
 
-                    foreach (var bullet in this.player2.BulletList)
+                    foreach (var bullet in this.player2.bulletList)
                     {
                         if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
                         {
@@ -209,16 +165,8 @@
                     asteroid.Update(gameTime);
                 }
                 this.hud.Update(gameTime);
-                // if player2 is still alive - update
-                if (this.player2.isAlive)
-                {
-                    this.player2.Update(gameTime);
-                }
-                // if player is still alive - update
-                if (this.player.isAlive)
-                {
-                    this.player.Update(gameTime);
-                }
+                this.player2.Update(gameTime);
+                this.player.Update(gameTime);
                 this.starfield.Update(gameTime);
                 this.ManageExplosions();
                 this.LoadAsteroids();

@@ -10,13 +10,12 @@
         public Rectangle BoundingBox;
         public Texture2D Texture;
         public Vector2 Position;
-        public Vector2 Origin;
 
-        public float RotationAngle;
+        // Rotation is not working at the moment in order to get proper collision
+        // public Vector2 Origin;
+        //public float RotationAngle;
         public int Speed;
         public bool IsVisible;
-
-        readonly Random randomSpawn = new Random();
 
         public float RandomX;
         public float RandomY;
@@ -26,48 +25,52 @@
             this.Position = newPosition;
             this.Texture = newTexture;
             this.Speed = 4;
-            this.RandomX = this.randomSpawn.Next(0, 1200);
-            this.RandomY = this.randomSpawn.Next(-700, -50);
             this.IsVisible = true;
+
+            // Rotation is not working at the moment in order to get proper collision
+            //this.Origin.X = Texture.Width / 2;
+            //this.Origin.Y = Texture.Height / 2;
         }
 
-        public void LoadContent(ContentManager content)
-        {
-            this.Texture = content.Load<Texture2D>("asteroid");
-            this.Origin.X = this.Texture.Width / 2;
-            this.Origin.Y = this.Texture.Height / 2;
-        }
+        //public void LoadContent(ContentManager content)
+        //{
+        //}
 
         public void Update(GameTime gemeTime)
         {
-            this.BoundingBox = new Rectangle((int)this.Position.X, (int)this.Position.Y, 45, 45);
+            BoundingBox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
 
-            this.Position.Y += this.Speed;
-            if (this.Position.Y >= 950)
+            Position.Y += Speed;
+            if (Position.Y >= 768)
             {
-                this.Position.Y = -50;
+                Position.Y = -75;
             }
 
-            float elapsed = (float)gemeTime.ElapsedGameTime.TotalSeconds;
-            this.RotationAngle += elapsed;
-            float circle = MathHelper.Pi * 2;
-            this.RotationAngle %= circle;
+            // Rotation is not working at the moment in order to get proper collision
+
+            //float elapsed = (float)gemeTime.ElapsedGameTime.TotalSeconds;
+            //RotationAngle += elapsed;
+            //float circle = MathHelper.Pi * 2;
+            //RotationAngle %= circle;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (this.IsVisible)
+            if (IsVisible)
             {
-                spriteBatch.Draw(
-                    this.Texture,
-                    this.Position,
-                    null,
-                    null,
-                    this.Origin,
-                    this.RotationAngle,
+                spriteBatch.Draw(Texture,Position,Color.White);
+
+                // Rotation is not working at the moment in order to get proper collision
+                /*spriteBatch.Draw(
+                    Texture,
+                    Position,
                     null,
                     Color.White,
-                    SpriteEffects.FlipVertically);
+                    RotationAngle,
+                    Origin,
+                    1.0f,
+                    SpriteEffects.None,
+                    0f);*/
             }
         }
     }
