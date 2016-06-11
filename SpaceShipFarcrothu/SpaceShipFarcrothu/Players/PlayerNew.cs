@@ -56,8 +56,18 @@
         // Player draw method
         public void Draw(SpriteBatch spriteBatch)
         {
+            // Draw player itself
             spriteBatch.Draw(texture, position, Color.White);
+
+            // Draw player health
+            healthRectangle = new Rectangle(
+                (int)healthBarPosition.X,
+                (int)healthBarPosition.Y,
+                health,
+                20);
             spriteBatch.Draw(healthTexture, healthRectangle, Color.White);
+
+            // Draw bullets
             foreach (var bullet in bulletList)
             {
                 bullet.Draw(spriteBatch);
@@ -68,7 +78,7 @@
         public void Update(GameTime gameTime)
         {
             // if player health is below zero set isAlive flag to false
-            if(health <= 0)
+            if (health <= 0)
             {
                 isAlive = false;
             }
@@ -80,17 +90,12 @@
                 return;
             }
             
+            // Create bounding box around the player
             boundingBox = new Rectangle(
                 (int)position.X,
                 (int)position.Y,
                 texture.Width,
                 texture.Height);
-
-            healthRectangle = new Rectangle(
-                (int)healthBarPosition.X,
-                (int)healthBarPosition.Y,
-                health,
-                25);
 
             // Keyboard state monitoring
             var keyState = Keyboard.GetState();
@@ -155,8 +160,8 @@
             {
                 Bullet newBullet = new Bullet(bulletTexture);
                 newBullet.Position = new Vector2(
-                    position.X + 32 - newBullet.Texture.Width / 20,
-                    position.Y + 30);
+                    position.X + 32 - newBullet.Texture.Width / 2,
+                    position.Y + 10);
 
                 newBullet.IsVisible = true;
 

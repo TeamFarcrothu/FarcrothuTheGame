@@ -30,8 +30,8 @@
 
             playerscore = 0;
             player2score = 0;
-            playerScorePos = new Vector2(screenWidth / 4, 50);
-            player2ScorePos = new Vector2(screenWidth / 2, 50);
+            playerScorePos = new Vector2(50, 20);
+            player2ScorePos = new Vector2(1110, 20);
         }
 
         public void LoadContent(ContentManager Content)
