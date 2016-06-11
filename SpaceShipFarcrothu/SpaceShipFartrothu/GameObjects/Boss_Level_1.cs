@@ -8,5 +8,6 @@ namespace SpaceShipFartrothu.GameObjects
 {
     class Boss_Level_1
     {
+
     }
 }
