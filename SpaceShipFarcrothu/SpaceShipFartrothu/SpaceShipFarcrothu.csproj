@@ -47,7 +47,7 @@
     <Compile Include="GameObjects\Asteroid.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="GameObjects\Boss_Level_1.cs" />
+    <Compile Include="GameObjects\Boss.cs" />
     <Compile Include="GameObjects\Bullet.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

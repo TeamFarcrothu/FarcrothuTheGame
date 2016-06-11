@@ -8,6 +8,7 @@
     using Microsoft.Xna.Framework.Input;
     using Players;
     using Effects;
+
     public class GameEngine : Game
     {
         private SpriteBatch spriteBatch;
@@ -22,8 +23,11 @@
         private readonly List<Enemy> enemyList = new List<Enemy>();
         private readonly HUD hud = new HUD();
         private readonly List<Explosion> explosionList = new List<Explosion>();
+        private Boss boss;
+        private bool bossHasInstance;
 
-        public int enemyBulletDamage;
+        private int enemyBulletDamage;
+        private int bossBulletDamage;
 
         public GameEngine()
         {
@@ -36,7 +40,8 @@
 
             this.Window.Title = "Traveling to FARCROTHU";
             this.Content.RootDirectory = "Content";
-            enemyBulletDamage = 10;
+            this.enemyBulletDamage = 10;
+            this.bossBulletDamage = 30;
         }
 
         protected override void Initialize()
@@ -48,7 +53,7 @@
         {
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
 
-            hud.LoadContent(this.Content);
+            this.hud.LoadContent(this.Content);
             this.player2.LoadContent(this.Content);
             this.player.LoadContent(this.Content);
             this.starfield.LoadContent(this.Content);
@@ -66,86 +71,92 @@
                 this.Exit();
             }
 
-            // if one of the players is alive, keep going
-            if(player.isAlive || player2.isAlive)
+            // boss logic
+            if (this.hud.playerscore >= 1000 || this.hud.player2score >= 10)
             {
-                foreach(Enemy enemy in this.enemyList)
+                this.boss.Update(gameTime);
+            }
+
+            // if one of the players is alive, keep going
+            if (this.player.isAlive || this.player2.isAlive)
+            {
+                foreach (Enemy enemy in this.enemyList)
                 {
-                    if (enemy.boundingBox.Intersects(player.boundingBox))
+                    if (enemy.boundingBox.Intersects(this.player.boundingBox))
                     {
-                        player.health -= 40;
-                        hud.playerscore += 20;
+                        this.player.health -= 40;
+                        this.hud.playerscore += 20;
                         enemy.isVisible = false;
                     }
-                    if (enemy.boundingBox.Intersects(player2.boundingBox))
+                    if (enemy.boundingBox.Intersects(this.player2.boundingBox))
                     {
-                        player2.health -= 40;
-                        hud.player2score += 20;
+                        this.player2.health -= 40;
+                        this.hud.player2score += 20;
                         enemy.isVisible = false;
                     }
 
                     for (int i = 0; i < enemy.bulletList.Count; i++)
                     {
-                        if (player.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
+                        if (this.player.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
                         {
-                            player.health -= enemyBulletDamage;
+                            this.player.health -= this.enemyBulletDamage;
                             enemy.bulletList[i].IsVisible = false;
                         }
-                        if (player2.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
+                        if (this.player2.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
                         {
-                            player2.health -= enemyBulletDamage;
+                            this.player2.health -= this.enemyBulletDamage;
                             enemy.bulletList[i].IsVisible = false;
                         }
                     }
                     // player bullet lists colliding with enemy ships
-                    for (int i = 0; i < player.bulletList.Count; i++)
+                    for (int i = 0; i < this.player.bulletList.Count; i++)
                     {
-                        if (player.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
+                        if (this.player.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                         {
-                            explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(enemy.position.X, enemy.position.Y)));
-                            hud.playerscore += 20;
-                            player.bulletList[i].IsVisible = false;
+                            this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"), new Vector2(enemy.position.X, enemy.position.Y)));
+                            this.hud.playerscore += 20;
+                            this.player.bulletList[i].IsVisible = false;
                             enemy.isVisible = false;
                         }
                     }
-                    for (int i = 0; i < player2.bulletList.Count; i++)
+                    for (int i = 0; i < this.player2.bulletList.Count; i++)
                     {
-                        if (player2.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
+                        if (this.player2.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                         {
-                            explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(enemy.position.X, enemy.position.Y)));
-                            hud.player2score += 20;
-                            player2.bulletList[i].IsVisible = false;
+                            this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"), new Vector2(enemy.position.X, enemy.position.Y)));
+                            this.hud.player2score += 20;
+                            this.player2.bulletList[i].IsVisible = false;
                             enemy.isVisible = false;
                         }
                     }
                     enemy.Update(gameTime);
                 }
-                foreach (var explosion in explosionList)
+                foreach (var explosion in this.explosionList)
                 {
                     explosion.Update(gameTime);
                 }
-                foreach (var asteroid in asteroids)
+                foreach (var asteroid in this.asteroids)
                 {
-                    if (asteroid.BoundingBox.Intersects(player.boundingBox))
+                    if (asteroid.BoundingBox.Intersects(this.player.boundingBox))
                     {
-                        hud.playerscore += 5;
+                        this.hud.playerscore += 5;
                         asteroid.IsVisible = false;
-                        player.health -= 20;
+                        this.player.health -= 20;
                     }
 
                     if (asteroid.BoundingBox.Intersects(this.player2.boundingBox))
                     {
                         asteroid.IsVisible = false;
-                        player2.health -= 20;
-                        hud.player2score += 5;
+                        this.player2.health -= 20;
+                        this.hud.player2score += 5;
                     }
 
                     foreach (var bullet in this.player.bulletList)
                     {
                         if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
                         {
-                            explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(asteroid.Position.X, asteroid.Position.Y)));
-                            hud.playerscore += 5;
+                            this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"), new Vector2(asteroid.Position.X, asteroid.Position.Y)));
+                            this.hud.playerscore += 5;
                             asteroid.IsVisible = false;
                             bullet.IsVisible = false;
                         }
@@ -155,8 +166,8 @@
                     {
                         if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
                         {
-                            explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(asteroid.Position.X, asteroid.Position.Y)));
-                            hud.player2score += 5;
+                            this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"), new Vector2(asteroid.Position.X, asteroid.Position.Y)));
+                            this.hud.player2score += 5;
                             asteroid.IsVisible = false;
                             bullet.IsVisible = false;
                         }
@@ -171,9 +182,24 @@
                 this.ManageExplosions();
                 this.LoadAsteroids();
                 this.LoadEnemies();
-            //[end of] if one of the players is alive, keep going
+                this.LoadBoss();
+                //[end of] if one of the players is alive, keep going
             }
             base.Update(gameTime);
+        }
+
+        private void LoadBoss()
+        {
+            // Singleton
+            if (!this.bossHasInstance && (this.hud.playerscore >= 1000 || this.hud.player2score >= 10))
+            {
+                this.boss = new Boss(
+                    this.Content.Load<Texture2D>("space_Boss_Level_1"),
+                    new Vector2(0, 0),
+                    this.Content.Load<Texture2D>("bullet"));
+
+                this.bossHasInstance = true;
+            }
         }
 
         protected override void Draw(GameTime gameTime)
@@ -185,21 +211,32 @@
             this.starfield.Draw(this.spriteBatch);
             this.player.Draw(this.spriteBatch);
             this.player2.Draw(this.spriteBatch);
-            foreach (var explosion in explosionList)
+            foreach (var explosion in this.explosionList)
             {
-                explosion.Draw(spriteBatch);
+                explosion.Draw(this.spriteBatch);
             }
             foreach (var asteroid in this.asteroids)
             {
-                asteroid.Draw(this.spriteBatch);
+                if (this.boss == null || !this.boss.isVisible)
+                {
+                    asteroid.Draw(this.spriteBatch);
+                }
             }
 
-            foreach(Enemy enemy in this.enemyList)
+            foreach (Enemy enemy in this.enemyList)
             {
-                enemy.Draw(this.spriteBatch);
+                if (this.boss == null|| !this.boss.isVisible)
+                {
+                    enemy.Draw(this.spriteBatch);
+                }
             }
 
             this.hud.Draw(this.spriteBatch);
+            if (this.bossHasInstance)
+            {
+                this.boss.Draw(this.spriteBatch);
+            }
+
             this.spriteBatch.End();
 
             base.Draw(gameTime);
@@ -236,7 +273,7 @@
 
             if (this.enemyList.Count < 3)
             {
-                enemyList.Add(new Enemy(
+                this.enemyList.Add(new Enemy(
                     this.Content.Load<Texture2D>("enemy_ship"),
                     new Vector2(randomX, randomY),
                     this.Content.Load<Texture2D>("bullet")));
@@ -253,11 +290,11 @@
         }
         public void ManageExplosions()
         {
-            for (int i = 0; i < explosionList.Count; i++)
+            for (int i = 0; i < this.explosionList.Count; i++)
             {
-                if (!explosionList[i].isVisible)
+                if (!this.explosionList[i].isVisible)
                 {
-                    explosionList.RemoveAt(i);
+                    this.explosionList.RemoveAt(i);
                     i--;
                 }
             }
