@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpaceShipFartrothu.GameObjects
+﻿namespace SpaceShipFartrothu.GameObjects
 {
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+
     class Boss_Level_1
     {
+
     }
 }
