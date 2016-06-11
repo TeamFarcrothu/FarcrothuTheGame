@@ -1,4 +1,4 @@
-<<<<<<< HEAD:SpaceShipFarcrothu/SpaceShipFartrothu/Core/GameEngine.cs
+
 ﻿namespace SpaceShipFartrothu.Core
 {
     using System;
@@ -302,7 +302,7 @@
         }
     }
 }
-=======
+
 ﻿namespace SpaceShipFartrothu.Core
 {
     using System;
@@ -567,4 +567,4 @@
         }
     }
 }
->>>>>>> 53bf4acd503f0c5ba6ee13ae8eb1f39cd0b4524d:SpaceShipFarcrothu/SpaceShipFarcrothu/Core/GameEngine.cs
+
