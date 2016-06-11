@@ -71,7 +71,7 @@ public class GameEngine : Game
         }
 
         // boss logic
-        if (this.hud.playerscore >= 1000 || this.hud.player2score >= 10)
+        if (this.hud.playerscore >= 100 || this.hud.player2score >= 100)
         {
             this.boss.Update(gameTime);
         }
@@ -190,7 +190,7 @@ public class GameEngine : Game
     private void LoadBoss()
     {
         // Singleton
-        if (!this.bossHasInstance && (this.hud.playerscore >= 1000 || this.hud.player2score >= 10))
+        if (!this.bossHasInstance && (this.hud.playerscore >= 100 || this.hud.player2score >= 100))
         {
             this.boss = new Boss(
                 this.Content.Load<Texture2D>("space_Boss_Level_1"),
@@ -262,6 +262,7 @@ public class GameEngine : Game
                 i--;
             }
         }
+
     }
 
     public void LoadEnemies()
