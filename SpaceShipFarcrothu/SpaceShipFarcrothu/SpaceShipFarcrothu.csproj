@@ -84,6 +84,7 @@
     <Content Include="Content\asteroid.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\beam.png" />
     <Content Include="Content\bullet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

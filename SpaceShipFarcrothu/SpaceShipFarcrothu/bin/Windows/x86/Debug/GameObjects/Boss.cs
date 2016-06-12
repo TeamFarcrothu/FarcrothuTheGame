@@ -8,7 +8,8 @@
     {
         private const int DefaultHealth = 50;
         private const int DefaultSpeed = 2;
-        private const int DefaultBulletDelay = 60;
+        private const int DefaultBulletDelay = 10;
+        private const int DefaultSideBulletDelay = 70;
         private const int ScreenWidth = 1181;
 
         private List<Bullet> bulletList;
@@ -19,6 +20,7 @@
 
         private int health;
         private int bulletDelay;
+        private int sideBulletDelay;
         private int speed;
         public bool isAtTheRightBorder;
         public bool isVisible;
@@ -94,10 +96,26 @@
                     Bullet newBullet = new Bullet(this.bulletTexture);
                     newBullet.Position = new Vector2(
                         this.position.X + this.texture.Width / 2 - newBullet.Texture.Width / 2,
-                        this.position.Y + this.texture.Height - 20);
+                        this.position.Y + this.texture.Height - 100);
 
                     newBullet.IsVisible = true;
                     this.bulletList.Add(newBullet);
+
+                    Bullet leftBullet = new Bullet(this.bulletTexture);
+                    leftBullet.Position = new Vector2(
+                        this.position.X + this.texture.Width / 2 - leftBullet.Texture.Width / 2 - 130,
+                        this.position.Y + this.texture.Height - 210);
+
+                    leftBullet.IsVisible = true;
+                    this.bulletList.Add(leftBullet);
+
+                    Bullet rightBullet = new Bullet(this.bulletTexture);
+                    rightBullet.Position = new Vector2(
+                        this.position.X + this.texture.Width / 2 - rightBullet.Texture.Width / 2 + 130,
+                        this.position.Y + this.texture.Height - 210);
+
+                    rightBullet.IsVisible = true;
+                    this.bulletList.Add(rightBullet);
                 }
 
                 if (this.bulletDelay == 0)
