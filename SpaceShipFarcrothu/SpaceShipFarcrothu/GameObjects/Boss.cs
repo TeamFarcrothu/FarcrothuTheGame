@@ -12,13 +12,13 @@
         private const int DefaultSideBulletDelay = 70;
         private const int ScreenWidth = 1181;
 
-        private List<Bullet> bulletList;
-        private Rectangle boundingBox;
-        private Texture2D texture;
+        public List<Bullet> bulletList;
+        public Rectangle boundingBox;
+        public Texture2D texture;
         private Texture2D bulletTexture;
         public Vector2 position;
 
-        private int health;
+        public int health;
         private int bulletDelay;
         private int sideBulletDelay;
         private int speed;
