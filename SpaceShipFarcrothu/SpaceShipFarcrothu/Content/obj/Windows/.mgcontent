@@ -4,8 +4,8 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Github/FarcrothuTheGame/SpaceShipFarcrothu/SpaceShipFarcrothu/Content/georgia.spritefont</File>
-    <File>C:/Github/FarcrothuTheGame/SpaceShipFarcrothu/SpaceShipFarcrothu/Content/playershoot.wav</File>
-    <File>C:/Github/FarcrothuTheGame/SpaceShipFarcrothu/SpaceShipFarcrothu/Content/theme.mp3</File>
+    <File>C:/Users/user/Desktop/repo 50th commit/FarcrothuTheGame/SpaceShipFarcrothu/SpaceShipFarcrothu/Content/georgia.spritefont</File>
+    <File>C:/Users/user/Desktop/repo 50th commit/FarcrothuTheGame/SpaceShipFarcrothu/SpaceShipFarcrothu/Content/playershoot.wav</File>
+    <File>C:/Users/user/Desktop/repo 50th commit/FarcrothuTheGame/SpaceShipFarcrothu/SpaceShipFarcrothu/Content/theme.mp3</File>
   </SourceFiles>
 </SourceFileCollection>
