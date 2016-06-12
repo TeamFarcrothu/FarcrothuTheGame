@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using SpaceShipFartrothu.Sound;
-
-namespace SpaceShipFartrothu.Players
+﻿namespace SpaceShipFartrothu.Players
 {
-
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
+    using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework.Input;
+    using SpaceShipFartrothu.Sound;
     using GameObjects;
-
 
     public class PlayerNew
     {
@@ -25,7 +22,7 @@ namespace SpaceShipFartrothu.Players
         public float bulletDelay;
         public bool isColiding;
         public bool isAlive;
-        SoundManager sm = new SoundManager();
+        public SoundManager sm = new SoundManager();
 
         //Constructor method
         public PlayerNew(string newShipTextureFile, Vector2 newPosition, int newId)
@@ -38,7 +35,7 @@ namespace SpaceShipFartrothu.Players
             this.speed = 5;
             this.isColiding = false;
             this.health = 200;
-            if(id == 1)
+            if (id == 1)
             {
                 this.healthBarPosition = new Vector2(50, 50);
                 this.resetPosition = new Vector2(200, 600);
@@ -96,7 +93,7 @@ namespace SpaceShipFartrothu.Players
                 position = resetPosition;
                 return;
             }
-            
+
             // Create bounding box around the player
             boundingBox = new Rectangle(
                 (int)position.X,
@@ -172,7 +169,6 @@ namespace SpaceShipFartrothu.Players
                     position.Y + 10);
 
                 newBullet.IsVisible = true;
-
 
                 if (bulletList.Count() < 20)
                 {
