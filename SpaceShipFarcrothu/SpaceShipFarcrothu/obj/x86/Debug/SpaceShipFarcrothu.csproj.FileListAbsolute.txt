@@ -341,3 +341,4 @@ C:\Users\user\Desktop\repo 50th commit\FarcrothuTheGame\SpaceShipFarcrothu\Space
 C:\Users\user\Desktop\repo 50th commit\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFarcrothu\obj\x86\Debug\SpaceShipFarcrothu.csprojResolveAssemblyReference.cache
 C:\Users\user\Desktop\repo 50th commit\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\menu_image.png
 C:\Users\user\Desktop\repo 50th commit\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\gameover_image.png
+C:\Users\user\Desktop\repo 50th commit\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\winning_image.png

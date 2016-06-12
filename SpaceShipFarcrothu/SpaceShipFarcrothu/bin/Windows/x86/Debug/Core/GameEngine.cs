@@ -37,6 +37,7 @@ namespace SpaceShipFartrothu.Core
         private int bossBulletDamage;
         private Texture2D menuImage;
         private Texture2D gameoverImage;
+        private Texture2D winningImage;
 
         SoundManager sm = new SoundManager();
 
@@ -73,6 +74,7 @@ namespace SpaceShipFartrothu.Core
             sm.LoadContent(Content);
             this.menuImage = Content.Load<Texture2D>("menu_image");
             this.gameoverImage = Content.Load<Texture2D>("gameover_image");
+            this.winningImage = Content.Load<Texture2D>("winning_image");
             MediaPlayer.Play(sm.bgMusic);
         }
 
@@ -160,6 +162,11 @@ namespace SpaceShipFartrothu.Core
                             }
 
                             this.boss.Update(gameTime);
+
+                            if (!this.boss.isVisible)
+                            {
+                                this.gameState = State.Winning;
+                            }
 
                         }
                         else
@@ -312,8 +319,9 @@ namespace SpaceShipFartrothu.Core
                         break;
                     }
 
-                //UPDATING GAMEOVER STATE
+                //UPDATING GAMEOVER STATE or WINNING STATE
                 case State.GameOver:
+                case State.Winning:
                     {
                         //Get keyboard state
                         KeyboardState keyState = Keyboard.GetState();
@@ -325,6 +333,7 @@ namespace SpaceShipFartrothu.Core
 
                             this.enemyList.Clear();
                             this.asteroids.Clear();
+                            this.explosionList.Clear();
 
                             this.player.health = 200;
                             this.player2.health = 200;
@@ -340,6 +349,7 @@ namespace SpaceShipFartrothu.Core
                         this.starfield.Update(gameTime);
                     }
                     break;
+              
             }
 
             base.Update(gameTime);
@@ -402,6 +412,15 @@ namespace SpaceShipFartrothu.Core
                     {
                         this.starfield.Draw(spriteBatch);
                         this.spriteBatch.Draw(gameoverImage, new Vector2(0, 0), Color.White);
+
+                        break;
+                    }
+
+                // DRAWING WINNING STATE
+                case State.Winning:
+                    {
+                        this.starfield.Draw(spriteBatch);
+                        this.spriteBatch.Draw(winningImage, new Vector2(0, 0), Color.White);
 
                         break;
                     }
