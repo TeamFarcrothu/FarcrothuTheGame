@@ -41,6 +41,7 @@
     <Compile Include="Core\HUD.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Core\State.cs" />
     <Compile Include="Effects\Explosion.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

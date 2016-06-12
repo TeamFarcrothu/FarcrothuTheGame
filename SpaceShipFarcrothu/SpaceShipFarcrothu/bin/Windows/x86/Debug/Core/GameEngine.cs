@@ -14,12 +14,7 @@ namespace SpaceShipFartrothu.Core
 {
     public class GameEngine : Game
     {
-        public enum State
-        {
-            Menu,
-            Playing,
-            GameOver
-        }
+        
         //Set first state 
         private State gameState = State.Menu;
 
