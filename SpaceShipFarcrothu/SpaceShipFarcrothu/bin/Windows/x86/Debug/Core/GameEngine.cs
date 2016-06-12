@@ -65,6 +65,7 @@ namespace SpaceShipFartrothu.Core
 
         protected override void LoadContent()
         {
+            
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
 
             this.hud.LoadContent(this.Content);
@@ -75,7 +76,7 @@ namespace SpaceShipFartrothu.Core
             this.menuImage = Content.Load<Texture2D>("menu_image");
             this.gameoverImage = Content.Load<Texture2D>("gameover_image");
             this.winningImage = Content.Load<Texture2D>("winning_image");
-            MediaPlayer.Play(sm.bgMusic);
+            MediaPlayer.Play(sm.intro);
         }
 
         protected override void UnloadContent()
@@ -110,6 +111,7 @@ namespace SpaceShipFartrothu.Core
 
                             if (this.boss.boundingBox.Intersects(this.player2.boundingBox))
                             {
+                                sm.explodeSound.Play();
                                 this.player2.health -= 50;
                                 //this.hud.player2score += 20;
                             }
@@ -118,11 +120,13 @@ namespace SpaceShipFartrothu.Core
                             {
                                 if (this.player.boundingBox.Intersects(bullet.BoundingBox))
                                 {
+                                    sm.explodeSound.Play();
                                     this.player.health -= this.bossBulletDamage;
                                     bullet.IsVisible = false;
                                 }
                                 if (this.player2.boundingBox.Intersects(bullet.BoundingBox))
                                 {
+                                    sm.explodeSound.Play();
                                     this.player2.health -= this.bossBulletDamage;
                                     bullet.IsVisible = false;
                                 }
@@ -133,7 +137,7 @@ namespace SpaceShipFartrothu.Core
                             {
                                 if (this.player.bulletList[i].BoundingBox.Intersects(this.boss.boundingBox))
                                 {
-                                    //sm.explodeSound.Play();
+                                    sm.explodeSound.Play();
                                     this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"),
                                         new Vector2(this.boss.position.X + this.boss.texture.Height / 2,
                                             this.boss.position.Y + this.boss.texture.Width / 2)));
@@ -147,6 +151,7 @@ namespace SpaceShipFartrothu.Core
                             {
                                 if (this.player2.bulletList[i].BoundingBox.Intersects(this.boss.boundingBox))
                                 {
+                                    sm.explodeSound.Play();
                                     this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"),
                                         new Vector2(this.boss.position.X + boss.texture.Height / 2,
                                             this.boss.position.Y + this.boss.texture.Width / 2)));
@@ -175,6 +180,7 @@ namespace SpaceShipFartrothu.Core
                             {
                                 if (enemy.boundingBox.Intersects(this.player.boundingBox))
                                 {
+                                    sm.explodeSound.Play();
                                     this.player.health -= 40;
                                     this.hud.playerscore += 20;
                                     enemy.isVisible = false;
@@ -182,6 +188,7 @@ namespace SpaceShipFartrothu.Core
 
                                 if (enemy.boundingBox.Intersects(this.player2.boundingBox))
                                 {
+                                    sm.explodeSound.Play();
                                     this.player2.health -= 40;
                                     this.hud.player2score += 20;
                                     enemy.isVisible = false;
@@ -191,11 +198,13 @@ namespace SpaceShipFartrothu.Core
                                 {
                                     if (this.player.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
                                     {
+                                        sm.explodeSound.Play();
                                         this.player.health -= this.enemyBulletDamage;
                                         enemy.bulletList[i].IsVisible = false;
                                     }
                                     if (this.player2.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
                                     {
+                                        sm.explodeSound.Play();
                                         this.player2.health -= this.enemyBulletDamage;
                                         enemy.bulletList[i].IsVisible = false;
                                     }
@@ -206,7 +215,7 @@ namespace SpaceShipFartrothu.Core
                                 {
                                     if (this.player.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                                     {
-                                        //sm.explodeSound.Play();
+                                        sm.explodeSound.Play();
                                         this.explosionList.Add(
                                             new Explosion(this.Content.Load<Texture2D>("explosion"),
                                                 new Vector2(enemy.position.X, enemy.position.Y)));
@@ -220,6 +229,7 @@ namespace SpaceShipFartrothu.Core
                                 {
                                     if (this.player2.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
                                     {
+                                        sm.explodeSound.Play();
                                         this.explosionList.Add(
                                             new Explosion(this.Content.Load<Texture2D>("explosion"),
                                                 new Vector2(enemy.position.X, enemy.position.Y)));
@@ -241,6 +251,7 @@ namespace SpaceShipFartrothu.Core
                             {
                                 if (asteroid.BoundingBox.Intersects(this.player.boundingBox))
                                 {
+                                    sm.explodeSound.Play();
                                     this.hud.playerscore += 5;
                                     asteroid.IsVisible = false;
                                     this.player.health -= 20;
@@ -248,6 +259,7 @@ namespace SpaceShipFartrothu.Core
 
                                 if (asteroid.BoundingBox.Intersects(this.player2.boundingBox))
                                 {
+                                    sm.explodeSound.Play();
                                     asteroid.IsVisible = false;
                                     this.player2.health -= 20;
                                     this.hud.player2score += 5;
@@ -257,6 +269,7 @@ namespace SpaceShipFartrothu.Core
                                 {
                                     if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
                                     {
+                                        sm.explodeSound.Play();
                                         this.explosionList.Add(
                                             new Explosion(this.Content.Load<Texture2D>("explosion"),
                                                 new Vector2(asteroid.Position.X, asteroid.Position.Y)));
@@ -270,6 +283,7 @@ namespace SpaceShipFartrothu.Core
                                 {
                                     if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
                                     {
+                                        sm.explodeSound.Play();
                                         this.explosionList.Add(
                                             new Explosion(this.Content.Load<Texture2D>("explosion"),
                                                 new Vector2(asteroid.Position.X, asteroid.Position.Y)));
@@ -349,7 +363,6 @@ namespace SpaceShipFartrothu.Core
                         this.starfield.Update(gameTime);
                     }
                     break;
-              
             }
 
             base.Update(gameTime);
@@ -424,7 +437,6 @@ namespace SpaceShipFartrothu.Core
 
                         break;
                     }
-
             }
 
             this.spriteBatch.End();
@@ -437,12 +449,9 @@ namespace SpaceShipFartrothu.Core
             // Singleton
             if (!this.bossHasInstance)
             {
-                this.boss = new Boss(
-                    this.Content.Load<Texture2D>("space_Boss_level_1"),
-                    new Vector2(501, -600),
-                    this.Content.Load<Texture2D>("bullet"));
-
+                this.boss = new Boss();
                 this.bossHasInstance = true;
+                this.boss.LoadContent(this.Content);
             }
         }
 
@@ -467,7 +476,6 @@ namespace SpaceShipFartrothu.Core
                     i--;
                 }
             }
-
         }
 
         public void LoadEnemies()

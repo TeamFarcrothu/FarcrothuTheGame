@@ -10,6 +10,7 @@ namespace SpaceShipFartrothu.Sound
         public SoundEffect playerShootSound;
         public SoundEffect explodeSound;
         public Song bgMusic;
+        public Song intro;
 
 
         //Constructor
@@ -18,15 +19,15 @@ namespace SpaceShipFartrothu.Sound
             playerShootSound = null;
             explodeSound = null;
             bgMusic = null;
+            intro = null;
         }
 
         public void LoadContent(ContentManager content)
         {
-            //Content.RootDirectory = "Content";
             playerShootSound = content.Load<SoundEffect>("playershoot");
-            //TODO once shooting is ready:
-            //explodeSound = Content.Load<SoundEffect>("explode");
+            explodeSound = content.Load<SoundEffect>("explode");
             bgMusic = content.Load<Song>("theme");
+            intro = content.Load<Song>("intro");
         }
     }
 }
