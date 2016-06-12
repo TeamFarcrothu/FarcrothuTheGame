@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework.Content;
 
     public class Boss
     {
@@ -13,29 +14,35 @@
         private const int ScreenWidth = 1181;
 
         public List<Bullet> bulletList;
-        public Rectangle boundingBox;
-        public Texture2D texture;
-        private Texture2D bulletTexture;
-        public Vector2 position;
+        public Rectangle boundingBox, healthRectangle;
+        public Texture2D texture, bulletTexture, healthTexture;
+        public Vector2 position, healthBarPosition;
 
         public int health;
         private int bulletDelay;
         private int sideBulletDelay;
         private int speed;
-        public bool isAtTheRightBorder;
+        private bool isAtTheRightBorder;
         public bool isVisible;
 
-        public Boss(Texture2D newTexture, Vector2 newPosition, Texture2D newBulletTexture)
+
+        public void LoadContent(ContentManager content)
         {
-            this.position = newPosition;
-            this.texture = newTexture;
-            this.bulletTexture = newBulletTexture;
+            texture = content.Load<Texture2D>("space_Boss_Level_1");
+            bulletTexture = content.Load<Texture2D>("bullet");
+            healthTexture = content.Load<Texture2D>("healthbar");
+            this.position = new Vector2(501, -600);
+        }
+
+        public Boss()
+        {
             this.health = DefaultHealth;
             this.bulletDelay = DefaultBulletDelay;
             this.speed = DefaultSpeed;
             this.isVisible = true;
             this.bulletList = new List<Bullet>();
             this.isAtTheRightBorder = true;
+            this.healthBarPosition = this.position;
         }
 
         public void Update(GameTime gameTime)
@@ -47,9 +54,10 @@
                 this.texture.Height);
 
             // Showing the Boss slowly from top of the screen
-            if (this.position.Y <= 31)
+            if (this.position.Y < 31)
             {
                 this.position.Y += this.speed;
+                healthBarPosition = new Vector2(position.X + 140, position.Y - 30);
                 return;
             }
 
@@ -61,6 +69,7 @@
                     isAtTheRightBorder = false;
                 }
                 this.position.X += this.speed;
+                healthBarPosition = new Vector2(position.X + 140, position.Y - 30);
             }
             else if (this.position.X >= -171 && !isAtTheRightBorder)
             {
@@ -69,9 +78,9 @@
                     isAtTheRightBorder = true;
                 }
                 this.position.X -= this.speed;
+                healthBarPosition = new Vector2(position.X + 140, position.Y - 30);
             }
 
-            
             if (this.health <= 0)
             {
                 this.isVisible = false;
@@ -128,6 +137,14 @@
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(this.texture, this.position, Color.White);
+
+            healthRectangle = new Rectangle(
+               (int)healthBarPosition.X,
+               (int)healthBarPosition.Y,
+               health,
+               20);
+
+            spriteBatch.Draw(this.healthTexture, this.healthRectangle, Color.White);
 
             foreach (var bullet in this.bulletList)
             {

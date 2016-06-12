@@ -349,7 +349,6 @@ namespace SpaceShipFartrothu.Core
                         this.starfield.Update(gameTime);
                     }
                     break;
-              
             }
 
             base.Update(gameTime);
@@ -424,7 +423,6 @@ namespace SpaceShipFartrothu.Core
 
                         break;
                     }
-
             }
 
             this.spriteBatch.End();
@@ -437,12 +435,9 @@ namespace SpaceShipFartrothu.Core
             // Singleton
             if (!this.bossHasInstance)
             {
-                this.boss = new Boss(
-                    this.Content.Load<Texture2D>("space_Boss_level_1"),
-                    new Vector2(501, -600),
-                    this.Content.Load<Texture2D>("bullet"));
-
+                this.boss = new Boss();
                 this.bossHasInstance = true;
+                this.boss.LoadContent(this.Content);
             }
         }
 
@@ -467,7 +462,6 @@ namespace SpaceShipFartrothu.Core
                     i--;
                 }
             }
-
         }
 
         public void LoadEnemies()
