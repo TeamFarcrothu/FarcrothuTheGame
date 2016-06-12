@@ -76,7 +76,7 @@ namespace SpaceShipFartrothu.Core
             this.player.LoadContent(this.Content);
             this.starfield.LoadContent(this.Content);
             sm.LoadContent(Content);
-            this.menuImage = Content.Load<Texture2D>("menu_image");
+            this.menuImage = Content.Load<Texture2D>("menu");
             MediaPlayer.Play(sm.bgMusic);
         }
 
