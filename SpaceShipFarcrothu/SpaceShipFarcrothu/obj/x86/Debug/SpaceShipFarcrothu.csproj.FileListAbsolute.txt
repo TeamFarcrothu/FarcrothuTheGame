@@ -398,3 +398,9 @@ C:\Users\milensk1\Documents\GitHub\FarcrothuTheGame_Local\SpaceShipFarcrothu\obj
 C:\Users\milensk1\Documents\GitHub\FarcrothuTheGame_Local\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\explode.xnb
 C:\Users\milensk1\Documents\GitHub\FarcrothuTheGame_Local\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\intro.wma
 C:\Users\milensk1\Documents\GitHub\FarcrothuTheGame_Local\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\intro.xnb
+C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\gameover_image.png
+C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\menu_image.png
+C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\winning_image.png
+C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\explode.xnb
+C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\intro.wma
+C:\Github\FarcrothuTheGame\SpaceShipFarcrothu\SpaceShipFarcrothu\bin\Windows\x86\Debug\Content\intro.xnb

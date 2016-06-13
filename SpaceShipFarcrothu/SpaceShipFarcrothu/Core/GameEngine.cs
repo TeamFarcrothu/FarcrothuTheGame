@@ -2,10 +2,12 @@ namespace SpaceShipFartrothu.Core
 {
     using System;
     using System.Collections.Generic;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Microsoft.Xna.Framework.Media;
+
     using Effects;
     using GameObjects;
     using Players;
@@ -18,14 +20,16 @@ namespace SpaceShipFartrothu.Core
 
         private SpriteBatch spriteBatch;
         private readonly GraphicsDeviceManager graphics;
+
+        // Instances
         private readonly Random random = new Random();
-        //private readonly Player player = new Player();
         private readonly PlayerNew player = new PlayerNew("ship_p1", new Vector2(600, 600), 1);
-        //private readonly Player2 player2 = new Player2();
         private readonly PlayerNew player2 = new PlayerNew("ship_p2", new Vector2(700, 600), 2);
         private readonly StarField starfield = new StarField();
         private readonly HUD hud = new HUD();
+        private readonly SoundManager soundManager = new SoundManager();
 
+        // Lists
         private readonly List<Asteroid> asteroids = new List<Asteroid>();
         private readonly List<Enemy> enemyList = new List<Enemy>();
         private readonly List<Explosion> explosionList = new List<Explosion>();
@@ -39,7 +43,6 @@ namespace SpaceShipFartrothu.Core
         private Texture2D gameoverImage;
         private Texture2D winningImage;
 
-        SoundManager sm = new SoundManager();
 
         public GameEngine()
         {
@@ -65,18 +68,20 @@ namespace SpaceShipFartrothu.Core
 
         protected override void LoadContent()
         {
-            
+
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
 
             this.hud.LoadContent(this.Content);
             this.player2.LoadContent(this.Content);
             this.player.LoadContent(this.Content);
             this.starfield.LoadContent(this.Content);
-            sm.LoadContent(Content);
-            this.menuImage = Content.Load<Texture2D>("menu_image");
-            this.gameoverImage = Content.Load<Texture2D>("gameover_image");
-            this.winningImage = Content.Load<Texture2D>("winning_image");
-            MediaPlayer.Play(sm.intro);
+            this.soundManager.LoadContent(this.Content);
+
+            this.menuImage = this.Content.Load<Texture2D>("menu_image");
+            this.gameoverImage = this.Content.Load<Texture2D>("gameover_image");
+            this.winningImage = this.Content.Load<Texture2D>("winning_image");
+
+            MediaPlayer.Play(this.soundManager.intro);
         }
 
         protected override void UnloadContent()
@@ -92,213 +97,12 @@ namespace SpaceShipFartrothu.Core
             }
 
             //UPDATING Game state
-            switch (gameState)
+            switch (this.gameState)
             {
                 case State.Playing:
                     {
                         this.starfield.Speed = 3;
-
-                        //If some of the players score is over XX(some score) load the boss 
-                        if (this.hud.playerscore >= 10 || this.hud.player2score >= 10)
-                        {
-                            this.LoadBoss();
-
-                            if (this.boss.boundingBox.Intersects(this.player.boundingBox))
-                            {
-                                this.player.health -= 50;
-                                // this.hud.playerscore += 20;
-                            }
-
-                            if (this.boss.boundingBox.Intersects(this.player2.boundingBox))
-                            {
-                                sm.explodeSound.Play();
-                                this.player2.health -= 50;
-                                //this.hud.player2score += 20;
-                            }
-
-                            foreach (Bullet bullet in this.boss.bulletList)
-                            {
-                                if (this.player.boundingBox.Intersects(bullet.BoundingBox))
-                                {
-                                    sm.explodeSound.Play();
-                                    this.player.health -= this.bossBulletDamage;
-                                    bullet.IsVisible = false;
-                                }
-                                if (this.player2.boundingBox.Intersects(bullet.BoundingBox))
-                                {
-                                    sm.explodeSound.Play();
-                                    this.player2.health -= this.bossBulletDamage;
-                                    bullet.IsVisible = false;
-                                }
-                            }
-
-                            // player bullet lists colliding with boss ship
-                            for (int i = 0; i < this.player.bulletList.Count; i++)
-                            {
-                                if (this.player.bulletList[i].BoundingBox.Intersects(this.boss.boundingBox))
-                                {
-                                    sm.explodeSound.Play();
-                                    this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"),
-                                        new Vector2(this.boss.position.X + this.boss.texture.Height / 2,
-                                            this.boss.position.Y + this.boss.texture.Width / 2)));
-                                    // this.hud.playerscore += 20;
-                                    this.player.bulletList[i].IsVisible = false;
-                                    this.boss.health -= 2;
-                                }
-                            }
-
-                            for (int i = 0; i < this.player2.bulletList.Count; i++)
-                            {
-                                if (this.player2.bulletList[i].BoundingBox.Intersects(this.boss.boundingBox))
-                                {
-                                    sm.explodeSound.Play();
-                                    this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"),
-                                        new Vector2(this.boss.position.X + boss.texture.Height / 2,
-                                            this.boss.position.Y + this.boss.texture.Width / 2)));
-                                    // this.hud.player2score += 20;
-                                    this.player2.bulletList[i].IsVisible = false;
-                                    this.boss.health -= 2;
-                                }
-                            }
-
-                            foreach (var explosion in this.explosionList)
-                            {
-                                explosion.Update(gameTime);
-                            }
-
-                            this.boss.Update(gameTime);
-
-                            if (!this.boss.isVisible)
-                            {
-                                this.gameState = State.Winning;
-                            }
-
-                        }
-                        else
-                        {
-                            foreach (Enemy enemy in this.enemyList)
-                            {
-                                if (enemy.boundingBox.Intersects(this.player.boundingBox))
-                                {
-                                    sm.explodeSound.Play();
-                                    this.player.health -= 40;
-                                    this.hud.playerscore += 20;
-                                    enemy.isVisible = false;
-                                }
-
-                                if (enemy.boundingBox.Intersects(this.player2.boundingBox))
-                                {
-                                    sm.explodeSound.Play();
-                                    this.player2.health -= 40;
-                                    this.hud.player2score += 20;
-                                    enemy.isVisible = false;
-                                }
-
-                                for (int i = 0; i < enemy.bulletList.Count; i++)
-                                {
-                                    if (this.player.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
-                                    {
-                                        sm.explodeSound.Play();
-                                        this.player.health -= this.enemyBulletDamage;
-                                        enemy.bulletList[i].IsVisible = false;
-                                    }
-                                    if (this.player2.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
-                                    {
-                                        sm.explodeSound.Play();
-                                        this.player2.health -= this.enemyBulletDamage;
-                                        enemy.bulletList[i].IsVisible = false;
-                                    }
-                                }
-
-                                // player bullet lists colliding with enemy ships
-                                for (int i = 0; i < this.player.bulletList.Count; i++)
-                                {
-                                    if (this.player.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
-                                    {
-                                        sm.explodeSound.Play();
-                                        this.explosionList.Add(
-                                            new Explosion(this.Content.Load<Texture2D>("explosion"),
-                                                new Vector2(enemy.position.X, enemy.position.Y)));
-                                        this.hud.playerscore += 20;
-                                        this.player.bulletList[i].IsVisible = false;
-                                        enemy.isVisible = false;
-                                    }
-                                }
-
-                                for (int i = 0; i < this.player2.bulletList.Count; i++)
-                                {
-                                    if (this.player2.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
-                                    {
-                                        sm.explodeSound.Play();
-                                        this.explosionList.Add(
-                                            new Explosion(this.Content.Load<Texture2D>("explosion"),
-                                                new Vector2(enemy.position.X, enemy.position.Y)));
-                                        this.hud.player2score += 20;
-                                        this.player2.bulletList[i].IsVisible = false;
-                                        enemy.isVisible = false;
-                                    }
-                                }
-
-                                enemy.Update(gameTime);
-                            }
-
-                            foreach (var explosion in this.explosionList)
-                            {
-                                explosion.Update(gameTime);
-                            }
-
-                            foreach (var asteroid in this.asteroids)
-                            {
-                                if (asteroid.BoundingBox.Intersects(this.player.boundingBox))
-                                {
-                                    sm.explodeSound.Play();
-                                    this.hud.playerscore += 5;
-                                    asteroid.IsVisible = false;
-                                    this.player.health -= 20;
-                                }
-
-                                if (asteroid.BoundingBox.Intersects(this.player2.boundingBox))
-                                {
-                                    sm.explodeSound.Play();
-                                    asteroid.IsVisible = false;
-                                    this.player2.health -= 20;
-                                    this.hud.player2score += 5;
-                                }
-
-                                foreach (var bullet in this.player.bulletList)
-                                {
-                                    if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
-                                    {
-                                        sm.explodeSound.Play();
-                                        this.explosionList.Add(
-                                            new Explosion(this.Content.Load<Texture2D>("explosion"),
-                                                new Vector2(asteroid.Position.X, asteroid.Position.Y)));
-                                        this.hud.playerscore += 5;
-                                        asteroid.IsVisible = false;
-                                        bullet.IsVisible = false;
-                                    }
-                                }
-
-                                foreach (var bullet in this.player2.bulletList)
-                                {
-                                    if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
-                                    {
-                                        sm.explodeSound.Play();
-                                        this.explosionList.Add(
-                                            new Explosion(this.Content.Load<Texture2D>("explosion"),
-                                                new Vector2(asteroid.Position.X, asteroid.Position.Y)));
-                                        this.hud.player2score += 5;
-                                        asteroid.IsVisible = false;
-                                        bullet.IsVisible = false;
-                                    }
-                                }
-
-                                asteroid.Update(gameTime);
-                            }
-
-                            this.LoadAsteroids();
-                            this.LoadEnemies();
-                        }
+                        this.Play(gameTime);
 
                         this.hud.Update(gameTime);
                         this.player2.Update(gameTime);
@@ -312,60 +116,269 @@ namespace SpaceShipFartrothu.Core
 
                         this.starfield.Update(gameTime);
                         this.ManageExplosions();
-
                         break;
                     }
 
                 //UPDATING MENU STATE
                 case State.Menu:
+                    var keyState = Keyboard.GetState();
+
+                    if (keyState.IsKeyDown(Keys.Enter))
                     {
-                        //Get keyboard state
-                        KeyboardState keyState = Keyboard.GetState();
-
-                        if (keyState.IsKeyDown(Keys.Enter))
-                        {
-                            gameState = State.Playing;
-                            MediaPlayer.Play(sm.bgMusic);
-                        }
-
-                        this.starfield.Update(gameTime);
-                        this.starfield.Speed = 1;
-                        break;
+                        this.gameState = State.Playing;
+                        MediaPlayer.Play(this.soundManager.bgMusic);
                     }
+
+                    this.starfield.Update(gameTime);
+                    this.starfield.Speed = 1;
+                    break;
 
                 //UPDATING GAMEOVER STATE or WINNING STATE
                 case State.GameOver:
                 case State.Winning:
+                    var currentKeyState = Keyboard.GetState();
+
+                    if (currentKeyState.IsKeyDown(Keys.Space))
                     {
-                        //Get keyboard state
-                        KeyboardState keyState = Keyboard.GetState();
+                        //Stop music
+                        MediaPlayer.Stop();
 
-                        if (keyState.IsKeyDown(Keys.Space))
-                        {
-                            //Stop music
-                            MediaPlayer.Stop();
+                        this.enemyList.Clear();
+                        this.asteroids.Clear();
+                        this.explosionList.Clear();
 
-                            this.enemyList.Clear();
-                            this.asteroids.Clear();
-                            this.explosionList.Clear();
+                        this.player.health = 200;
+                        this.player2.health = 200;
+                        this.player.isAlive = true;
+                        this.player2.isAlive = true;
+                        this.hud.playerscore = 0;
+                        this.hud.player2score = 0;
+                        this.bossHasInstance = false;
 
-                            this.player.health = 200;
-                            this.player2.health = 200;
-                            this.player.isAlive = true;
-                            this.player2.isAlive = true;
-                            this.hud.playerscore = 0;
-                            this.hud.player2score = 0;
-                            this.bossHasInstance = false;
-
-                            gameState = State.Menu;
-                        }
-
-                        this.starfield.Update(gameTime);
+                        this.gameState = State.Menu;
                     }
+
+                    this.starfield.Update(gameTime);
                     break;
             }
 
             base.Update(gameTime);
+        }
+
+        private void Play(GameTime gameTime)
+        {
+            if (this.hud.playerscore >= 10 || this.hud.player2score >= 10)
+            {
+                this.EnableBossMode(gameTime);
+            }
+            else
+            {
+                this.ManageEnemyCollisions(gameTime);
+
+                foreach (var explosion in this.explosionList)
+                {
+                    explosion.Update(gameTime);
+                }
+
+                foreach (var asteroid in this.asteroids)
+                {
+                    if (asteroid.BoundingBox.Intersects(this.player.boundingBox))
+                    {
+                        this.soundManager.explodeSound.Play();
+                        this.hud.playerscore += 5;
+                        asteroid.IsVisible = false;
+                        this.player.health -= 20;
+                    }
+
+                    if (asteroid.BoundingBox.Intersects(this.player2.boundingBox))
+                    {
+                        this.soundManager.explodeSound.Play();
+                        asteroid.IsVisible = false;
+                        this.player2.health -= 20;
+                        this.hud.player2score += 5;
+                    }
+
+                    foreach (var bullet in this.player.bulletList)
+                    {
+                        if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
+                        {
+                            this.soundManager.explodeSound.Play();
+                            this.explosionList.Add(
+                                new Explosion(this.Content.Load<Texture2D>("explosion"),
+                                    new Vector2(asteroid.Position.X, asteroid.Position.Y)));
+                            this.hud.playerscore += 5;
+                            asteroid.IsVisible = false;
+                            bullet.IsVisible = false;
+                        }
+                    }
+
+                    foreach (var bullet in this.player2.bulletList)
+                    {
+                        if (asteroid.BoundingBox.Intersects(bullet.BoundingBox))
+                        {
+                            this.soundManager.explodeSound.Play();
+                            this.explosionList.Add(
+                                new Explosion(this.Content.Load<Texture2D>("explosion"),
+                                    new Vector2(asteroid.Position.X, asteroid.Position.Y)));
+                            this.hud.player2score += 5;
+                            asteroid.IsVisible = false;
+                            bullet.IsVisible = false;
+                        }
+                    }
+
+                    asteroid.Update(gameTime);
+                }
+
+                this.LoadAsteroids();
+                this.LoadEnemies();
+            }
+        }
+
+        private void EnableBossMode(GameTime gameTime)
+        {
+            this.LoadBoss();
+
+            if (this.boss.boundingBox.Intersects(this.player.boundingBox))
+            {
+                this.player.health -= 50;
+                // this.hud.playerscore += 20;
+            }
+
+            if (this.boss.boundingBox.Intersects(this.player2.boundingBox))
+            {
+                this.soundManager.explodeSound.Play();
+                this.player2.health -= 50;
+                //this.hud.player2score += 20;
+            }
+
+            // Boss bullet collisions
+            foreach (var bullet in this.boss.bulletList)
+            {
+                if (this.player.boundingBox.Intersects(bullet.BoundingBox))
+                {
+                    this.soundManager.explodeSound.Play();
+                    this.player.health -= this.bossBulletDamage;
+                    bullet.IsVisible = false;
+                }
+                if (this.player2.boundingBox.Intersects(bullet.BoundingBox))
+                {
+                    this.soundManager.explodeSound.Play();
+                    this.player2.health -= this.bossBulletDamage;
+                    bullet.IsVisible = false;
+                }
+            }
+
+            // player bullet lists colliding with boss ship
+            for (int i = 0; i < this.player.bulletList.Count; i++)
+            {
+                if (this.player.bulletList[i].BoundingBox.Intersects(this.boss.boundingBox))
+                {
+                    this.soundManager.explodeSound.Play();
+                    this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"),
+                        new Vector2(this.boss.position.X + this.boss.texture.Height / 2,
+                            this.boss.position.Y + this.boss.texture.Width / 2)));
+                    // this.hud.playerscore += 20;
+                    this.player.bulletList[i].IsVisible = false;
+                    this.boss.health -= 2;
+                }
+            }
+
+            // Explosions logic
+            for (int i = 0; i < this.player2.bulletList.Count; i++)
+            {
+                if (this.player2.bulletList[i].BoundingBox.Intersects(this.boss.boundingBox))
+                {
+                    this.soundManager.explodeSound.Play();
+                    this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"),
+                        new Vector2(this.boss.position.X + this.boss.texture.Height / 2,
+                            this.boss.position.Y + this.boss.texture.Width / 2)));
+                    // this.hud.player2score += 20;
+                    this.player2.bulletList[i].IsVisible = false;
+                    this.boss.health -= 2;
+                }
+            }
+
+            foreach (var explosion in this.explosionList)
+            {
+                explosion.Update(gameTime);
+            }
+
+            this.boss.Update(gameTime);
+
+            if (!this.boss.isVisible)
+            {
+                this.gameState = State.Winning;
+            }
+        }
+
+        private void ManageEnemyCollisions(GameTime gameTime)
+        {
+            foreach (Enemy enemy in this.enemyList)
+            {
+                if (enemy.boundingBox.Intersects(this.player.boundingBox))
+                {
+                    this.soundManager.explodeSound.Play();
+                    this.player.health -= 40;
+                    this.hud.playerscore += 20;
+                    enemy.isVisible = false;
+                }
+
+                if (enemy.boundingBox.Intersects(this.player2.boundingBox))
+                {
+                    this.soundManager.explodeSound.Play();
+                    this.player2.health -= 40;
+                    this.hud.player2score += 20;
+                    enemy.isVisible = false;
+                }
+
+                for (int i = 0; i < enemy.bulletList.Count; i++)
+                {
+                    if (this.player.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
+                    {
+                        this.soundManager.explodeSound.Play();
+                        this.player.health -= this.enemyBulletDamage;
+                        enemy.bulletList[i].IsVisible = false;
+                    }
+                    if (this.player2.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
+                    {
+                        this.soundManager.explodeSound.Play();
+                        this.player2.health -= this.enemyBulletDamage;
+                        enemy.bulletList[i].IsVisible = false;
+                    }
+                }
+
+                // player bullet lists colliding with enemy ships
+                for (int i = 0; i < this.player.bulletList.Count; i++)
+                {
+                    if (this.player.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
+                    {
+                        this.soundManager.explodeSound.Play();
+                        this.explosionList.Add(
+                            new Explosion(this.Content.Load<Texture2D>("explosion"),
+                                new Vector2(enemy.position.X, enemy.position.Y)));
+
+                        this.hud.playerscore += 20;
+                        this.player.bulletList[i].IsVisible = false;
+                        enemy.isVisible = false;
+                    }
+                }
+
+                for (int i = 0; i < this.player2.bulletList.Count; i++)
+                {
+                    if (this.player2.bulletList[i].BoundingBox.Intersects(enemy.boundingBox))
+                    {
+                        this.soundManager.explodeSound.Play();
+                        this.explosionList.Add(
+                            new Explosion(this.Content.Load<Texture2D>("explosion"),
+                                new Vector2(enemy.position.X, enemy.position.Y)));
+                        this.hud.player2score += 20;
+                        this.player2.bulletList[i].IsVisible = false;
+                        enemy.isVisible = false;
+                    }
+                }
+
+                enemy.Update(gameTime);
+            }
         }
 
         protected override void Draw(GameTime gameTime)
@@ -373,7 +386,7 @@ namespace SpaceShipFartrothu.Core
             this.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             this.spriteBatch.Begin();
-            switch (gameState)
+            switch (this.gameState)
             {
                 // DRAWING PLAYING STATE
                 case State.Playing:
@@ -415,16 +428,16 @@ namespace SpaceShipFartrothu.Core
                 // DRAWING MENU STATE
                 case State.Menu:
                     {
-                        this.starfield.Draw(spriteBatch);
-                        this.spriteBatch.Draw(menuImage, new Vector2(0, 0), Color.White);
+                        this.starfield.Draw(this.spriteBatch);
+                        this.spriteBatch.Draw(this.menuImage, new Vector2(0, 0), Color.White);
 
                         break;
                     }
                 // DRAWING GAMEOVER STATE
                 case State.GameOver:
                     {
-                        this.starfield.Draw(spriteBatch);
-                        this.spriteBatch.Draw(gameoverImage, new Vector2(0, 0), Color.White);
+                        this.starfield.Draw(this.spriteBatch);
+                        this.spriteBatch.Draw(this.gameoverImage, new Vector2(0, 0), Color.White);
 
                         break;
                     }
@@ -432,15 +445,14 @@ namespace SpaceShipFartrothu.Core
                 // DRAWING WINNING STATE
                 case State.Winning:
                     {
-                        this.starfield.Draw(spriteBatch);
-                        this.spriteBatch.Draw(winningImage, new Vector2(0, 0), Color.White);
+                        this.starfield.Draw(this.spriteBatch);
+                        this.spriteBatch.Draw(this.winningImage, new Vector2(0, 0), Color.White);
 
                         break;
                     }
             }
 
             this.spriteBatch.End();
-
             base.Draw(gameTime);
         }
 
@@ -455,7 +467,7 @@ namespace SpaceShipFartrothu.Core
             }
         }
 
-        public void LoadAsteroids()
+        private void LoadAsteroids()
         {
             var newRand = new Random();
             int randomX = this.random.Next(0, 1200) - newRand.Next(0, 20);
@@ -478,7 +490,7 @@ namespace SpaceShipFartrothu.Core
             }
         }
 
-        public void LoadEnemies()
+        private void LoadEnemies()
         {
             var newRand = new Random();
             int randomX = this.random.Next(0, 1200) - newRand.Next(0, 20);
@@ -502,7 +514,7 @@ namespace SpaceShipFartrothu.Core
             }
         }
 
-        public void ManageExplosions()
+        private void ManageExplosions()
         {
             for (int i = 0; i < this.explosionList.Count; i++)
             {
