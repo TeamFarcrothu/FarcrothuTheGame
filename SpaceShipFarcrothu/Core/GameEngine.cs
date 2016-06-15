@@ -108,6 +108,12 @@ namespace SpaceShipFartrothu.Core
                         this.player2.Update(gameTime);
                         this.player.Update(gameTime);
 
+                        //Clear bullets if player is dead
+                        if (!this.player.isAlive)
+                            this.player.bulletList.Clear();
+                        if (!this.player2.isAlive)
+                            this.player2.bulletList.Clear();
+
                         //Check if both players are dead and switch to Gameover screen if so
                         if (!this.player.isAlive && !this.player2.isAlive)
                         {
