@@ -60,8 +60,9 @@
         // Player draw method
         public void Draw(SpriteBatch spriteBatch)
         {
-            // Draw player itself
-            spriteBatch.Draw(texture, position, Color.White);
+            // Draw player itself if he is alive
+            if(this.isAlive)
+                 spriteBatch.Draw(texture, position, Color.White);
 
             // Draw player health
             healthRectangle = new Rectangle(
@@ -105,24 +106,24 @@
             var keyState = Keyboard.GetState();
 
             // Player shooting
-            if ((keyState.IsKeyDown(Keys.LeftControl) && id == 1) || (keyState.IsKeyDown(Keys.RightControl) && id == 2))
+            if ((keyState.IsKeyDown(Keys.LeftControl) && id == 2) || (keyState.IsKeyDown(Keys.RightControl) && id == 1))
             {
                 Shoot();
             }
             // PlayerNew movement
-            if ((keyState.IsKeyDown(Keys.W) && id == 1) || (keyState.IsKeyDown(Keys.Up) && id == 2))
-            {
-                position.Y = position.Y - speed;
-            }
-            if ((keyState.IsKeyDown(Keys.A) && id == 1) || (keyState.IsKeyDown(Keys.Left) && id == 2))
-            {
-                position.X = position.X - speed;
-            }
-            if ((keyState.IsKeyDown(Keys.S) && id == 1) || (keyState.IsKeyDown(Keys.Down) && id == 2))
-            {
-                position.Y = position.Y + speed;
-            }
-            if ((keyState.IsKeyDown(Keys.D) && id == 1) || (keyState.IsKeyDown(Keys.Right) && id == 2))
+            if ((keyState.IsKeyDown(Keys.W) && id == 2) || (keyState.IsKeyDown(Keys.Up) && id == 1))
+            {                                        
+                position.Y = position.Y - speed;     
+            }                                        
+            if ((keyState.IsKeyDown(Keys.A) && id == 2) || (keyState.IsKeyDown(Keys.Left) && id == 1))
+            {                                        
+                position.X = position.X - speed;     
+            }                                        
+            if ((keyState.IsKeyDown(Keys.S) && id == 2) || (keyState.IsKeyDown(Keys.Down) && id == 1))
+            {                                        
+                position.Y = position.Y + speed;     
+            }                                        
+            if ((keyState.IsKeyDown(Keys.D) && id == 2) || (keyState.IsKeyDown(Keys.Right) && id == 1))
             {
                 position.X = position.X + speed;
             }
