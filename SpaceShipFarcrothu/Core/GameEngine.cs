@@ -70,17 +70,17 @@ namespace SpaceShipFartrothu.Core
         protected override void LoadContent()
         {
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
-            this.hud.LoadContent(this.Content);          
+            this.hud.LoadContent(this.Content);
             //this.player.LoadContent(this.Content);     
             //this.player2.LoadContent(this.Content);     
             this.starfield.LoadContent(this.Content);
             this.soundManager.LoadContent(this.Content);
 
+            MediaPlayer.Play(this.soundManager.intro);
+
             this.menuImage = this.Content.Load<Texture2D>("menu_image");
             this.gameoverImage = this.Content.Load<Texture2D>("gameover_image");
             this.winningImage = this.Content.Load<Texture2D>("winning_image");
-
-            MediaPlayer.Play(this.soundManager.intro);
         }
 
         protected override void UnloadContent()
@@ -150,6 +150,7 @@ namespace SpaceShipFartrothu.Core
                         this.twoPlayersMode = true;
                         this.gameState = State.Playing;
                         MediaPlayer.Play(this.soundManager.bgMusic);
+                        MediaPlayer.Volume = 0.5f;
                     }
 
                     if (keyState.IsKeyDown(Keys.D1))
@@ -159,6 +160,7 @@ namespace SpaceShipFartrothu.Core
                         this.twoPlayersMode = false;
                         this.gameState = State.Playing;
                         MediaPlayer.Play(this.soundManager.bgMusic);
+                        MediaPlayer.Volume = 0.5f;
                     }
 
                     this.starfield.Update(gameTime);
@@ -178,10 +180,10 @@ namespace SpaceShipFartrothu.Core
                         this.asteroids.Clear();
                         this.explosionList.Clear();
 
-                        this.player.health = 200;                     
-                        this.player.isAlive = true;                        
+                        this.player.health = 200;
+                        this.player.isAlive = true;
                         this.hud.playerscore = 0;
-                        
+
                         this.bossHasInstance = false;
 
                         if (twoPlayersMode)
@@ -337,8 +339,8 @@ namespace SpaceShipFartrothu.Core
                     {
                         this.soundManager.explodeSound.Play();
                         this.explosionList.Add(new Explosion(this.Content.Load<Texture2D>("explosion"),
-                            new Vector2(this.boss.position.X + this.boss.texture.Height/2,
-                                this.boss.position.Y + this.boss.texture.Width/2)));
+                            new Vector2(this.boss.position.X + this.boss.texture.Height / 2,
+                                this.boss.position.Y + this.boss.texture.Width / 2)));
                         // this.hud.player2score += 20;
                         this.player2.bulletList[i].IsVisible = false;
                         this.boss.health -= 2;
