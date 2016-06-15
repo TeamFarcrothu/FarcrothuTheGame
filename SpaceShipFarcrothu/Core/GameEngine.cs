@@ -112,7 +112,7 @@ namespace SpaceShipFartrothu.Core
                         if (!this.player.isAlive)
                             this.player.bulletList.Clear();
 
-                        if (!this.player.isAlive)
+                        if (!this.player.isAlive && !this.twoPlayersMode)
                         {
                             this.gameState = State.GameOver;
                         }
