@@ -95,6 +95,14 @@ namespace SpaceShipFartrothu.Core
                 this.Exit();
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.OemMinus) && MediaPlayer.Volume >= 0.02f)
+            {
+                MediaPlayer.Volume -= 0.02f;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.OemPlus) && MediaPlayer.Volume <= 0.98f)
+            {
+                MediaPlayer.Volume += 0.02f;
+            }
             //UPDATING Game state
             switch (this.gameState)
             {
