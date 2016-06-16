@@ -23,8 +23,8 @@ namespace SpaceShipFartrothu.Core
 
         // Instances
         private readonly Random random = new Random();
-        private PlayerNew player;// = new PlayerNew("ship_p1", new Vector2(600, 600), 1);
-        private PlayerNew player2;//= new PlayerNew("ship_p2", new Vector2(700, 600), 2);
+        private PlayerNew player;
+        private PlayerNew player2;
         private readonly StarField starfield = new StarField();
         private readonly HUD hud = new HUD();
         private readonly SoundManager soundManager = new SoundManager();
@@ -70,9 +70,7 @@ namespace SpaceShipFartrothu.Core
         protected override void LoadContent()
         {
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
-            this.hud.LoadContent(this.Content);
-            //this.player.LoadContent(this.Content);     
-            //this.player2.LoadContent(this.Content);     
+            this.hud.LoadContent(this.Content);   
             this.starfield.LoadContent(this.Content);
             this.soundManager.LoadContent(this.Content);
 
@@ -530,7 +528,6 @@ namespace SpaceShipFartrothu.Core
 
         private void LoadBoss()
         {
-            // Singleton
             if (!this.bossHasInstance)
             {
                 this.boss = new Boss();
