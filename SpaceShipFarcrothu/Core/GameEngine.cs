@@ -48,7 +48,7 @@ namespace SpaceShipFartrothu.Core
         {
             this.graphics = new GraphicsDeviceManager(this)
             {
-                IsFullScreen = false,
+                IsFullScreen = true,
                 PreferredBackBufferWidth = 1366,
                 PreferredBackBufferHeight = 768
             };
@@ -115,7 +115,7 @@ namespace SpaceShipFartrothu.Core
 
 
                         this.player.Update(gameTime);
-
+                        this.ActivateSecondBullet();
                         //Clear bullets if player is dead
                         if (!this.player.isAlive)
                             this.player.bulletList.Clear();
@@ -213,7 +213,8 @@ namespace SpaceShipFartrothu.Core
 
         private void Play(GameTime gameTime)
         {
-            if (this.hud.playerscore >= 10 || (twoPlayersMode && this.hud.player2score >= 10))
+
+            if (this.hud.playerscore >= 350 || (twoPlayersMode && this.hud.player2score >= 350))
             {
                 this.EnableBossMode(gameTime);
             }
@@ -594,6 +595,20 @@ namespace SpaceShipFartrothu.Core
                     this.explosionList.RemoveAt(i);
                     i--;
                 }
+            }
+        }
+
+        private void ActivateSecondBullet()
+        {
+            if (this.hud.playerscore >= 150)
+            {
+                this.player.isSecondBulletActive = true;
+            }
+
+            if (this.twoPlayersMode)
+            {
+                if (this.hud.player2score >= 150)
+                    this.player2.isSecondBulletActive = true;
             }
         }
     }

@@ -7,7 +7,7 @@
 
     public class Boss
     {
-        private const int DefaultHealth = 50;
+        private const int DefaultHealth = 200;
         private const int DefaultSpeed = 2;
         private const int DefaultBulletDelay = 10;
         private const int DefaultSideBulletDelay = 70;

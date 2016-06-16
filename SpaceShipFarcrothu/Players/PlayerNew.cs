@@ -22,6 +22,8 @@
         public float bulletDelay;
         public bool isColiding;
         public bool isAlive;
+        public bool isSecondBulletActive;
+
         public SoundManager sm = new SoundManager();
 
         //Constructor method
@@ -34,6 +36,7 @@
             this.bulletDelay = 20;
             this.speed = 5;
             this.isColiding = false;
+            this.isSecondBulletActive = false;
             this.health = 200;
             if (id == 1)
             {
@@ -171,9 +174,23 @@
 
                 newBullet.IsVisible = true;
 
+                Bullet secondBullet = new Bullet(bulletTexture);
+
+                if (this.isSecondBulletActive)
+                {
+                    
+                    secondBullet.Position = new Vector2(
+                        position.X + 42 - secondBullet.Texture.Width / 2,
+                        position.Y + 10);
+
+                    secondBullet.IsVisible = true;
+                }
+
                 if (bulletList.Count() < 20)
                 {
                     bulletList.Add(newBullet);
+                    if (this.isSecondBulletActive)
+                        bulletList.Add(secondBullet);
                 }
             }
             if (bulletDelay == 0)
