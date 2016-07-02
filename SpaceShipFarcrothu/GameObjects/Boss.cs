@@ -91,7 +91,7 @@
             this.UpdateBossBullets();
         }
 
-        public void BossShoot()
+        private void BossShoot()
         {
             if (this.bulletDelay >= 0)
             {

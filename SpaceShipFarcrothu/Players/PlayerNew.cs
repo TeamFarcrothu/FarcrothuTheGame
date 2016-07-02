@@ -6,7 +6,7 @@
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using SpaceShipFartrothu.Sound;
+    using Sound;
     using GameObjects;
 
     public class PlayerNew
@@ -15,16 +15,16 @@
         public Vector2 position, healthBarPosition, resetPosition;
         public Rectangle boundingBox, healthRectangle;
         public List<Bullet> bulletList;
-        public int id;  // holds the player identifier
-        public string shipTextureFile;  // the ship texture file name
-        public int speed;
+        private int id;  // holds the player identifier
+        private string shipTextureFile;  // the ship texture file name
+        private int speed;
         public int health;
-        public float bulletDelay;
-        public bool isColiding;
+        private float bulletDelay;
+        private bool isColiding;
         public bool isAlive;
         public bool isSecondBulletActive;
 
-        public SoundManager sm = new SoundManager();
+        private SoundManager sm = new SoundManager();
 
         //Constructor method
         public PlayerNew(string newShipTextureFile, Vector2 newPosition, int newId)
@@ -64,8 +64,8 @@
         public void Draw(SpriteBatch spriteBatch)
         {
             // Draw player itself if he is alive
-            if(this.isAlive)
-                 spriteBatch.Draw(texture, position, Color.White);
+            if (this.isAlive)
+                spriteBatch.Draw(texture, position, Color.White);
 
             // Draw player health
             healthRectangle = new Rectangle(
@@ -109,23 +109,23 @@
             var keyState = Keyboard.GetState();
 
             // Player shooting
-            if ((keyState.IsKeyDown(Keys.LeftControl) && id == 2) || (keyState.IsKeyDown(Keys.RightControl) && id == 1))
+            if ((keyState.IsKeyDown(Keys.RightControl) && id == 2) || (keyState.IsKeyDown(Keys.LeftControl) && id == 1))
             {
                 Shoot();
             }
             // PlayerNew movement
             if ((keyState.IsKeyDown(Keys.W) && id == 2) || (keyState.IsKeyDown(Keys.Up) && id == 1))
-            {                                        
-                position.Y = position.Y - speed;     
-            }                                        
+            {
+                position.Y = position.Y - speed;
+            }
             if ((keyState.IsKeyDown(Keys.A) && id == 2) || (keyState.IsKeyDown(Keys.Left) && id == 1))
-            {                                        
-                position.X = position.X - speed;     
-            }                                        
+            {
+                position.X = position.X - speed;
+            }
             if ((keyState.IsKeyDown(Keys.S) && id == 2) || (keyState.IsKeyDown(Keys.Down) && id == 1))
-            {                                        
-                position.Y = position.Y + speed;     
-            }                                        
+            {
+                position.Y = position.Y + speed;
+            }
             if ((keyState.IsKeyDown(Keys.D) && id == 2) || (keyState.IsKeyDown(Keys.Right) && id == 1))
             {
                 position.X = position.X + speed;
@@ -157,7 +157,7 @@
         }
 
         // Player shooting method
-        public void Shoot()
+        private void Shoot()
         {
             if (bulletDelay >= 0)
             {
@@ -178,7 +178,7 @@
 
                 if (this.isSecondBulletActive)
                 {
-                    
+
                     secondBullet.Position = new Vector2(
                         position.X + 42 - secondBullet.Texture.Width / 2,
                         position.Y + 10);
@@ -199,7 +199,7 @@
             }
         }
 
-        public void UpdateBullets()
+        private void UpdateBullets()
         {
             foreach (Bullet b in bulletList)
             {
@@ -225,6 +225,5 @@
                 }
             }
         }
-
     }
 }

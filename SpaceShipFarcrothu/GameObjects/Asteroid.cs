@@ -1,24 +1,22 @@
 ﻿namespace SpaceShipFartrothu.GameObjects
 {
-    using System;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
 
     public class Asteroid
     {
         public Rectangle BoundingBox;
-        public Texture2D Texture;
+        private Texture2D Texture;
         public Vector2 Position;
 
         // Rotation is not working at the moment in order to get proper collision
         // public Vector2 Origin;
         //public float RotationAngle;
-        public int Speed;
+        private int Speed;
         public bool IsVisible;
 
-        public float RandomX;
-        public float RandomY;
+        //public float RandomX;
+        //public float RandomY;
 
         public Asteroid(Texture2D newTexture, Vector2 newPosition)
         {

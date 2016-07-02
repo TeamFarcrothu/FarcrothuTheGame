@@ -7,14 +7,14 @@
 
     public class HUD
     {
-        public int screenWidth, screenHeight;
-        public SpriteFont playerScoreFont;
-        public bool showHUD;
+        private int screenWidth, screenHeight;
+        private SpriteFont playerScoreFont;
+        private bool showHUD;
 
         public int playerscore;
         public int player2score;
-        public Vector2 playerScorePos;
-        public Vector2 player2ScorePos;
+        private Vector2 playerScorePos;
+        private Vector2 player2ScorePos;
 
         public HUD()
         {

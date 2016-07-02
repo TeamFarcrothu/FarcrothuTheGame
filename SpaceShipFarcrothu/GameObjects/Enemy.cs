@@ -1,6 +1,5 @@
 ﻿namespace SpaceShipFartrothu.GameObjects
 {
-    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using System.Collections.Generic;
@@ -8,9 +7,9 @@
     public class Enemy
     {
         public Rectangle boundingBox;
-        public Texture2D texture, bulletTexture;
+        private Texture2D texture, bulletTexture;
         public Vector2 position;
-        public int health, speed, bulletDelay, currentDifficultyLevel;
+        private int health, speed, bulletDelay, currentDifficultyLevel;
         public bool isVisible;
         public List<Bullet> bulletList;
 
@@ -33,7 +32,7 @@
 
             position.Y += speed;
 
-            if(position.Y >= 768)
+            if (position.Y >= 768)
             {
                 position.Y = -75;
             }
@@ -43,14 +42,14 @@
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture,position,Color.White);
-            foreach(Bullet bullet in bulletList)
+            spriteBatch.Draw(texture, position, Color.White);
+            foreach (Bullet bullet in bulletList)
             {
                 bullet.Draw(spriteBatch);
             }
         }
 
-        public void UpdateBullets()
+        private void UpdateBullets()
         {
             foreach (Bullet bullet in this.bulletList)
             {
@@ -76,14 +75,15 @@
                 }
             }
         }
-        public void EnemyShoot()
+
+        private void EnemyShoot()
         {
-            if(bulletDelay >= 0)
+            if (bulletDelay >= 0)
             {
                 bulletDelay--;
             }
 
-            if(bulletDelay <= 0)
+            if (bulletDelay <= 0)
             {
                 if (bulletList.Count < 20)
                 {
@@ -93,7 +93,7 @@
                     bulletList.Add(newBullet);
                 }
 
-                if(bulletDelay == 0)
+                if (bulletDelay == 0)
                 {
                     bulletDelay = 40;
                 }

@@ -6,8 +6,8 @@
 
     public class StarField
     {
-        public Texture2D Texture;
-        public Vector2 BackGroundPosition1, BackGroundPosition2;
+        private Texture2D Texture;
+        private Vector2 BackGroundPosition1, BackGroundPosition2;
         public int Speed;
 
         public StarField()

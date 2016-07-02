@@ -7,7 +7,7 @@
     {
         public Rectangle BoundingBox;
         public Texture2D Texture;
-        public Vector2 Origin;
+        //public Vector2 Origin;
         public Vector2 Position;
         public bool IsVisible;
         public float Speed;
