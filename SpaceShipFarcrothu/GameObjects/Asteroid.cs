@@ -36,12 +36,12 @@
 
         public void Update(GameTime gemeTime)
         {
-            BoundingBox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
+            this.BoundingBox = new Rectangle((int) this.Position.X, (int) this.Position.Y, this.Texture.Width, this.Texture.Height);
 
-            Position.Y += Speed;
-            if (Position.Y >= 768)
+            this.Position.Y += this.Speed;
+            if (this.Position.Y >= 768)
             {
-                Position.Y = -75;
+                this.Position.Y = -75;
             }
 
             // Rotation is not working at the moment in order to get proper collision
@@ -54,9 +54,9 @@
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (IsVisible)
+            if (this.IsVisible)
             {
-                spriteBatch.Draw(Texture,Position,Color.White);
+                spriteBatch.Draw(this.Texture, this.Position,Color.White);
 
                 // Rotation is not working at the moment in order to get proper collision
                 /*spriteBatch.Draw(

@@ -15,35 +15,35 @@
 
         public Enemy(Texture2D newTexture, Vector2 newPosition, Texture2D newBulletTexture)
         {
-            bulletList = new List<Bullet>();
-            texture = newTexture;
-            bulletTexture = newBulletTexture;
-            health = 5;
-            position = newPosition;
-            currentDifficultyLevel = 1;
-            bulletDelay = 40;
-            speed = 5;
-            isVisible = true;
+            this.bulletList = new List<Bullet>();
+            this.texture = newTexture;
+            this.bulletTexture = newBulletTexture;
+            this.health = 5;
+            this.position = newPosition;
+            this.currentDifficultyLevel = 1;
+            this.bulletDelay = 40;
+            this.speed = 5;
+            this.isVisible = true;
         }
 
         public void Update(GameTime gameTime)
         {
-            boundingBox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            this.boundingBox = new Rectangle((int) this.position.X, (int) this.position.Y, this.texture.Width, this.texture.Height);
 
-            position.Y += speed;
+            this.position.Y += this.speed;
 
-            if (position.Y >= 768)
+            if (this.position.Y >= 768)
             {
-                position.Y = -75;
+                this.position.Y = -75;
             }
 
-            EnemyShoot();
-            UpdateBullets();
+            this.EnemyShoot();
+            this.UpdateBullets();
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, Color.White);
-            foreach (Bullet bullet in bulletList)
+            spriteBatch.Draw(this.texture, this.position, Color.White);
+            foreach (Bullet bullet in this.bulletList)
             {
                 bullet.Draw(spriteBatch);
             }
@@ -78,24 +78,24 @@
 
         private void EnemyShoot()
         {
-            if (bulletDelay >= 0)
+            if (this.bulletDelay >= 0)
             {
-                bulletDelay--;
+                this.bulletDelay--;
             }
 
-            if (bulletDelay <= 0)
+            if (this.bulletDelay <= 0)
             {
-                if (bulletList.Count < 20)
+                if (this.bulletList.Count < 20)
                 {
-                    Bullet newBullet = new Bullet(bulletTexture);
+                    Bullet newBullet = new Bullet(this.bulletTexture);
                     newBullet.Position = new Vector2(this.position.X + this.texture.Width / 2 - newBullet.Texture.Width / 2, this.position.Y + this.texture.Height);
                     newBullet.IsVisible = true;
-                    bulletList.Add(newBullet);
+                    this.bulletList.Add(newBullet);
                 }
 
-                if (bulletDelay == 0)
+                if (this.bulletDelay == 0)
                 {
-                    bulletDelay = 40;
+                    this.bulletDelay = 40;
                 }
             }
         }

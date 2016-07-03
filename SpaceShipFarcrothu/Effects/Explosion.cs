@@ -17,14 +17,14 @@ namespace SpaceShipFartrothu.Effects
 
         public Explosion(Texture2D newTexture, Vector2 newPosition)
         {
-            position = newPosition;
-            texture = newTexture;
-            timer = 0f;
-            interval = 20;
-            frameRow = 1;
-            spriteWidth = 100;
-            spriteHeight = 100;
-            isVisible = true;
+            this.position = newPosition;
+            this.texture = newTexture;
+            this.timer = 0f;
+            this.interval = 20;
+            this.frameRow = 1;
+            this.spriteWidth = 100;
+            this.spriteHeight = 100;
+            this.isVisible = true;
         }
 
         public void LoadContent(ContentManager Content)
@@ -34,32 +34,32 @@ namespace SpaceShipFartrothu.Effects
 
         public void Update(GameTime gameTime)
         {
-            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            this.timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (timer > interval)
+            if (this.timer > this.interval)
             {
-                frameCol++;
-                timer = 0f;
+                this.frameCol++;
+                this.timer = 0f;
             }
-            if (frameCol == 8)
+            if (this.frameCol == 8)
             {
-                if (frameRow == 8)
+                if (this.frameRow == 8)
                 {
-                    frameRow = 0;
-                    isVisible = false;
+                    this.frameRow = 0;
+                    this.isVisible = false;
                 }
-                frameRow++;
-                frameCol = 0;
+                this.frameRow++;
+                this.frameCol = 0;
             }
-            sourceRect = new Rectangle(frameCol * spriteWidth, frameRow * spriteHeight, spriteWidth, spriteHeight);
-            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            this.sourceRect = new Rectangle(this.frameCol *this.spriteWidth, this.frameRow *this.spriteHeight, this.spriteWidth, this.spriteHeight);
+            this.origin = new Vector2(this.sourceRect.Width / 2, this.sourceRect.Height / 2);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (isVisible == true)
+            if (this.isVisible == true)
             {
-                spriteBatch.Draw(texture, position, sourceRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                spriteBatch.Draw(this.texture, this.position, this.sourceRect, Color.White, 0f, this.origin, 1.0f, SpriteEffects.None, 0);
             }
         }
     }

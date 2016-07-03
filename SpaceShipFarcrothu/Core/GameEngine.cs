@@ -124,7 +124,7 @@ namespace SpaceShipFartrothu.Core
                         }
 
                         //If two players mode is active update second player too
-                        if (twoPlayersMode)
+                        if (this.twoPlayersMode)
                         {
                             this.player2.Update(gameTime);
 
@@ -192,7 +192,7 @@ namespace SpaceShipFartrothu.Core
 
                         this.bossHasInstance = false;
 
-                        if (twoPlayersMode)
+                        if (this.twoPlayersMode)
                         {
                             this.player2.isAlive = true;
                             this.player2.health = 200;
@@ -212,7 +212,7 @@ namespace SpaceShipFartrothu.Core
         private void Play(GameTime gameTime)
         {
 
-            if (this.hud.playerscore >= 350 || (twoPlayersMode && this.hud.player2score >= 350))
+            if (this.hud.playerscore >= 350 || (this.twoPlayersMode && this.hud.player2score >= 350))
             {
                 this.EnableBossMode(gameTime);
             }
@@ -250,7 +250,7 @@ namespace SpaceShipFartrothu.Core
                         }
                     }
 
-                    if (twoPlayersMode)
+                    if (this.twoPlayersMode)
                     {
                         if (asteroid.BoundingBox.Intersects(this.player2.boundingBox))
                         {
@@ -292,7 +292,7 @@ namespace SpaceShipFartrothu.Core
                 // this.hud.playerscore += 20;
             }
 
-            if (twoPlayersMode)
+            if (this.twoPlayersMode)
             {
                 if (this.boss.boundingBox.Intersects(this.player2.boundingBox))
                 {
@@ -312,7 +312,7 @@ namespace SpaceShipFartrothu.Core
                     bullet.IsVisible = false;
                 }
 
-                if (twoPlayersMode)
+                if (this.twoPlayersMode)
                 {
                     if (this.player2.boundingBox.Intersects(bullet.BoundingBox))
                     {
@@ -334,11 +334,11 @@ namespace SpaceShipFartrothu.Core
                             this.boss.position.Y + this.boss.texture.Width / 2)));
                     // this.hud.playerscore += 20;
                     this.player.bulletList[i].IsVisible = false;
-                    this.boss.health -= 2;
+                    this.boss.health -= this.player.BulletDamage;
                 }
             }
 
-            if (twoPlayersMode)
+            if (this.twoPlayersMode)
             {
                 for (int i = 0; i < this.player2.bulletList.Count; i++)
                 {
@@ -380,7 +380,7 @@ namespace SpaceShipFartrothu.Core
                     enemy.isVisible = false;
                 }
 
-                if (twoPlayersMode)
+                if (this.twoPlayersMode)
                 {
                     if (enemy.boundingBox.Intersects(this.player2.boundingBox))
                     {
@@ -400,7 +400,7 @@ namespace SpaceShipFartrothu.Core
                         enemy.bulletList[i].IsVisible = false;
                     }
 
-                    if (twoPlayersMode)
+                    if (this.twoPlayersMode)
                     {
                         if (this.player2.boundingBox.Intersects(enemy.bulletList[i].BoundingBox))
                         {
@@ -428,7 +428,7 @@ namespace SpaceShipFartrothu.Core
                     }
                 }
 
-                if (twoPlayersMode)
+                if (this.twoPlayersMode)
                 {
                     for (int i = 0; i < this.player2.bulletList.Count; i++)
                     {
@@ -462,7 +462,7 @@ namespace SpaceShipFartrothu.Core
                         this.starfield.Draw(this.spriteBatch);
                         this.player.Draw(this.spriteBatch);
 
-                        if (twoPlayersMode)
+                        if (this.twoPlayersMode)
                             this.player2.Draw(this.spriteBatch);
 
                         //Update explosions

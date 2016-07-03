@@ -18,20 +18,20 @@
 
         public HUD()
         {
-            showHUD = true;
-            screenWidth = 1366;
-            screenHeight = 768;
-            playerScoreFont = null;
+            this.showHUD = true;
+            this.screenWidth = 1366;
+            this.screenHeight = 768;
+            this.playerScoreFont = null;
 
-            playerscore = 0;
-            player2score = 0;
-            playerScorePos = new Vector2(50, 20);
-            player2ScorePos = new Vector2(1110, 20);
+            this.playerscore = 0;
+            this.player2score = 0;
+            this.playerScorePos = new Vector2(50, 20);
+            this.player2ScorePos = new Vector2(1110, 20);
         }
 
         public void LoadContent(ContentManager Content)
         {
-            playerScoreFont = Content.Load<SpriteFont>("georgia");
+            this.playerScoreFont = Content.Load<SpriteFont>("georgia");
         }
 
         public void Update(GameTime gameTime)
@@ -41,10 +41,10 @@
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (showHUD)
+            if (this.showHUD)
             {
-                spriteBatch.DrawString(playerScoreFont, "Player 1: " + playerscore, playerScorePos, Color.Red);
-                spriteBatch.DrawString(playerScoreFont, "Player 2: " + player2score, player2ScorePos, Color.Red);
+                spriteBatch.DrawString(this.playerScoreFont, "Player 1: " + this.playerscore, this.playerScorePos, Color.Red);
+                spriteBatch.DrawString(this.playerScoreFont, "Player 2: " + this.player2score, this.player2ScorePos, Color.Red);
             }
         }
     }

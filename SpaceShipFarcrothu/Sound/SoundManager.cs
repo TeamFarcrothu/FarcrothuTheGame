@@ -16,18 +16,18 @@ namespace SpaceShipFartrothu.Sound
         //Constructor
         public SoundManager()
         {
-            playerShootSound = null;
-            explodeSound = null;
-            bgMusic = null;
-            intro = null;
+            this.playerShootSound = null;
+            this.explodeSound = null;
+            this.bgMusic = null;
+            this.intro = null;
         }
 
         public void LoadContent(ContentManager content)
         {
-            playerShootSound = content.Load<SoundEffect>("playershoot");
-            explodeSound = content.Load<SoundEffect>("explode");
-            bgMusic = content.Load<Song>("theme");
-            intro = content.Load<Song>("intro");
+            this.playerShootSound = content.Load<SoundEffect>("playershoot");
+            this.explodeSound = content.Load<SoundEffect>("explode");
+            this.bgMusic = content.Load<Song>("theme");
+            this.intro = content.Load<Song>("intro");
         }
     }
 }

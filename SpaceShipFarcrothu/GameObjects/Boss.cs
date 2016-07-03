@@ -28,9 +28,9 @@
 
         public void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("space_Boss_Level_1");
-            bulletTexture = content.Load<Texture2D>("bullet");
-            healthTexture = content.Load<Texture2D>("healthbar");
+            this.texture = content.Load<Texture2D>("space_Boss_Level_1");
+            this.bulletTexture = content.Load<Texture2D>("bullet");
+            this.healthTexture = content.Load<Texture2D>("healthbar");
             this.position = new Vector2(501, -600);
         }
 
@@ -57,28 +57,28 @@
             if (this.position.Y < 31)
             {
                 this.position.Y += this.speed;
-                healthBarPosition = new Vector2(position.X + 140, position.Y - 30);
+                this.healthBarPosition = new Vector2(this.position.X + 140, this.position.Y - 30);
                 return;
             }
 
             // Moving  the Boss automaticaly left and right
-            if (this.position.X <= ScreenWidth && isAtTheRightBorder)
+            if (this.position.X <= ScreenWidth && this.isAtTheRightBorder)
             {
                 if (this.position.X == ScreenWidth)
                 {
-                    isAtTheRightBorder = false;
+                    this.isAtTheRightBorder = false;
                 }
                 this.position.X += this.speed;
-                healthBarPosition = new Vector2(position.X + 140, position.Y - 30);
+                this.healthBarPosition = new Vector2(this.position.X + 140, this.position.Y - 30);
             }
-            else if (this.position.X >= -171 && !isAtTheRightBorder)
+            else if (this.position.X >= -171 && !this.isAtTheRightBorder)
             {
                 if (this.position.X == -171)
                 {
-                    isAtTheRightBorder = true;
+                    this.isAtTheRightBorder = true;
                 }
                 this.position.X -= this.speed;
-                healthBarPosition = new Vector2(position.X + 140, position.Y - 30);
+                this.healthBarPosition = new Vector2(this.position.X + 140, this.position.Y - 30);
             }
 
             if (this.health <= 0)
@@ -100,7 +100,7 @@
 
             if (this.bulletDelay <= 0)
             {
-                if (bulletList.Count < 20)
+                if (this.bulletList.Count < 20)
                 {
                     Bullet newBullet = new Bullet(this.bulletTexture);
                     newBullet.Position = new Vector2(
@@ -138,10 +138,9 @@
         {
             spriteBatch.Draw(this.texture, this.position, Color.White);
 
-            healthRectangle = new Rectangle(
-               (int)healthBarPosition.X,
-               (int)healthBarPosition.Y,
-               health,
+            this.healthRectangle = new Rectangle(
+               (int) this.healthBarPosition.X,
+               (int) this.healthBarPosition.Y, this.health,
                20);
 
             spriteBatch.Draw(this.healthTexture, this.healthRectangle, Color.White);

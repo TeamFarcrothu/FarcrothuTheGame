@@ -1,5 +1,6 @@
 ﻿namespace SpaceShipFartrothu.Players
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Xna.Framework;
@@ -8,17 +9,23 @@
     using Microsoft.Xna.Framework.Input;
     using Sound;
     using GameObjects;
+    using GameObjects.Items;
 
     public class PlayerNew
     {
+        private const int DefaultBulletDamage = 2;
+
         public Texture2D texture /* this holds the texture graphics content of the ship */, bulletTexture, healthTexture;
         public Vector2 position, healthBarPosition, resetPosition;
         public Rectangle boundingBox, healthRectangle;
         public List<Bullet> bulletList;
+        private List<Item> items;
+
         private int id;  // holds the player identifier
         private string shipTextureFile;  // the ship texture file name
         private int speed;
         public int health;
+        private int bulletDamage;
         private float bulletDelay;
         private bool isColiding;
         public bool isAlive;
@@ -31,6 +38,8 @@
         {
             this.id = newId;
             this.bulletList = new List<Bullet>();
+            this.BulletDamage = DefaultBulletDamage;
+            this.items = new List<Item>();
             this.shipTextureFile = newShipTextureFile;
             this.position = newPosition;
             this.bulletDelay = 20;
@@ -38,7 +47,7 @@
             this.isColiding = false;
             this.isSecondBulletActive = false;
             this.health = 200;
-            if (id == 1)
+            if (this.id == 1)
             {
                 this.healthBarPosition = new Vector2(50, 50);
                 this.resetPosition = new Vector2(200, 600);
@@ -51,13 +60,35 @@
             this.isAlive = true;
         }
 
+        public int BulletDamage
+        {
+            get { return this.bulletDamage; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Damage cannot be negative");
+                }
+
+                this.bulletDamage = value;
+            }
+        }
+
+        public void AddItem(Item item)
+        {
+            this.items.Add(item);
+
+            this.health += item.Health;
+            this.BulletDamage += item.Damage;
+        }
+
         // Player load content method
         public void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>(shipTextureFile);
-            bulletTexture = content.Load<Texture2D>("bullet");
-            healthTexture = content.Load<Texture2D>("healthbar");
-            sm.LoadContent(content);
+            this.texture = content.Load<Texture2D>(this.shipTextureFile);
+            this.bulletTexture = content.Load<Texture2D>("bullet");
+            this.healthTexture = content.Load<Texture2D>("healthbar");
+            this.sm.LoadContent(content);
         }
 
         // Player draw method
@@ -65,18 +96,17 @@
         {
             // Draw player itself if he is alive
             if (this.isAlive)
-                spriteBatch.Draw(texture, position, Color.White);
+                spriteBatch.Draw(this.texture, this.position, Color.White);
 
             // Draw player health
-            healthRectangle = new Rectangle(
-                (int)healthBarPosition.X,
-                (int)healthBarPosition.Y,
-                health,
+            this.healthRectangle = new Rectangle(
+                (int) this.healthBarPosition.X,
+                (int) this.healthBarPosition.Y, this.health,
                 20);
-            spriteBatch.Draw(healthTexture, healthRectangle, Color.White);
+            spriteBatch.Draw(this.healthTexture, this.healthRectangle, Color.White);
 
             // Draw bullets
-            foreach (var bullet in bulletList)
+            foreach (var bullet in this.bulletList)
             {
                 bullet.Draw(spriteBatch);
             }
@@ -86,122 +116,116 @@
         public void Update(GameTime gameTime)
         {
             // if player health is below zero set isAlive flag to false
-            if (health <= 0)
+            if (this.health <= 0)
             {
-                isAlive = false;
+                this.isAlive = false;
             }
 
             // if isAlive flag is false the player should be dead, so we reset it's position depending on id
-            if (!isAlive)
+            if (!this.isAlive)
             {
-                position = resetPosition;
+                this.position = this.resetPosition;
                 return;
             }
 
             // Create bounding box around the player
-            boundingBox = new Rectangle(
-                (int)position.X,
-                (int)position.Y,
-                texture.Width,
-                texture.Height);
+            this.boundingBox = new Rectangle(
+                (int) this.position.X,
+                (int) this.position.Y, this.texture.Width, this.texture.Height);
 
             // Keyboard state monitoring
             var keyState = Keyboard.GetState();
 
             // Player shooting
-            if ((keyState.IsKeyDown(Keys.RightControl) && id == 2) || (keyState.IsKeyDown(Keys.LeftControl) && id == 1))
+            if ((keyState.IsKeyDown(Keys.RightControl) && this.id == 2) || (keyState.IsKeyDown(Keys.LeftControl) && this.id == 1))
             {
-                Shoot();
+                this.Shoot();
             }
             // PlayerNew movement
-            if ((keyState.IsKeyDown(Keys.W) && id == 2) || (keyState.IsKeyDown(Keys.Up) && id == 1))
+            if ((keyState.IsKeyDown(Keys.W) && this.id == 2) || (keyState.IsKeyDown(Keys.Up) && this.id == 1))
             {
-                position.Y = position.Y - speed;
+                this.position.Y = this.position.Y - this.speed;
             }
-            if ((keyState.IsKeyDown(Keys.A) && id == 2) || (keyState.IsKeyDown(Keys.Left) && id == 1))
+            if ((keyState.IsKeyDown(Keys.A) && this.id == 2) || (keyState.IsKeyDown(Keys.Left) && this.id == 1))
             {
-                position.X = position.X - speed;
+                this.position.X = this.position.X - this.speed;
             }
-            if ((keyState.IsKeyDown(Keys.S) && id == 2) || (keyState.IsKeyDown(Keys.Down) && id == 1))
+            if ((keyState.IsKeyDown(Keys.S) && this.id == 2) || (keyState.IsKeyDown(Keys.Down) && this.id == 1))
             {
-                position.Y = position.Y + speed;
+                this.position.Y = this.position.Y + this.speed;
             }
-            if ((keyState.IsKeyDown(Keys.D) && id == 2) || (keyState.IsKeyDown(Keys.Right) && id == 1))
+            if ((keyState.IsKeyDown(Keys.D) && this.id == 2) || (keyState.IsKeyDown(Keys.Right) && this.id == 1))
             {
-                position.X = position.X + speed;
+                this.position.X = this.position.X + this.speed;
             }
 
             // Moving left and right through screen borders
-            if (position.X <= -30 || position.X >= 1366)
+            if (this.position.X <= -30 || this.position.X >= 1366)
             {
-                if (position.X > 1366)
+                if (this.position.X > 1366)
                 {
-                    position.X = -30;
+                    this.position.X = -30;
                 }
-                else if (position.X < -30)
+                else if (this.position.X < -30)
                 {
-                    position.X = 1366;
+                    this.position.X = 1366;
                 }
             }
-            if (position.Y <= 0)
+            if (this.position.Y <= 0)
             {
-                position.Y = 0;
+                this.position.Y = 0;
             }
-            if (position.Y >= 768 - texture.Height)
+            if (this.position.Y >= 768 - this.texture.Height)
             {
-                position.Y = 768 - texture.Height;
+                this.position.Y = 768 - this.texture.Height;
             }
 
             // Update bullets fired
-            UpdateBullets();
+            this.UpdateBullets();
         }
 
         // Player shooting method
         private void Shoot()
         {
-            if (bulletDelay >= 0)
+            if (this.bulletDelay >= 0)
             {
-                bulletDelay--;
+                this.bulletDelay--;
             }
 
-            if (bulletDelay <= 0)
+            if (this.bulletDelay <= 0)
             {
-                sm.playerShootSound.Play();
-                Bullet newBullet = new Bullet(bulletTexture);
-                newBullet.Position = new Vector2(
-                    position.X + 32 - newBullet.Texture.Width / 2,
-                    position.Y + 10);
+                this.sm.playerShootSound.Play();
+                Bullet newBullet = new Bullet(this.bulletTexture);
+                newBullet.Position = new Vector2(this.position.X + 32 - newBullet.Texture.Width / 2, this.position.Y + 10);
 
                 newBullet.IsVisible = true;
 
-                Bullet secondBullet = new Bullet(bulletTexture);
+                Bullet secondBullet = new Bullet(this.bulletTexture);
 
                 if (this.isSecondBulletActive)
                 {
 
-                    secondBullet.Position = new Vector2(
-                        position.X + 42 - secondBullet.Texture.Width / 2,
-                        position.Y + 10);
+                    secondBullet.Position = new Vector2(this.position.X + 42 - secondBullet.Texture.Width / 2, this.position.Y + 10);
 
                     secondBullet.IsVisible = true;
                 }
 
-                if (bulletList.Count() < 20)
+                if (this.bulletList.Count() < 20)
                 {
-                    bulletList.Add(newBullet);
+                    this.bulletList.Add(newBullet);
                     if (this.isSecondBulletActive)
-                        bulletList.Add(secondBullet);
+                        this.bulletList.Add(secondBullet);
                 }
             }
-            if (bulletDelay == 0)
+            if (this.bulletDelay == 0)
             {
-                bulletDelay = 10;
+                this.bulletDelay = 10;
             }
         }
 
         private void UpdateBullets()
         {
-            foreach (Bullet b in bulletList)
+            foreach (Bullet b in this.bulletList)
             {
                 b.BoundingBox = new Rectangle(
                 (int)b.Position.X,
@@ -216,11 +240,11 @@
                 }
             }
 
-            for (int i = 0; i < bulletList.Count; i++)
+            for (int i = 0; i < this.bulletList.Count; i++)
             {
-                if (!bulletList[i].IsVisible)
+                if (!this.bulletList[i].IsVisible)
                 {
-                    bulletList.RemoveAt(i);
+                    this.bulletList.RemoveAt(i);
                     i--;
                 }
             }
