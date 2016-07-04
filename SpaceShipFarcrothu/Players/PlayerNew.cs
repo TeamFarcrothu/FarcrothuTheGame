@@ -15,15 +15,17 @@
     {
         private const int DefaultBulletDamage = 2;
 
-        public Texture2D texture /* this holds the texture graphics content of the ship */, bulletTexture, healthTexture;
-        public Vector2 position, healthBarPosition, resetPosition;
-        public Rectangle boundingBox, healthRectangle;
-        public List<Bullet> bulletList;
+        private Texture2D texture /* this holds the texture graphics content of the ship */, bulletTexture, healthTexture;
+        private Vector2 position, healthBarPosition;
+        private readonly Vector2 resetPosition;
+        public Rectangle boundingBox;
+        private Rectangle healthRectangle;
+        public readonly List<Bullet> bulletList;
         private List<Item> items;
 
         private int id;  // holds the player identifier
-        private string shipTextureFile;  // the ship texture file name
-        private int speed;
+        private readonly string shipTextureFile;  // the ship texture file name
+        private readonly int speed;
         public int health;
         private int bulletDamage;
         private float bulletDelay;
@@ -63,7 +65,7 @@
         public int BulletDamage
         {
             get { return this.bulletDamage; }
-            set
+            private set
             {
                 if (value < 0)
                 {
@@ -100,8 +102,8 @@
 
             // Draw player health
             this.healthRectangle = new Rectangle(
-                (int) this.healthBarPosition.X,
-                (int) this.healthBarPosition.Y, this.health,
+                (int)this.healthBarPosition.X,
+                (int)this.healthBarPosition.Y, this.health,
                 20);
             spriteBatch.Draw(this.healthTexture, this.healthRectangle, Color.White);
 
@@ -130,8 +132,8 @@
 
             // Create bounding box around the player
             this.boundingBox = new Rectangle(
-                (int) this.position.X,
-                (int) this.position.Y, this.texture.Width, this.texture.Height);
+                (int)this.position.X,
+                (int)this.position.Y, this.texture.Width, this.texture.Height);
 
             // Keyboard state monitoring
             var keyState = Keyboard.GetState();
