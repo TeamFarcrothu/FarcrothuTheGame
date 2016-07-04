@@ -32,6 +32,7 @@
         private bool isColiding;
         public bool isAlive;
         public bool isSecondBulletActive;
+        public bool isThirdBulletActive;
 
         private SoundManager sm = new SoundManager();
 
@@ -48,6 +49,7 @@
             this.speed = 5;
             this.isColiding = false;
             this.isSecondBulletActive = false;
+            this.isThirdBulletActive = false;
             this.health = 200;
             if (this.id == 1)
             {
@@ -203,6 +205,7 @@
                 newBullet.IsVisible = true;
 
                 Bullet secondBullet = new Bullet(this.bulletTexture);
+                Bullet thirdBullet = new Bullet(this.bulletTexture);
 
                 if (this.isSecondBulletActive)
                 {
@@ -211,12 +214,21 @@
 
                     secondBullet.IsVisible = true;
                 }
+                if (this.isThirdBulletActive)
+                {
+
+                    thirdBullet.Position = new Vector2(this.position.X + 22 - thirdBullet.Texture.Width / 2, this.position.Y + 10);
+
+                    thirdBullet.IsVisible = true;
+                }
 
                 if (this.bulletList.Count() < 20)
                 {
                     this.bulletList.Add(newBullet);
                     if (this.isSecondBulletActive)
                         this.bulletList.Add(secondBullet);
+                    if (this.isThirdBulletActive)
+                        this.bulletList.Add(thirdBullet);
                 }
             }
             if (this.bulletDelay == 0)

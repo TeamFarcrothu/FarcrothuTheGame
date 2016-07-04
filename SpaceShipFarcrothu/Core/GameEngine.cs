@@ -212,7 +212,7 @@ namespace SpaceShipFartrothu.Core
         private void Play(GameTime gameTime)
         {
 
-            if (this.hud.playerscore >= 350 || (this.twoPlayersMode && this.hud.player2score >= 350))
+            if (this.hud.playerscore >= 1500 || (this.twoPlayersMode && this.hud.player2score >= 1500))
             {
                 this.EnableBossMode(gameTime);
             }
@@ -597,15 +597,46 @@ namespace SpaceShipFartrothu.Core
 
         private void ActivateSecondBullet()
         {
-            if (this.hud.playerscore >= 150)
+            if (this.hud.playerscore >= hud.p1neededPointsToNextLevel)
             {
-                this.player.isSecondBulletActive = true;
+                hud.p1hasEnoughToNextLevel = true;
+                if (hud.p1hasEnoughToNextLevel)
+                {
+                    hud.playerLevel++;
+                    hud.p1hasEnoughToNextLevel = false;
+                    hud.p1neededPointsToNextLevel += hud.p1neededPointsToNextLevel;
+                }
+                if (hud.playerLevel == 3)
+                {
+                    this.player.isSecondBulletActive = true;
+                }
+                if (hud.playerLevel == 5)
+                {
+                    this.player.isThirdBulletActive = true;
+                }
             }
 
             if (this.twoPlayersMode)
             {
-                if (this.hud.player2score >= 150)
-                    this.player2.isSecondBulletActive = true;
+                if (this.hud.player2score >= hud.p2neededPointsToNextLevel)
+                {
+                    hud.p2hasEnoughToNextLevel = true;
+                    if (hud.p2hasEnoughToNextLevel)
+                    {
+                        hud.player2Level++;
+                        hud.p2hasEnoughToNextLevel = false;
+                        hud.p2neededPointsToNextLevel += hud.p2neededPointsToNextLevel;
+                    }
+                    if (hud.player2Level == 3)
+                    {
+                        this.player2.isSecondBulletActive = true;
+                    }
+                    if (hud.player2Level == 5)
+                    {
+                        this.player2.isThirdBulletActive = true;
+                    }
+                }
+
             }
         }
     }
