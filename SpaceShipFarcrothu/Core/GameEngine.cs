@@ -16,7 +16,7 @@ namespace SpaceShipFartrothu.Core
     public class GameEngine : Game
     {
         //Set first state 
-        private State gameState = State.Menu;
+        private State gameState = State.Intro;
 
         private SpriteBatch spriteBatch;
         private readonly GraphicsDeviceManager graphics;
@@ -44,6 +44,11 @@ namespace SpaceShipFartrothu.Core
         private Texture2D winningImage;
         private bool twoPlayersMode;
 
+        VideoPlayer videoPlayer;
+        Video video;
+        private Texture2D texture;
+        private bool introPlayed;
+
         public GameEngine()
         {
             this.graphics = new GraphicsDeviceManager(this)
@@ -70,15 +75,18 @@ namespace SpaceShipFartrothu.Core
         protected override void LoadContent()
         {
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
-            this.hud.LoadContent(this.Content);   
+            this.hud.LoadContent(this.Content);
             this.starfield.LoadContent(this.Content);
             this.soundManager.LoadContent(this.Content);
 
-            MediaPlayer.Play(this.soundManager.intro);
+            //MediaPlayer.Play(this.soundManager.intro);
 
             this.menuImage = this.Content.Load<Texture2D>("menu_image");
             this.gameoverImage = this.Content.Load<Texture2D>("gameover_image");
             this.winningImage = this.Content.Load<Texture2D>("winning_image");
+
+            video = Content.Load<Video>("sample");
+            videoPlayer = new VideoPlayer();
         }
 
         protected override void UnloadContent()
@@ -87,6 +95,8 @@ namespace SpaceShipFartrothu.Core
 
         protected override void Update(GameTime gameTime)
         {
+
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
                 || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
@@ -104,6 +114,17 @@ namespace SpaceShipFartrothu.Core
             //UPDATING Game state
             switch (this.gameState)
             {
+                case State.Intro:
+                    if (videoPlayer.State == MediaState.Stopped && this.introPlayed == false)
+                    {
+                        videoPlayer.Play(video);
+                        this.introPlayed = true;
+                    }
+                    else if (videoPlayer.State == MediaState.Stopped && this.introPlayed == true)
+                    {
+                        this.gameState = State.Menu;
+                    }
+                    break;
                 case State.Playing:
                     {
                         this.starfield.Speed = 3;
@@ -205,7 +226,6 @@ namespace SpaceShipFartrothu.Core
                     this.starfield.Update(gameTime);
                     break;
             }
-
             base.Update(gameTime);
         }
 
@@ -520,6 +540,14 @@ namespace SpaceShipFartrothu.Core
 
                         break;
                     }
+                // DRAWING INTRO VIDEO
+                case State.Intro:
+                    if (videoPlayer.State != MediaState.Stopped)
+                    {
+                        texture = videoPlayer.GetTexture();
+                        spriteBatch.Draw(texture, GraphicsDevice.Viewport.Bounds, Color.White);
+                    }
+                    break;
             }
 
             this.spriteBatch.End();

@@ -5,6 +5,7 @@
         Menu,
         Playing,
         GameOver,
-        Winning
+        Winning,
+        Intro
     }
 }
