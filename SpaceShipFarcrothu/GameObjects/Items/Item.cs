@@ -1,120 +1,43 @@
 ﻿namespace SpaceShipFartrothu.GameObjects.Items
 {
-    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Globals;
 
-    public abstract class Item
+    public abstract class Item : FallingObject
     {
         private const int DefaultSpeed = 4;
 
-        private int health;
-        private int damage;
-        private int speed;
-        private bool isVisible;
-
-        private Rectangle boundingBox;
-        private Texture2D texture;
-        private Vector2 position;
-
-        protected Item(Texture2D texture, Vector2 position, int health, int damage)
+        protected Item(Texture2D texture, Vector2 position)
+            : base(texture, position)
         {
-            this.Texture = texture;
-            this.Position = position;
             this.Speed = DefaultSpeed;
-            this.Health = health;
-            this.IsVisible = true;
-            this.Damage = damage;
         }
 
-        public int Health
-        {
-            get { return this.health; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Item health cannot be negative.");
-                }
-
-                this.health = value;
-            }
-        }
-
-        public int Damage
-        {
-            get { return this.damage; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Item damage cannot be negative.");
-                }
-
-                this.damage = value;
-            }
-        }
-
-        public int Speed
-        {
-            get { return this.speed; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Item speed cannot be negative");
-                }
-
-                this.speed = value;
-            }
-        }
-
-        public bool IsVisible
-        {
-            get { return this.isVisible; }
-            set { this.isVisible = value; }
-        }
-
-        public Rectangle BoundingBox
-        {
-            get { return this.boundingBox; }
-            set { this.boundingBox = value; }
-        }
-
-        public Texture2D Texture
-        {
-            get { return this.texture; }
-            set { this.texture = value; }
-        }
-
-        public Vector2 Position
-        {
-            get { return this.position; }
-            set { this.position = value; }
-        }
+        public int Health { get; set; }
 
         public virtual void Update()
         {
             this.BoundingBox = new Rectangle(
-                (int)this.Position.X,
-                (int)this.Position.Y,
-                this.Texture.Width,
-                this.Texture.Height);
+                    (int)this.Position.X,
+                    (int)this.Position.Y,
+                    this.Texture.Width,
+                    this.Texture.Height
+                );
 
-            this.position.Y += this.speed;
+            this.Position = new Vector2(this.Position.X, this.Position.Y + this.Speed);
 
-            if (this.position.Y >= 768)
+            if (this.Position.Y >= Globals.MAIN_SCREEN_HEIGHT)
             {
-                this.position.Y = -75;
+                this.Position = new Vector2(this.Position.X, this.Position.Y - 75);
+                //??
+                this.IsVisible = false;
             }
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public override void ReactOnColission(GameObject target = null)
         {
-            if (this.IsVisible)
-            {
-                spriteBatch.Draw(this.Texture, this.Position, Color.White);
-            }
+            this.IsVisible = false;
         }
     }
 }

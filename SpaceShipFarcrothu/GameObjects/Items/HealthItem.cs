@@ -11,9 +11,25 @@
            when adding health item */
         private const int ZeroDamagePower = 0;
 
-        public HealthItem(Texture2D texture, Vector2 position)
-            : base(texture, position, HealthPower, ZeroDamagePower)
+        public HealthItem(Texture2D texture, Vector2 position) 
+            : base(texture, position)
         {
+            this.Health = HealthPower;
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void ReactOnColission(GameObject target = null)
+        {
+            this.IsVisible = false;
+        }     
     }
 }

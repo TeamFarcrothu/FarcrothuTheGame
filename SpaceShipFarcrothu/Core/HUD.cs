@@ -1,9 +1,13 @@
-﻿namespace SpaceShipFartrothu.Core
+﻿using System.Linq;
+using SpaceShipFartrothu.GameObjects;
+
+namespace SpaceShipFartrothu.Core
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+    using Globals;
 
     public class HUD
     {
@@ -32,8 +36,8 @@
         public HUD()
         {
             this.showHUD = true;
-            this.screenWidth = 1366;
-            this.screenHeight = 768;
+            this.screenWidth = Globals.MAIN_SCREEN_WIDTH;
+            this.screenHeight = Globals.MAIN_SCREEN_HEIGHT;
             this.playerScoreFont = null;
 
             this.p1neededPointsToNextLevel = 150;
@@ -52,14 +56,20 @@
             this.player2ScorePos = new Vector2(1110, 20);
         }
 
-        public void LoadContent(ContentManager Content)
+        public void LoadContent(ContentManager content)
         {
-            this.playerScoreFont = Content.Load<SpriteFont>("georgia");
+            this.playerScoreFont = content.Load<SpriteFont>("georgia");
         }
 
         public void Update(GameTime gameTime)
         {
-            KeyboardState keyState = Keyboard.GetState();
+            foreach (Player player in Player.Players)
+            {
+                if (player.Id == 1)
+                    this.playerscore = player.Score;
+                else if (player.Id == 2)
+                    this.player2score = player.Score;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

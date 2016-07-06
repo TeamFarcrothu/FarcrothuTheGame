@@ -1,103 +1,147 @@
 ﻿namespace SpaceShipFartrothu.GameObjects
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using System.Collections.Generic;
+    using Globals;
+    using Effects;
+    using Core;
 
-    public class Enemy
+    public class Enemy : EnemyEntity
     {
-        public Rectangle boundingBox;
-        private Texture2D texture, bulletTexture;
-        public Vector2 position;
-        private int health, speed, bulletDelay, currentDifficultyLevel;
-        public bool isVisible;
-        public List<Bullet> bulletList;
+        private const int DefaultScorePoints = 15;
+        //private Texture2D bulletTexture;
+        private const int shooterId = 0;
+        private static Random random = new Random();
 
-        public Enemy(Texture2D newTexture, Vector2 newPosition, Texture2D newBulletTexture)
+        private int health, bulletDelay, currentDifficultyLevel;
+
+        private int bulletDamage;
+
+        public static Texture2D enemyTexture;
+
+        public static List<GameObject> Enemies = new List<GameObject>();
+
+        public Enemy(Texture2D texture, Vector2 position, Texture2D bulleTexture)
+            : base(enemyTexture, position)
         {
-            this.bulletList = new List<Bullet>();
-            this.texture = newTexture;
-            this.bulletTexture = newBulletTexture;
-            this.health = 5;
-            this.position = newPosition;
+            this.Texture = enemyTexture;
+            this.BulletTexture = bulleTexture;
+            this.Health = 5;
+            this.BulletDelay = 40;
+            this.Speed = 2;
+            this.IsVisible = true;
+            this.BulletDamage = 5;
+            this.Damage = 10;
+            this.ScorePoints = DefaultScorePoints;
             this.currentDifficultyLevel = 1;
-            this.bulletDelay = 40;
-            this.speed = 5;
-            this.isVisible = true;
+
+            Enemies.Add(this);
         }
 
-        public void Update(GameTime gameTime)
+        public int BulletDamage { get; set; }
+
+        public int BulletDelay { get; set; }
+
+        public int Health { get; set; }
+
+        //   TODO :  please make it work better
+        public Texture2D BulletTexture { get; set; }
+
+        //// TODO :  Must fix it
+        //public void LoadContent(ContentManager content)
+        //{
+        //    this.bulletTexture = content.Load<Texture2D>("bullet");
+        //}
+
+        public override void Update(GameTime gameTime)
         {
-            this.boundingBox = new Rectangle((int) this.position.X, (int) this.position.Y, this.texture.Width, this.texture.Height);
+            UpdateEnemyMovement();
 
-            this.position.Y += this.speed;
+            ClearNotVisibleEnemies();
 
-            if (this.position.Y >= 768)
+            if (Enemies.Count > 0)
+                this.EnemyShoot();
+        }
+
+        private void UpdateEnemyMovement()
+        {
+            //enemy BoundingBox
+            this.BoundingBox = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.Texture.Width,
+                this.Texture.Height);
+
+            this.Position = new Vector2(this.Position.X, this.Position.Y + this.Speed);
+
+            if (this.Position.Y >= Globals.MAIN_SCREEN_HEIGHT)
             {
-                this.position.Y = -75;
+                this.IsVisible = false;
             }
-
-            this.EnemyShoot();
-            this.UpdateBullets();
-        }
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(this.texture, this.position, Color.White);
-            foreach (Bullet bullet in this.bulletList)
-            {
-                bullet.Draw(spriteBatch);
-            }
         }
 
-        private void UpdateBullets()
+        private static void ClearNotVisibleEnemies()
         {
-            foreach (Bullet bullet in this.bulletList)
+            for (int i = 0; i < Enemies.Count; i++)
             {
-                bullet.BoundingBox = new Rectangle(
-                (int)bullet.Position.X,
-                (int)bullet.Position.Y,
-                bullet.Texture.Width,
-                bullet.Texture.Height);
-
-                bullet.Position.Y = bullet.Position.Y + bullet.Speed;
-                if (bullet.Position.Y >= 768)
+                if (!Enemies[i].IsVisible)
                 {
-                    bullet.IsVisible = false;
-                }
-            }
-
-            for (int i = 0; i < this.bulletList.Count; i++)
-            {
-                if (!this.bulletList[i].IsVisible)
-                {
-                    this.bulletList.RemoveAt(i);
+                    Enemies.RemoveAt(i);
                     i--;
                 }
             }
         }
 
-        private void EnemyShoot()
+        public static void LoadEnemies()
         {
-            if (this.bulletDelay >= 0)
+            var newRand = new Random();
+
+            int randomX = random.Next(0, 1200) - newRand.Next(0, 20);
+            int randomY = random.Next(-700, -50) + newRand.Next(0, 100);
+
+            if (Enemies.Count < 5)
             {
-                this.bulletDelay--;
+                Enemies.Add(new Enemy(enemyTexture, new Vector2(randomX, randomY), GameEngine.bulletTexture));
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(this.Texture, this.Position, Color.White);
+        }
+
+        public void EnemyShoot()
+        {
+            if (this.BulletDelay >= 0)
+            {
+                this.BulletDelay--;
             }
 
-            if (this.bulletDelay <= 0)
+            if (this.BulletDelay <= 0)
             {
-                if (this.bulletList.Count < 20)
+                if (Bullet.Bullets.Where(b => b.ShooterId == shooterId).ToList().Count < 20)
                 {
-                    Bullet newBullet = new Bullet(this.bulletTexture);
-                    newBullet.Position = new Vector2(this.position.X + this.texture.Width / 2 - newBullet.Texture.Width / 2, this.position.Y + this.texture.Height);
-                    newBullet.IsVisible = true;
-                    this.bulletList.Add(newBullet);
+                    var newBulletPosition = new Vector2(this.Position.X + this.Texture.Width / 2 - this.BulletTexture.Width / 2, this.Position.Y + this.BulletTexture.Height);
+
+                    Bullet newBullet = new Bullet(this.BulletTexture, newBulletPosition, shooterId, this.BulletDamage);
+                    Bullet.Bullets.Add(newBullet);
                 }
 
-                if (this.bulletDelay == 0)
+                if (this.BulletDelay == 0)
                 {
-                    this.bulletDelay = 40;
+                    this.BulletDelay = 40;
                 }
             }
+        }
+
+        public override void ReactOnColission(GameObject target = null)
+        {
+            Explosion.Explosions.Add(new Explosion(this.Position));
+
+            this.IsVisible = false;
+
+            //TODO: Sound
+
         }
     }
 }
