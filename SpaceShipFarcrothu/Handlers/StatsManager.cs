@@ -37,6 +37,11 @@ namespace SpaceShipFartrothu.Handlers
                     if (player1HasEnoughToNextLevel)
                     {
                         player1PointsToNextLevel += player1PointsToNextLevel;
+                        players[i].MaxHealth = 100 * players[i].Level;
+                        if (players[i].Level % 5 == 0)
+                        {
+                            players[i].Health = players[i].MaxHealth;
+                        }
                         players[i].Level++;
                         players[i].BulletDamage++;
                         player1HasEnoughToNextLevel = false;
@@ -52,6 +57,11 @@ namespace SpaceShipFartrothu.Handlers
                     if (player2HasEnoughToNextLevel)
                     {
                         player2PointsToNextLevel += player2PointsToNextLevel;
+                        players[i].MaxHealth = 100 * players[i].Level;
+                        if (players[i].Level % 5 == 0)
+                        {
+                            players[i].Health = players[i].MaxHealth;
+                        }
                         players[i].Level++;
                         players[i].BulletDamage++;
                         player1HasEnoughToNextLevel = false;

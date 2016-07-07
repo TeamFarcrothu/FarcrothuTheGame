@@ -15,10 +15,10 @@ namespace SpaceShipFartrothu.GameObjects
         private const int DefaultBulletDamage = 2;
         private const int DefaultSpeed = 5;
         private const int DefaultBulletDelay = 20;
-        private const int DefaultHealth = 200;
+        private const int DefaultHealth = 100;
 
         private Texture2D bulletTexture, healthTexture;
-        private Vector2 healthBarPosition;
+        //private Vector2 healthBarPosition;
 
         private readonly Vector2 resetPosition;
 
@@ -30,6 +30,7 @@ namespace SpaceShipFartrothu.GameObjects
         private readonly string shipTextureFile;  // the ship Texture file name
 
         private int health;
+        private int maxHealth;
 
         private int level; //***
 
@@ -54,6 +55,7 @@ namespace SpaceShipFartrothu.GameObjects
             this.BulletDelay = DefaultBulletDelay;
             this.Speed = DefaultSpeed;
             this.Health = DefaultHealth;
+            this.MaxHealth = this.Health;
             this.Score = 0;
             this.items = new List<Item>();
             //TODO: check if needed
@@ -65,12 +67,12 @@ namespace SpaceShipFartrothu.GameObjects
             this.IsAlive = true;
             if (this.id == 1)
             {
-                this.healthBarPosition = new Vector2(50, 50);
+               // this.healthBarPosition = new Vector2(50, 50);
                 this.resetPosition = new Vector2(200, 600);
             }
             else
             {
-                this.healthBarPosition = new Vector2(1110, 50);
+                //this.healthBarPosition = new Vector2(1110, 50);
                 this.resetPosition = new Vector2(1000, 600);
             }
 
@@ -112,6 +114,7 @@ namespace SpaceShipFartrothu.GameObjects
         public int Health { get; set; }
 
         public int BulletDelay { get; set; }
+        public int MaxHealth { get; set; }
 
         public void AddItem(Item item)
         {
@@ -136,15 +139,6 @@ namespace SpaceShipFartrothu.GameObjects
             // Draw player itself if he is alive
             if (this.isAlive)
                 spriteBatch.Draw(this.Texture, this.Position, Color.White);
-
-            //TODO : move that in hud class
-            // Draw player health
-            this.healthRectangle = new Rectangle(
-                (int)this.healthBarPosition.X,
-                (int)this.healthBarPosition.Y, this.Health,
-                20);
-            spriteBatch.Draw(this.healthTexture, this.healthRectangle, Color.White);
-
         }
 
         // Player update method
@@ -155,6 +149,10 @@ namespace SpaceShipFartrothu.GameObjects
             {
                 this.IsAlive = false;
             }
+            
+           
+
+            
 
             // if isAlive flag is false the player should be dead, so we reset it's Position depending on id
             if (!this.IsAlive)
@@ -175,7 +173,7 @@ namespace SpaceShipFartrothu.GameObjects
             var keyState = Keyboard.GetState();
 
             // Player shooting
-            if ((keyState.IsKeyDown(Keys.LeftControl) && this.id == 2) || (keyState.IsKeyDown(Keys.RightControl) && this.id == 1))
+            if ((keyState.IsKeyDown(Keys.LeftControl) && this.id == 2) || (keyState.IsKeyDown(Keys.LeftControl) && this.id == 1))
             {
                 this.Shoot();
             }

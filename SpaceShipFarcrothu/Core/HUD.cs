@@ -23,6 +23,8 @@ namespace SpaceShipFartrothu.Core
 
         public List<int> playersLevels; //***
         public List<int> playersScores; //***
+        public List<int> playersHealth;
+        public List<int> playersMaxHealth;
         public List<int> playersBulletDamage; //***
         private int playersCount;
 
@@ -35,10 +37,15 @@ namespace SpaceShipFartrothu.Core
         private Vector2 player1DamagePos;
         private Vector2 player2DamagePos;
 
+        private Vector2 player1HealthPos;
+        private Vector2 player2HealthPos;
+
         public HUD()
         {
             playersLevels = new List<int>();
             playersScores = new List<int>();
+            playersHealth = new List<int>();
+            playersMaxHealth = new List<int>();
             playersBulletDamage = new List<int>();
             this.showHUD = true;
             this.screenWidth = Globals.MAIN_SCREEN_WIDTH;
@@ -47,6 +54,9 @@ namespace SpaceShipFartrothu.Core
 
             this.p1neededPointsToNextLevel = 150;
             this.p2neededPointsToNextLevel = 150;
+
+            this.player1HealthPos = new Vector2(50, 50);
+            this.player2HealthPos = new Vector2(1110, 50);
 
             this.player1LevelPos = new Vector2(50, 75);
             this.player2LevelPos = new Vector2(1110, 75);
@@ -65,6 +75,8 @@ namespace SpaceShipFartrothu.Core
                 Player currentPlayer = players[i];
                 playersLevels.Add(currentPlayer.Level);
                 playersScores.Add(currentPlayer.Score);
+                playersHealth.Add(currentPlayer.Health);
+                playersMaxHealth.Add(currentPlayer.MaxHealth);
                 playersBulletDamage.Add(currentPlayer.BulletDamage);
             }
         }
@@ -92,6 +104,7 @@ namespace SpaceShipFartrothu.Core
                 if (playersCount >= 1)
                 {
                     spriteBatch.DrawString(this.playerScoreFont, "Player 1: " + this.playersScores[0], this.player1ScorePos, Color.Red);
+                    spriteBatch.DrawString(this.playerScoreFont, $"Health: {this.playersHealth[0]} / {this.playersMaxHealth[0]}", this.player1HealthPos, Color.Red);
                     spriteBatch.DrawString(this.playerScoreFont, "Level: " + this.playersLevels[0], this.player1LevelPos, Color.Blue);
                     spriteBatch.DrawString(this.playerScoreFont, "Damage: " + this.playersBulletDamage[0], this.player1DamagePos, Color.Green);
 
@@ -99,11 +112,14 @@ namespace SpaceShipFartrothu.Core
                 if (playersCount == 2)
                 {
                     spriteBatch.DrawString(this.playerScoreFont, "Player 2: " + this.playersScores[1], this.player2ScorePos, Color.Red);
+                    spriteBatch.DrawString(this.playerScoreFont, $"Health: {this.playersHealth[1]} / {this.playersMaxHealth[1]}", this.player2HealthPos, Color.Red);
                     spriteBatch.DrawString(this.playerScoreFont, "Level: " + this.playersLevels[1], this.player2LevelPos, Color.Blue);
                     spriteBatch.DrawString(this.playerScoreFont, "Damage: " + this.playersBulletDamage[1], this.player2DamagePos, Color.Green);
                 }
                 playersLevels.Clear();
                 playersScores.Clear();
+                playersHealth.Clear();
+                playersMaxHealth.Clear();
                 playersBulletDamage.Clear();
             }
         }
