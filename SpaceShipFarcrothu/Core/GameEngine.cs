@@ -1,6 +1,5 @@
 namespace SpaceShipFartrothu.Core
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -13,6 +12,7 @@ namespace SpaceShipFartrothu.Core
     using Effects;
     using GameObjects;
     using Sound;
+    using Globals;
 
     public class GameEngine : Game
     {
@@ -40,19 +40,14 @@ namespace SpaceShipFartrothu.Core
         private Texture2D player1Texture;
         private Texture2D player2Texture;
 
-        //private Texture2D bulletTexture;
-
         public static Texture2D explosionTexture;
         public static Texture2D bulletTexture;
         public static Texture2D asteroidTexture;
         public static Texture2D bossTexture;
         public static Texture2D healthTexture;
 
-        private bool twoPlayersMode;
-
-        VideoPlayer videoPlayer;
-        Video video;
-        private Texture2D texture;
+        private VideoPlayer videoPlayer;
+        private Video video;
         private bool introPlayed;
 
         public GameEngine()
@@ -60,8 +55,8 @@ namespace SpaceShipFartrothu.Core
             this.graphics = new GraphicsDeviceManager(this)
             {
                 IsFullScreen = false,
-                PreferredBackBufferWidth = 1366,
-                PreferredBackBufferHeight = 768
+                PreferredBackBufferWidth = Globals.MAIN_SCREEN_WIDTH,
+                PreferredBackBufferHeight = Globals.MAIN_SCREEN_HEIGHT
             };
 
             this.Window.Title = "Traveling to FARCROTHU";
@@ -73,20 +68,15 @@ namespace SpaceShipFartrothu.Core
 
         protected override void Initialize()
         {
+            this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.hud.LoadContent(this.Content);
-
-            //if (this.bossHasInstance)
-            //    this.boss.LoadContent(this.Content);
-
             this.starfield.LoadContent(this.Content);
             this.soundManager.LoadContent(this.Content);
-
             //MediaPlayer.Play(this.soundManager.intro);
 
             this.menuImage = this.Content.Load<Texture2D>("menu_image");
@@ -146,25 +136,12 @@ namespace SpaceShipFartrothu.Core
 
                         this.Play(gameTime);
 
-                        //this.ActivateSecondBullet();
-
-                        if (!this.player.IsAlive && !this.twoPlayersMode)
+                        if (Player.Players.Any(p => p.IsAlive == false))
                         {
                             this.gameState = State.GameOver;
                         }
 
-                        //If two players mode is active update second player too
-                        if (this.twoPlayersMode)
-                        {
-                            this.player2.Update(gameTime);
-
-                            //Check if both players are dead and switch to Gameover screen if so
-                            if (!this.player.IsAlive && !this.player2.IsAlive)
-                            {
-                                this.gameState = State.GameOver;
-                            }
-                        }
-
+                        Player.Players.ForEach(p => p.Update(gameTime));
                         this.starfield.Update(gameTime);
 
                         break;
@@ -174,6 +151,7 @@ namespace SpaceShipFartrothu.Core
                 case State.Menu:
                     var keyState = Keyboard.GetState();
 
+                    //Setup two players game
                     if (keyState.IsKeyDown(Keys.D2))
                     {
                         this.player = new Player(this.player1Texture, new Vector2(600, 600), 1);
@@ -181,18 +159,19 @@ namespace SpaceShipFartrothu.Core
                         this.player2.LoadContent(this.Content);
                         this.player.LoadContent(this.Content);
 
-                        this.twoPlayersMode = true;
+                        //this.twoPlayersMode = true;
                         this.gameState = State.Playing;
                         MediaPlayer.Play(this.soundManager.bgMusic);
                         MediaPlayer.Volume = 0.5f;
                     }
 
+                    //Setup single player game
                     if (keyState.IsKeyDown(Keys.D1))
                     {
                         this.player = new Player(this.player1Texture, new Vector2(600, 600), 1);
                         this.player.LoadContent(this.Content);
 
-                        this.twoPlayersMode = false;
+                        //this.twoPlayersMode = false;
                         this.gameState = State.Playing;
                         MediaPlayer.Play(this.soundManager.bgMusic);
                         MediaPlayer.Volume = 0.5f;
@@ -209,21 +188,7 @@ namespace SpaceShipFartrothu.Core
 
                     if (currentKeyState.IsKeyDown(Keys.Space))
                     {
-                        MediaPlayer.Stop();
-
-                        Enemy.Enemies.Clear();
-                        Asteroid.Asteroids.Clear();
-                        Explosion.Explosions.Clear();
-
-                        foreach (var pl in Player.Players)
-                        {
-                            pl.Health = 200;
-                            pl.IsAlive = true;
-                        }
-
-                        this.bossHasInstance = false;
-
-                        this.gameState = State.Menu;
+                        this.SetupNewGame();
                     }
 
                     this.starfield.Update(gameTime);
@@ -233,12 +198,25 @@ namespace SpaceShipFartrothu.Core
             base.Update(gameTime);
         }
 
+        private void SetupNewGame()
+        {
+            MediaPlayer.Stop();
+
+            Enemy.Enemies.Clear();
+            Asteroid.Asteroids.Clear();
+            Explosion.Explosions.Clear();
+            Player.Players.Clear();
+            Bullet.Bullets.Clear();
+
+            this.bossHasInstance = false;
+
+            this.gameState = State.Menu;
+        }
+
         private void Play(GameTime gameTime)
         {
-
-
-            //Enable boss mode if we have enough points   ## its 10 just for testing
-            if (this.player.Score >= 3000 || (this.twoPlayersMode && this.player2.Score >= 3000))
+            //Enable boss mode if some of players have enough points   ## its 150 just for testing
+            if (Player.Players.Any(s => s.Score >= 150))
             {
                 this.EnableBossMode(gameTime);
             }
@@ -249,26 +227,26 @@ namespace SpaceShipFartrothu.Core
                     Enemy.Enemies[i].Update(gameTime);
                 }
 
-                ColisionHandler.CheckForCollision(Player.Players, Asteroid.Asteroids);
-                ColisionHandler.CheckForCollision(Player.Players, Enemy.Enemies);
-                //ColisionHandler.CheckPlayerBulletsCollisions(this.player, this.enemyList);
-
-                // if two players mode is active check second player too
-                // ColisionHandler.CheckPlayerBulletsCollisions(this.player2, this.enemyList);
-
                 foreach (var asteroid in Asteroid.Asteroids)
                 {
                     asteroid.Update(gameTime);
                 }
 
+                // Handle collisions between players and enemy objects
+                CollisionHandler.CheckForCollision(Asteroid.Asteroids);
+                CollisionHandler.CheckForCollision(Enemy.Enemies);
+
                 Enemy.LoadEnemies();
                 Asteroid.LoadAsteroids();
             }
 
-            //this.hud.Update(gameTime);
             this.hud.UpdatePlayersInfo(Player.Players);
             StatsManager.UpdatePlayersStats(Player.Players);
-            this.player.Update(gameTime);
+
+            //Handle collisions between bullets and gameobjects
+            CollisionHandler.CheckPlayerBulletsCollisions(Enemy.Enemies);
+            CollisionHandler.CheckPlayerBulletsCollisions(Asteroid.Asteroids);
+            CollisionHandler.CheckEnemiesBulletsCollisions();
 
             //Update all bullets 
             for (int i = 0; i < Bullet.Bullets.Count; i++)
@@ -276,10 +254,7 @@ namespace SpaceShipFartrothu.Core
                 Bullet.Bullets[i].Update(gameTime);
             }
 
-            ColisionHandler.CheckPlayerBulletsCollisions(this.player, Enemy.Enemies);
-            ColisionHandler.CheckPlayerBulletsCollisions(this.player, Asteroid.Asteroids);
-            ColisionHandler.CheckEnemiesBulletsCollisions(Enemy.Enemies);
-
+            //Update all explosions
             foreach (var explosion in Explosion.Explosions)
             {
                 explosion.Update(gameTime);
@@ -293,8 +268,8 @@ namespace SpaceShipFartrothu.Core
 
             if (this.bossHasInstance)
             {
-                ColisionHandler.CheckBossBulletsCollisions();
-                ColisionHandler.CheckPlayerBulletsCollisions(this.player, new List<GameObject>() { this.boss });
+                CollisionHandler.CheckBossBulletsCollisions();
+                CollisionHandler.CheckPlayerBulletsCollisions(new List<GameObject>() { this.boss });
 
                 this.boss.Update(gameTime);
 
@@ -317,70 +292,27 @@ namespace SpaceShipFartrothu.Core
                     {
                         this.starfield.Draw(this.spriteBatch);
                         this.hud.Draw(this.spriteBatch);
-
-                        this.player.Draw(this.spriteBatch);
-
-                        if (this.twoPlayersMode)
-                            this.player2.Draw(this.spriteBatch);
-
-                        foreach (var enemy in Enemy.Enemies)
-                        {
-                            enemy.Draw(this.spriteBatch);
-                        }
-
-                        foreach (var bullet in Bullet.Bullets)
-                        {
-                            bullet.Draw(spriteBatch);
-                        }
-
-
-                        foreach (var explosion in Explosion.Explosions)
-                        {
-                            explosion.Draw(this.spriteBatch);
-                        }
-
-                        foreach (var asteroid in Asteroid.Asteroids)
-                        {
-                            asteroid.Draw(this.spriteBatch);
-                        }
+                        this.DrawAllGameObjects();
 
                         if (this.bossHasInstance)
-                        {
-                            if (Asteroid.Asteroids.Any())
-                                Asteroid.Asteroids.Clear();
-                            if (Enemy.Enemies.Any())
-                                Enemy.Enemies.Clear();
-
-                            this.boss.Draw(this.spriteBatch);
-                        }
+                            this.DrawBoss();
 
                         break;
                     }
-
                 // DRAWING MENU STATE
                 case State.Menu:
                     {
-                        this.starfield.Draw(this.spriteBatch);
-                        this.spriteBatch.Draw(this.menuImage, new Vector2(0, 0), Color.White);
-
-                        break;
+                        this.DrawStarfield(this.menuImage); break;
                     }
                 // DRAWING GAMEOVER STATE
                 case State.GameOver:
                     {
-                        this.starfield.Draw(this.spriteBatch);
-                        this.spriteBatch.Draw(this.gameoverImage, new Vector2(0, 0), Color.White);
-
-                        break;
+                        this.DrawStarfield(this.gameoverImage); break;
                     }
-
                 // DRAWING WINNING STATE
                 case State.Winning:
                     {
-                        this.starfield.Draw(this.spriteBatch);
-                        this.spriteBatch.Draw(this.winningImage, new Vector2(0, 0), Color.White);
-
-                        break;
+                        this.DrawStarfield(this.winningImage); break;
                     }
 
                     // DRAWING INTRO VIDEO
@@ -397,60 +329,90 @@ namespace SpaceShipFartrothu.Core
             base.Draw(gameTime);
         }
 
-        //private void LoadBoss()
-        //{
-        //    if (!this.bossHasInstance)
-        //    {
-        //        //                                                  -600
-        //        this.boss = new Boss(bossTexture, new Vector2(501, 10));
-        //        this.bossHasInstance = true;
-        //        this.boss.LoadContent(this.Content);
-        //    }
-        //}
-
-        private void ActivateSecondBullet()
+        private void DrawAllGameObjects()
         {
-            if (this.player.Score >= hud.p1neededPointsToNextLevel)
+            Player.Players.ForEach(p => p.Draw(this.spriteBatch));
+
+            foreach (var enemy in Enemy.Enemies)
             {
-                hud.p1hasEnoughToNextLevel = true;
-                if (hud.p1hasEnoughToNextLevel)
-                {
-                    player.Level++;
-                    hud.p1hasEnoughToNextLevel = false;
-                    hud.p1neededPointsToNextLevel += hud.p1neededPointsToNextLevel;
-                }
-                //if (hud.playerLevel == 3)
-                //{
-                //    this.player.isSecondBulletActive = true;
-                //}
-                //if (hud.playerLevel == 5)
-                //{
-                //    this.player.isThirdBulletActive = true;
-                //}
+                enemy.Draw(this.spriteBatch);
             }
 
-            if (this.twoPlayersMode)
+            foreach (var bullet in Bullet.Bullets)
             {
-                if (this.player2.Score >= hud.p2neededPointsToNextLevel)
-                {
-                    hud.p2hasEnoughToNextLevel = true;
-                    if (hud.p2hasEnoughToNextLevel)
-                    {
-                        //hud.player2Level++;
-                        hud.p2hasEnoughToNextLevel = false;
-                        hud.p2neededPointsToNextLevel += hud.p2neededPointsToNextLevel;
-                    }
-                    //if (hud.player2Level == 3)
-                    //{
-                    //    this.player2.isSecondBulletActive = true;
-                    //}
-                    //if (hud.player2Level == 5)
-                    //{
-                    //    this.player2.isThirdBulletActive = true;
-                    //}
-                }
+                bullet.Draw(spriteBatch);
+            }
 
+            foreach (var explosion in Explosion.Explosions)
+            {
+                explosion.Draw(this.spriteBatch);
+            }
+
+            foreach (var asteroid in Asteroid.Asteroids)
+            {
+                asteroid.Draw(this.spriteBatch);
             }
         }
+
+        private void DrawBoss()
+        {
+            if (Asteroid.Asteroids.Any())
+                Asteroid.Asteroids.Clear();
+            if (Enemy.Enemies.Any())
+                Enemy.Enemies.Clear();
+
+            this.boss.Draw(this.spriteBatch);
+        }
+
+        private void DrawStarfield(Texture2D stateImage)
+        {
+            this.starfield.Draw(this.spriteBatch);
+            this.spriteBatch.Draw(stateImage, new Vector2(0, 0), Color.White);
+        }
+
+        //private void ActivateSecondBullet()
+        //{
+        //    if (this.player.Score >= hud.p1neededPointsToNextLevel)
+        //    {
+        //        hud.p1hasEnoughToNextLevel = true;
+        //        if (hud.p1hasEnoughToNextLevel)
+        //        {
+        //            player.Level++;
+        //            hud.p1hasEnoughToNextLevel = false;
+        //            hud.p1neededPointsToNextLevel += hud.p1neededPointsToNextLevel;
+        //        }
+        //        //if (hud.playerLevel == 3)
+        //        //{
+        //        //    this.player.isSecondBulletActive = true;
+        //        //}
+        //        //if (hud.playerLevel == 5)
+        //        //{
+        //        //    this.player.isThirdBulletActive = true;
+        //        //}
+        //    }
+
+        //    if (this.twoPlayersMode)
+        //    {
+        //        if (this.player2.Score >= hud.p2neededPointsToNextLevel)
+        //        {
+        //            hud.p2hasEnoughToNextLevel = true;
+        //            if (hud.p2hasEnoughToNextLevel)
+        //            {
+        //                //hud.player2Level++;
+        //                hud.p2hasEnoughToNextLevel = false;
+        //                hud.p2neededPointsToNextLevel += hud.p2neededPointsToNextLevel;
+        //            }
+        //            //if (hud.player2Level == 3)
+        //            //{
+        //            //    this.player2.isSecondBulletActive = true;
+        //            //}
+        //            //if (hud.player2Level == 5)
+        //            //{
+        //            //    this.player2.isThirdBulletActive = true;
+        //            //}
+        //        }
+
+        //    }
+        //}
     }
 }

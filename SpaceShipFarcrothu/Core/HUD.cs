@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using SpaceShipFartrothu.GameObjects;
+﻿using SpaceShipFartrothu.GameObjects;
 
 namespace SpaceShipFartrothu.Core
 {

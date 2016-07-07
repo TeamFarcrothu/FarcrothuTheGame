@@ -39,7 +39,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Handlers\ColisionHandler.cs" />
+    <Compile Include="Handlers\CollisionHandler.cs" />
     <Compile Include="Core\HUD.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

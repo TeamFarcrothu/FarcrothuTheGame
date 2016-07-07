@@ -47,7 +47,7 @@
 
         public int Health { get; set; }
 
-        //   TODO :  please make it work better
+        //   TODO :  must make it work better
         public Texture2D BulletTexture { get; set; }
 
         //// TODO :  Must fix it
