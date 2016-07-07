@@ -18,7 +18,6 @@ namespace SpaceShipFartrothu.GameObjects
         private const int DefaultHealth = 100;
 
         private Texture2D bulletTexture, healthTexture;
-        //private Vector2 healthBarPosition;
 
         private readonly Vector2 resetPosition;
 
@@ -67,12 +66,10 @@ namespace SpaceShipFartrothu.GameObjects
             this.IsAlive = true;
             if (this.id == 1)
             {
-               // this.healthBarPosition = new Vector2(50, 50);
                 this.resetPosition = new Vector2(200, 600);
             }
             else
             {
-                //this.healthBarPosition = new Vector2(1110, 50);
                 this.resetPosition = new Vector2(1000, 600);
             }
 
@@ -80,12 +77,13 @@ namespace SpaceShipFartrothu.GameObjects
         }
 
         public int Level //***
-        { get
+        {
+            get
             {
                 return this.level;
             }
 
-          set
+            set
             {
                 this.level = value;
             }
@@ -149,10 +147,6 @@ namespace SpaceShipFartrothu.GameObjects
             {
                 this.IsAlive = false;
             }
-            
-           
-
-            
 
             // if isAlive flag is false the player should be dead, so we reset it's Position depending on id
             if (!this.IsAlive)
@@ -284,11 +278,6 @@ namespace SpaceShipFartrothu.GameObjects
 
                 this.Health -= target.Damage;
             }
-
-
-            //target.ReactOnColission();
         }
-
-
     }
 }
