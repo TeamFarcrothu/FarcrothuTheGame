@@ -31,6 +31,8 @@ namespace SpaceShipFartrothu.GameObjects
 
         private int health;
 
+        private int level; //***
+
         private int bulletDamage;
         private float bulletDelay;
 
@@ -46,6 +48,7 @@ namespace SpaceShipFartrothu.GameObjects
         public Player(Texture2D texture, Vector2 position, int id)
             : base(texture, position)
         {
+            this.Level = 1;
             this.Id = id;
             this.BulletDamage = DefaultBulletDamage;
             this.BulletDelay = DefaultBulletDelay;
@@ -74,6 +77,18 @@ namespace SpaceShipFartrothu.GameObjects
             Players.Add(this);
         }
 
+        public int Level //***
+        { get
+            {
+                return this.level;
+            }
+
+          set
+            {
+                this.level = value;
+            }
+        }
+
         public int Id { get { return this.id; } set { this.id = value; } }
 
         public bool IsAlive { get { return this.isAlive; } set { this.isAlive = value; } }
@@ -81,7 +96,7 @@ namespace SpaceShipFartrothu.GameObjects
         public int BulletDamage
         {
             get { return this.bulletDamage; }
-            private set
+            set
             {
                 if (value < 0)
                 {
@@ -160,7 +175,7 @@ namespace SpaceShipFartrothu.GameObjects
             var keyState = Keyboard.GetState();
 
             // Player shooting
-            if ((keyState.IsKeyDown(Keys.RightControl) && this.id == 2) || (keyState.IsKeyDown(Keys.LeftControl) && this.id == 1))
+            if ((keyState.IsKeyDown(Keys.LeftControl) && this.id == 2) || (keyState.IsKeyDown(Keys.RightControl) && this.id == 1))
             {
                 this.Shoot();
             }
@@ -188,7 +203,7 @@ namespace SpaceShipFartrothu.GameObjects
             {
                 if (this.Position.X > Globals.Globals.MAIN_SCREEN_WIDTH)
                 {
-                    this.Position = new Vector2(this.Position.X - 30, this.Position.Y);
+                    this.Position = new Vector2(this.Position.X - Globals.Globals.MAIN_SCREEN_WIDTH, this.Position.Y);
                 }
                 else if (this.Position.X < -30)
                 {

@@ -166,7 +166,10 @@
 
         public override void ReactOnColission(GameObject target = null)
         {
-            // this.Health -= target.Damage;
+            foreach (Player player in Player.Players)
+            {
+                this.Health -= player.BulletDamage;
+            }
         }
 
     }

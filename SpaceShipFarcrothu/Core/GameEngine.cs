@@ -238,7 +238,7 @@ namespace SpaceShipFartrothu.Core
 
 
             //Enable boss mode if we have enough points   ## its 10 just for testing
-            if (this.hud.playerscore >= 10 || (this.twoPlayersMode && this.hud.player2score >= 1500))
+            if (this.player.Score >= 3000 || (this.twoPlayersMode && this.player2.Score >= 3000))
             {
                 this.EnableBossMode(gameTime);
             }
@@ -265,8 +265,9 @@ namespace SpaceShipFartrothu.Core
                 Asteroid.LoadAsteroids();
             }
 
-            this.hud.Update(gameTime);
-
+            //this.hud.Update(gameTime);
+            this.hud.UpdatePlayersInfo(Player.Players);
+            StatsManager.UpdatePlayersStats(Player.Players);
             this.player.Update(gameTime);
 
             //Update all bullets 
@@ -409,12 +410,12 @@ namespace SpaceShipFartrothu.Core
 
         private void ActivateSecondBullet()
         {
-            if (this.hud.playerscore >= hud.p1neededPointsToNextLevel)
+            if (this.player.Score >= hud.p1neededPointsToNextLevel)
             {
                 hud.p1hasEnoughToNextLevel = true;
                 if (hud.p1hasEnoughToNextLevel)
                 {
-                    hud.playerLevel++;
+                    player.Level++;
                     hud.p1hasEnoughToNextLevel = false;
                     hud.p1neededPointsToNextLevel += hud.p1neededPointsToNextLevel;
                 }
@@ -430,12 +431,12 @@ namespace SpaceShipFartrothu.Core
 
             if (this.twoPlayersMode)
             {
-                if (this.hud.player2score >= hud.p2neededPointsToNextLevel)
+                if (this.player2.Score >= hud.p2neededPointsToNextLevel)
                 {
                     hud.p2hasEnoughToNextLevel = true;
                     if (hud.p2hasEnoughToNextLevel)
                     {
-                        hud.player2Level++;
+                        //hud.player2Level++;
                         hud.p2hasEnoughToNextLevel = false;
                         hud.p2neededPointsToNextLevel += hud.p2neededPointsToNextLevel;
                     }
