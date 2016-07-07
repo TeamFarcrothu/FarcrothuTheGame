@@ -1,3 +1,5 @@
+using SpaceShipFartrothu.Multimedia;
+
 namespace SpaceShipFartrothu.Core
 {
     using System.Collections.Generic;
@@ -11,7 +13,6 @@ namespace SpaceShipFartrothu.Core
     using Handlers;
     using Effects;
     using GameObjects;
-    using Sound;
     using Globals;
 
     public class GameEngine : Game
@@ -46,8 +47,9 @@ namespace SpaceShipFartrothu.Core
         public static Texture2D bossTexture;
         public static Texture2D healthTexture;
 
-        private VideoPlayer videoPlayer;
-        private Video video;
+        private VideoManager videoManager = new VideoManager();
+        private Texture2D texture;
+        private VideoPlayer videoPlayer = new VideoPlayer();
         private bool introPlayed;
 
         public GameEngine()
@@ -92,8 +94,7 @@ namespace SpaceShipFartrothu.Core
             healthTexture = this.Content.Load<Texture2D>("healthbar");
             Enemy.enemyTexture = this.Content.Load<Texture2D>("enemy_ship");
 
-            //video = Content.Load<Video>("sample");
-            //videoPlayer = new VideoPlayer();
+            this.videoManager.LoadContent(this.Content);
         }
 
         protected override void UnloadContent()
@@ -120,15 +121,15 @@ namespace SpaceShipFartrothu.Core
             switch (this.gameState)
             {
                 case State.Intro:
-                    //if (videoPlayer.State == MediaState.Stopped && this.introPlayed == false)
-                    //{
-                    //    videoPlayer.Play(video);
-                    //    this.introPlayed = true;
-                    //}
-                    //else if (videoPlayer.State == MediaState.Stopped && this.introPlayed == true)
-                    //{
-                    this.gameState = State.Menu;
-                    //}
+                    if (videoPlayer.State == MediaState.Stopped && this.introPlayed == false)
+                    {
+                        videoPlayer.Play(this.videoManager.Video);
+                        this.introPlayed = true;
+                    }
+                    else if (videoPlayer.State == MediaState.Stopped && this.introPlayed == true)
+                    {
+                        this.gameState = State.Menu;
+                    }
                     break;
                 case State.Playing:
                     {
@@ -315,14 +316,14 @@ namespace SpaceShipFartrothu.Core
                         this.DrawStarfield(this.winningImage); break;
                     }
 
-                    // DRAWING INTRO VIDEO
-                    //case State.Intro:
-                    //    if (videoPlayer.State != MediaState.Stopped)
-                    //    {
-                    //        texture = videoPlayer.GetTexture();
-                    //        spriteBatch.Draw(texture, GraphicsDevice.Viewport.Bounds, Color.White);
-                    //    }
-                    //    break;
+                //DRAWING INTRO VIDEO
+                case State.Intro:
+                    if (videoPlayer.State != MediaState.Stopped)
+                    {
+                        texture = videoPlayer.GetTexture();
+                        spriteBatch.Draw(texture, GraphicsDevice.Viewport.Bounds, Color.White);
+                    }
+                    break;
             }
 
             this.spriteBatch.End();

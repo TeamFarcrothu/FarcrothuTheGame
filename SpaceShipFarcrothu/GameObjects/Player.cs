@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SpaceShipFartrothu.GameObjects.Items;
-using SpaceShipFartrothu.Sound;
+using SpaceShipFartrothu.Multimedia;
 
 namespace SpaceShipFartrothu.GameObjects
 {

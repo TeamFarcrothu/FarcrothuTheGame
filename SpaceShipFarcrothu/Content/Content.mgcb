@@ -43,8 +43,8 @@
 /processorParam:Quality=Best
 /build:intro.mp3
 
-#begin sample.mp4
-/importer:H264Importer
+#begin introVideo.wmv
+/importer:WmvImporter
 /processor:VideoProcessor
-/build:sample.mp4
+/build:introVideo.wmv
 
