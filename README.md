@@ -2,7 +2,7 @@
 
 TODO:
 
-Till next project deffence:
+Till next project defence:
 
 - move lists with enemy, asteroids and all other static lists to GameEngine
 - instead of cleaning lists with present enemies, asteroids, bullets and etc. after they are dead or out of screen, set their vertical position at 0 to -300
