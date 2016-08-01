@@ -120,6 +120,10 @@ namespace SpaceShipFartrothu.Core
             {
                 MediaPlayer.Volume += 0.02f;
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && this.videoPlayer.State == MediaState.Playing)
+            {
+                this.videoPlayer.Stop();
+            }
             //UPDATING Game state
             switch (this.gameState)
             {

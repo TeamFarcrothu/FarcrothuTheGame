@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SpaceShipFartrothu.Core.GameEngine" Collapsed="true">
+    <Position X="20.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>WgQAUkgAAAEQAwIBAICAAEQHAAAAAggBgAAiAkAAgAQ=</HashCode>
+      <FileName>Core\GameEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.Core.HUD" Collapsed="true">
+    <Position X="20.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAIABJAAIBAgiAAiEQAAAQAUAAEIAEAAAAAUAAgAAQ=</HashCode>
+      <FileName>Core\HUD.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.Effects.Explosion" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAAAAAAAAAgAAEAAAAICAAEAAAAAAQAAAAAASAAQ=</HashCode>
+      <FileName>Effects\Explosion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameMain" Collapsed="true">
+    <Position X="22.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>GameMain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.Asteroid" Collapsed="true">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAAAAAAAgEAAAAAAAAAAEAAAAABAQQAAAAAEAA=</HashCode>
+      <FileName>GameObjects\Asteroid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.Boss" Collapsed="true">
+    <Position X="14" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYACACAAAAACgAAAAQMAAABAEBABAAAQRAAAAAAAA4=</HashCode>
+      <FileName>GameObjects\Boss.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.Bullet" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAgAAAAAAAAAAAEgAAAAIAQAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.Enemy" Collapsed="true">
+    <Position X="16.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQACAAAAAAAAgEgBAgMAAAACEkAAQABAAQAQAAIAAo=</HashCode>
+      <FileName>GameObjects\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.EnemyEntity" Collapsed="true">
+    <Position X="14" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>GameObjects\EnemyEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.FallingObject" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\FallingObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.GameObject" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAAAAAEgAgABAAIAABAGAAAwAgAAIAAAAAAAA=</HashCode>
+      <FileName>GameObjects\GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.Player" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQCDAAIAAAEDgiAAAwMAAABiEGgAAABARAAAgEAAgw=</HashCode>
+      <FileName>GameObjects\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.StarField" Collapsed="true">
+    <Position X="18.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAEgAAAgAAAAAAAAABAAAAAAAAAAIAAAAAAAQ=</HashCode>
+      <FileName>GameObjects\StarField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.Items.DamageItem" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAIAgAAAAAAAAAAAEAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>GameObjects\Items\DamageItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.Items.HealthItem" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAIAAAgAAAgAAAAAAAEAAQAAQAAQAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Items\HealthItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.GameObjects.Items.Item" Collapsed="true">
+    <Position X="1.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAAAAAAAAAAAAAAAAAAAAEAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Items\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.Globals.Globals" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Globals\Globals.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.Handlers.CollisionHandler" Collapsed="true">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Handlers\CollisionHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.Handlers.StatsManager" Collapsed="true">
+    <Position X="20.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABgAAAACAAAAgAAAAAAAAAAAQAAAAAEAgAQAAAAAA=</HashCode>
+      <FileName>Handlers\StatsManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.Multimedia.SoundManager" Collapsed="true">
+    <Position X="22.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAEAAAAAAAAABAAAQ=</HashCode>
+      <FileName>Multimedia\SoundManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipFartrothu.Multimedia.VideoManager" Collapsed="true">
+    <Position X="22.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw=</HashCode>
+      <FileName>Multimedia\VideoManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="SpaceShipFartrothu.Interfaces.ICollectable" Collapsed="true">
+    <Position X="18.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ICollectable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SpaceShipFartrothu.Interfaces.ICollidable" Collapsed="true">
+    <Position X="20.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ICollidable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="SpaceShipFartrothu.Core.State" Collapsed="true">
+    <Position X="18.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAgAAAAAAAABAAAAAAAAAIAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\State.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
