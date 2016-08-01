@@ -1,6 +1,7 @@
 ﻿namespace SpaceShipFartrothu.Handlers
 {
     using GameObjects;
+    using GameObjects.Items;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -17,14 +18,26 @@
                 {
                     if (player.BoundingBox.Intersects(currentTarget.BoundingBox))
                     {
-                        player.Score += (currentTarget as EnemyEntity).ScorePoints;
+                        if (currentTarget is EnemyEntity)
+                        {
+                            player.Score += (currentTarget as EnemyEntity).ScorePoints;
 
-                        player.ReactOnColission(currentTarget);
-                        currentTarget.ReactOnColission();
+                            player.ReactOnColission(currentTarget);
+                            currentTarget.ReactOnColission();
+                        }
+                        else if (currentTarget is Item)
+                        {
+                            if (currentTarget.IsVisible)
+                            {
+                                currentTarget.ReactOnColission(player);
+                            }
+                        }
                     }
                 }
             }
         }
+
+
 
         //check if player bullets collides with gameobjects
         public static void CheckPlayerBulletsCollisions(List<GameObject> targets)

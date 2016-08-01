@@ -53,8 +53,8 @@ namespace SpaceShipFartrothu.GameObjects
             this.BulletDamage = DefaultBulletDamage;
             this.BulletDelay = DefaultBulletDelay;
             this.Speed = DefaultSpeed;
+            this.MaxHealth = DefaultHealth;
             this.Health = DefaultHealth;
-            this.MaxHealth = this.Health;
             this.Score = 0;
             this.items = new List<Item>();
             //TODO: check if needed
@@ -109,7 +109,24 @@ namespace SpaceShipFartrothu.GameObjects
 
         public int Score { get; set; }
 
-        public int Health { get; set; }
+        public int Health
+        {
+            get
+            {
+                return this.health;
+            }
+            set
+            {
+                if (this.health + value >= this.MaxHealth)
+                {
+                    this.health = MaxHealth;
+                }
+                else
+                {
+                    this.health += value;
+                }
+            }
+        }
 
         public int BulletDelay { get; set; }
         public int MaxHealth { get; set; }
@@ -250,7 +267,7 @@ namespace SpaceShipFartrothu.GameObjects
                 //this.soundManager.explodeSound.Play();
                 //this.hud.playerscore += 5;
 
-                this.Health -= target.Damage;
+                this.Health = -target.Damage;
 
             }
 
@@ -258,14 +275,14 @@ namespace SpaceShipFartrothu.GameObjects
             {
 
                 //TODO: add points to player score and reduce health
-                this.Health -= target.Damage;
+                this.Health = -target.Damage;
             }
 
             else if (currentTargetType == "Boss")
             {
 
                 //TODO: add points to player score and reduce health
-                this.Health -= target.Damage;
+                this.Health = -target.Damage;
             }
 
             else if (currentTargetType == "Bullet")
@@ -276,7 +293,7 @@ namespace SpaceShipFartrothu.GameObjects
                 //var bulletId = bullet.ShooterId;
                 //if(bulletId == 0)
 
-                this.Health -= target.Damage;
+                this.Health = -target.Damage;
             }
         }
     }

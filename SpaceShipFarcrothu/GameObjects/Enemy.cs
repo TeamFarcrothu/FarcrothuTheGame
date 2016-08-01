@@ -8,6 +8,7 @@
     using Globals;
     using Effects;
     using Core;
+    using Items;
 
     public class Enemy : EnemyEntity
     {
@@ -156,6 +157,7 @@
         public override void ReactOnColission(GameObject target = null)
         {
             Explosion.Explosions.Add(new Explosion(this.Position));
+            HealthItem.LoadItems(this.Position);
 
             this.IsVisible = false;
 

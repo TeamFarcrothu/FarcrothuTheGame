@@ -14,6 +14,7 @@ namespace SpaceShipFartrothu.Core
     using Effects;
     using GameObjects;
     using Globals;
+    using GameObjects.Items;
 
     public class GameEngine : Game
     {
@@ -44,6 +45,7 @@ namespace SpaceShipFartrothu.Core
         public static Texture2D explosionTexture;
         public static Texture2D bulletTexture;
         public static Texture2D asteroidTexture;
+        public static Texture2D itemTexture; //-------------------------
         public static Texture2D bossTexture;
         public static Texture2D healthTexture;
 
@@ -90,6 +92,7 @@ namespace SpaceShipFartrothu.Core
             asteroidTexture = this.Content.Load<Texture2D>("asteroid");
             explosionTexture = this.Content.Load<Texture2D>("explosion");
             bulletTexture = this.Content.Load<Texture2D>("bullet");
+            itemTexture = this.Content.Load<Texture2D>("health_potion");//---------------------------------
             bossTexture = this.Content.Load<Texture2D>("space_Boss_Level_1");
             healthTexture = this.Content.Load<Texture2D>("healthbar");
             Enemy.enemyTexture = this.Content.Load<Texture2D>("enemy_ship");
@@ -217,7 +220,7 @@ namespace SpaceShipFartrothu.Core
         private void Play(GameTime gameTime)
         {
             //Enable boss mode if some of players have enough points   ## its 150 just for testing
-            if (Player.Players.Any(s => s.Score >= 150))
+            if (Player.Players.Any(s => s.Score >= 3000))
             {
                 this.EnableBossMode(gameTime);
             }
@@ -233,9 +236,15 @@ namespace SpaceShipFartrothu.Core
                     asteroid.Update(gameTime);
                 }
 
+                foreach (var item in HealthItem.HealthItems)
+                {
+                    item.Update(gameTime);
+                }
+
                 // Handle collisions between players and enemy objects
                 CollisionHandler.CheckForCollision(Asteroid.Asteroids);
                 CollisionHandler.CheckForCollision(Enemy.Enemies);
+                CollisionHandler.CheckForCollision(HealthItem.HealthItems);
 
                 Enemy.LoadEnemies();
                 Asteroid.LoadAsteroids();
@@ -260,6 +269,8 @@ namespace SpaceShipFartrothu.Core
             {
                 explosion.Update(gameTime);
             }
+
+            HealthItem.Update();
         }
 
         private void EnableBossMode(GameTime gameTime)
@@ -347,11 +358,17 @@ namespace SpaceShipFartrothu.Core
             foreach (var explosion in Explosion.Explosions)
             {
                 explosion.Draw(this.spriteBatch);
+
             }
 
             foreach (var asteroid in Asteroid.Asteroids)
             {
                 asteroid.Draw(this.spriteBatch);
+            }
+
+            foreach (var item in HealthItem.HealthItems)
+            {
+                item.Draw(this.spriteBatch);
             }
         }
 
@@ -361,6 +378,8 @@ namespace SpaceShipFartrothu.Core
                 Asteroid.Asteroids.Clear();
             if (Enemy.Enemies.Any())
                 Enemy.Enemies.Clear();
+            if (HealthItem.HealthItems.Any())
+                HealthItem.HealthItems.Clear();
 
             this.boss.Draw(this.spriteBatch);
         }

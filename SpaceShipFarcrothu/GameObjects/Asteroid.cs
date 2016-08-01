@@ -5,6 +5,7 @@ using SpaceShipFartrothu.Effects;
 
 namespace SpaceShipFartrothu.GameObjects
 {
+    using Items;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -103,6 +104,7 @@ namespace SpaceShipFartrothu.GameObjects
         {
             Explosion.Explosions.Add(new Explosion(this.Position));
             this.IsVisible = false;
+            HealthItem.LoadItems(this.Position);
 
             //TODO
 

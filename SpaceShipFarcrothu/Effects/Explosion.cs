@@ -56,6 +56,7 @@ namespace SpaceShipFartrothu.Effects
                 this.frameCol = 0;
             }
 
+
             this.sourceRect = new Rectangle(this.frameCol *this.spriteWidth, this.frameRow *this.spriteHeight, this.spriteWidth, this.spriteHeight);
             this.origin = new Vector2(this.sourceRect.Width / 2, this.sourceRect.Height / 2);
 
