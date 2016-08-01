@@ -63,6 +63,7 @@
         {
             this.Health = 0;
             this.IsVisible = false;
+            this.Position = new Vector2(0, -300);
         }
 
         //   TODO :  must make it work better
