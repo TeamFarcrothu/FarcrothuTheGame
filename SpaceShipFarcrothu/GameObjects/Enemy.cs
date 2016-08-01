@@ -12,6 +12,7 @@
     public class Enemy : EnemyEntity
     {
         private const int DefaultScorePoints = 15;
+        private const int DefaultHealth = 5;
         //private Texture2D bulletTexture;
         private const int shooterId = 0;
         private static Random random = new Random();
@@ -29,7 +30,7 @@
         {
             this.Texture = enemyTexture;
             this.BulletTexture = bulleTexture;
-            this.Health = 5;
+            this.Health = DefaultHealth;
             this.BulletDelay = 40;
             this.Speed = 2;
             this.IsVisible = true;
@@ -46,6 +47,23 @@
         public int BulletDelay { get; set; }
 
         public int Health { get; set; }
+
+        public void AddScore(int score)
+        {
+            if (score <= 0)
+            {
+                throw new ArgumentException("Score must be positive.");
+            }
+
+            int newScore = this.ScorePoints + score;
+            this.ScorePoints = newScore;
+        }
+
+        public void Die()
+        {
+            this.Health = 0;
+            this.IsVisible = false;
+        }
 
         //   TODO :  must make it work better
         public Texture2D BulletTexture { get; set; }
