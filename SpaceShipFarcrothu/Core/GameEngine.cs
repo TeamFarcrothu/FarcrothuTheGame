@@ -287,10 +287,27 @@ namespace SpaceShipFartrothu.Core
                     asteroid.Update(gameTime);
                 }
 
-                foreach (var item in HealthItem.HealthItems)
+
+                // Cycle through health items, remove invisible and update visible ones.
+                for (int i = 0; i < HealthItem.HealthItems.Count; i++)
                 {
-                    item.Update(gameTime);
+                    var item = HealthItem.HealthItems[i];
+                    if (!item.IsVisible)
+                    {
+                        HealthItem.HealthItems.RemoveAt(i);
+                    }
+                    else
+                    {
+                        item.Update(gameTime);
+                    }
                 }
+
+                /*
+                 * foreach (var item in HealthItem.HealthItems)
+                 * {
+                 *     item.Update(gameTime);
+                 * }
+                 */
 
                 // Handle collisions between players and enemy objects
                 CollisionHandler.CheckForCollision(this.Asteroids, this.Players, this.Explosions);
@@ -326,7 +343,8 @@ namespace SpaceShipFartrothu.Core
             //Update all explosions
             this.Explosions.ForEach(e => e.Update(gameTime));
 
-            HealthItem.Update();
+            // Updates static list in HealthItem class - integrated in HealthItem instance update method.
+            // HealthItem.Update(); 
         }
 
         //private void EnableBossMode(GameTime gameTime)

@@ -137,7 +137,7 @@
 
         public void AddItem(Item item)
         {
-            this.items.Add(item);
+            //this.items.Add(item);
 
             this.Health += item.Health;
             this.BulletDamage += item.Damage;
