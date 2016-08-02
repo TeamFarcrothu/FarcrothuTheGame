@@ -10,6 +10,7 @@
     public abstract class Item : FallingObject
     {
         private const int DefaultSpeed = 4;
+        private int health;
 
         protected Item(Texture2D texture, Vector2 position)
             : base(texture, position)
@@ -17,7 +18,7 @@
             this.Speed = DefaultSpeed;
         }
 
-        public int Health { get; set; }
+        public abstract int Health { get; set; }
 
         public virtual void Update()
         {
@@ -38,9 +39,9 @@
             }
         }
 
-        public override void ReactOnColission(GameObject target = null)
-        {
-            this.IsVisible = true;
-        }
+        //public override void ReactOnColission(GameObject target = null)
+        //{
+        //    this.IsVisible = true;
+        //}
     }
 }

@@ -10,6 +10,7 @@
     public class HealthItem : Item
     {
         private const int HealthPower = 5; // This can be changed later.
+        private int health;
 
         /* By setting damage to ZERO, we make sure not to increase player damage
            when adding health item */
@@ -18,6 +19,19 @@
         private static Random random = new Random();
 
         public static List<GameObject> HealthItems = new List<GameObject>();
+
+        public override int Health
+        {
+            get
+            {
+                return this.health;
+            }
+
+            set
+            {
+                this.health = value;
+            }
+        }
 
         public HealthItem(Texture2D texture, Vector2 position) 
             : base(texture, position)
@@ -46,18 +60,18 @@
             }
         }
 
-        public static void Update()
-        {
-
-            for (int i = 0; i < HealthItems.Count; i++)
-            {
-                if (!HealthItems[i].IsVisible)
-                {
-                    HealthItems.RemoveAt(i);
-                    i--;
-                }
-            }
-        }
+        //public static void Update()
+        //{
+        //
+        //    for (int i = 0; i < HealthItems.Count; i++)
+        //    {
+        //        if (!HealthItems[i].IsVisible)
+        //        {
+        //            HealthItems.RemoveAt(i);
+        //            i--;
+        //        }
+        //    }
+        //}
 
         public static void LoadItems(Vector2 position)
         {
@@ -77,7 +91,8 @@
         {
             if (target is Player)
             {
-                (target as Player).Health += this.Health;
+                //(target as Player).Health += this.Health;
+                (target as Player).AddItem(this);
             }
             this.IsVisible = false;
         }     

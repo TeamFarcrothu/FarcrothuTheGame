@@ -1,5 +1,6 @@
 ﻿namespace SpaceShipFartrothu.GameObjects.Items
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -10,6 +11,19 @@
         /* By setting health to ZERO, we make sure not to increase player health
            when adding damage item */
         private const int ZeroHealthPower = 0;
+
+        public override int Health
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public DamageItem(Texture2D texture, Vector2 position) 
             : base(texture, position)
