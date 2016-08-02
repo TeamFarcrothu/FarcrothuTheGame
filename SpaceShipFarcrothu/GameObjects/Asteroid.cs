@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using SpaceShipFartrothu.Core;
-using SpaceShipFartrothu.Effects;
-
-namespace SpaceShipFartrothu.GameObjects
+﻿namespace SpaceShipFartrothu.GameObjects
 {
     using Items;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using System;
+    using SpaceShipFartrothu.Interfaces;
 
-    public class Asteroid : EnemyEntity
+    public class Asteroid : EnemyEntity, IAsteroid
     {
         private const int DefaultSpeed = 4;
         private const int DefaultDamage = 10;
         private const int DefaultScorePoints = 10;
+        private const string Type = nameof(Asteroid);
 
         private static Random random = new Random();
 
@@ -23,7 +21,7 @@ namespace SpaceShipFartrothu.GameObjects
         //public float RandomX;
         //public float RandomY;
 
-        public static List<GameObject> Asteroids = new List<GameObject>();
+        //public static List<GameObject> Asteroids = new List<GameObject>();
 
         public Asteroid(Texture2D texture, Vector2 position)
             : base(texture, position)
@@ -80,29 +78,9 @@ namespace SpaceShipFartrothu.GameObjects
             }
         }
 
-        public static void LoadAsteroids()
+        public override void ReactOnColission(IGameObject target = null)
         {
-            var newRand = new Random();
-            int randomX = random.Next(0, 1200) - newRand.Next(0, 20);
-            int randomY = random.Next(-700, -50) + newRand.Next(0, 100);
-
-            if (Asteroids.Count < 15)
-            {
-                Asteroids.Add(new Asteroid(GameEngine.asteroidTexture, new Vector2(randomX, randomY)));
-            }
-
-            for (int i = 0; i < Asteroids.Count; i++)
-            {
-                if (!Asteroids[i].IsVisible)
-                {
-                    Asteroids.RemoveAt(i);
-                    i--;
-                }
-            }
-        }
-        public override void ReactOnColission(GameObject target = null)
-        {
-            Explosion.Explosions.Add(new Explosion(this.Position));
+            //explosions.Add(new Explosion(this.Position));
             this.IsVisible = false;
             HealthItem.LoadItems(this.Position);
 

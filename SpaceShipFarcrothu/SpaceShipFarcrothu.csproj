@@ -39,6 +39,10 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Factories\AsteroidFactory.cs" />
+    <Compile Include="Factories\BulletsFactory.cs" />
+    <Compile Include="Factories\EnemyFactory.cs" />
+    <Compile Include="Factories\ExplosionFactory.cs" />
     <Compile Include="Handlers\CollisionHandler.cs" />
     <Compile Include="Core\HUD.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -72,12 +76,21 @@
     <Compile Include="GameObjects\Items\HealthItem.cs" />
     <Compile Include="GameObjects\Items\Item.cs" />
     <Compile Include="Globals\Globals.cs" />
+    <Compile Include="Handlers\EntityCleanerHandler.cs" />
+    <Compile Include="Handlers\InputHandler.cs" />
     <Compile Include="Handlers\StatsManager.cs" />
+    <Compile Include="Interfaces\IAsteroid.cs" />
+    <Compile Include="Interfaces\IBullet.cs" />
     <Compile Include="Interfaces\ICollectable.cs" />
     <Compile Include="Interfaces\ICollidable.cs" />
     <Compile Include="GameObjects\Player.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Interfaces\IEnemy.cs" />
+    <Compile Include="Interfaces\IExplodable.cs" />
+    <Compile Include="Interfaces\IExplosion.cs" />
+    <Compile Include="Interfaces\IGameObject.cs" />
+    <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Multimedia\VideoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\StarField.cs">

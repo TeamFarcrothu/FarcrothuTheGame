@@ -6,6 +6,7 @@
     using System;
     using System.Collections.Generic;
     using Core;
+    using SpaceShipFartrothu.Interfaces;
 
     public abstract class Item : FallingObject
     {
@@ -38,7 +39,7 @@
             }
         }
 
-        public override void ReactOnColission(GameObject target = null)
+        public override void ReactOnColission(IGameObject target = null)
         {
             this.IsVisible = true;
         }

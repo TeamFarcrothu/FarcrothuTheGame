@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using SpaceShipFartrothu.GameObjects.Items;
-using SpaceShipFartrothu.Multimedia;
-
-namespace SpaceShipFartrothu.GameObjects
+﻿namespace SpaceShipFartrothu.GameObjects
 {
-    public class Player : GameObject
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
+    using Microsoft.Xna.Framework.Graphics;
+    using Items;
+    using Multimedia;
+    using Interfaces;
+
+    public class Player : GameObject, IPlayer
     {
         private const int DefaultBulletDamage = 2;
         private const int DefaultSpeed = 5;
@@ -41,10 +40,6 @@ namespace SpaceShipFartrothu.GameObjects
         //public bool isSecondBulletActive;
         //public bool isThirdBulletActive;
 
-        private SoundManager sm = new SoundManager();
-
-        public static List<Player> Players = new List<Player>();
-
         public Player(Texture2D texture, Vector2 position, int id)
             : base(texture, position)
         {
@@ -57,6 +52,8 @@ namespace SpaceShipFartrothu.GameObjects
             this.Health = DefaultHealth;
             this.Score = 0;
             this.items = new List<Item>();
+            this.SoundManager = new SoundManager();
+            this.Position = position;
             //TODO: check if needed
             // this.isColiding = false;
 
@@ -73,8 +70,10 @@ namespace SpaceShipFartrothu.GameObjects
                 this.resetPosition = new Vector2(1000, 600);
             }
 
-            Players.Add(this);
+            // Players.Add(this);
         }
+
+        public new Vector2 Position { get; set; }
 
         public int Level //***
         {
@@ -129,7 +128,12 @@ namespace SpaceShipFartrothu.GameObjects
         }
 
         public int BulletDelay { get; set; }
+
         public int MaxHealth { get; set; }
+
+        public Texture2D BulletTexture { get; set; }
+
+        public SoundManager SoundManager { get; set; }
 
         public void AddItem(Item item)
         {
@@ -143,9 +147,9 @@ namespace SpaceShipFartrothu.GameObjects
         public void LoadContent(ContentManager content)
         {
             //this.Texture = content.Load<Texture2D>(this.shipTextureFile);
-            this.bulletTexture = content.Load<Texture2D>("bullet");
+            this.BulletTexture = content.Load<Texture2D>("bullet");
             this.healthTexture = content.Load<Texture2D>("healthbar");
-            this.sm.LoadContent(content);
+            this.SoundManager.LoadContent(content);
         }
 
         // Player draw method
@@ -153,7 +157,9 @@ namespace SpaceShipFartrothu.GameObjects
         {
             // Draw player itself if he is alive
             if (this.isAlive)
+            {
                 spriteBatch.Draw(this.Texture, this.Position, Color.White);
+            }
         }
 
         // Player update method
@@ -179,85 +185,9 @@ namespace SpaceShipFartrothu.GameObjects
                     this.Texture.Width - 5,
                     this.Texture.Height - 5
                 );
-
-            // Keyboard state monitoring
-            var keyState = Keyboard.GetState();
-
-            // Player shooting
-            if ((keyState.IsKeyDown(Keys.LeftControl) && this.id == 2) || (keyState.IsKeyDown(Keys.LeftControl) && this.id == 1))
-            {
-                this.Shoot();
-            }
-
-            // Player movement
-            if ((keyState.IsKeyDown(Keys.W) && this.id == 2) || (keyState.IsKeyDown(Keys.Up) && this.id == 1))
-            {
-                this.Position = new Vector2(this.Position.X, this.Position.Y - this.Speed);
-            }
-            if ((keyState.IsKeyDown(Keys.A) && this.id == 2) || (keyState.IsKeyDown(Keys.Left) && this.id == 1))
-            {
-                this.Position = new Vector2(this.Position.X - this.Speed, this.Position.Y);
-            }
-            if ((keyState.IsKeyDown(Keys.S) && this.id == 2) || (keyState.IsKeyDown(Keys.Down) && this.id == 1))
-            {
-                this.Position = new Vector2(this.Position.X, this.Position.Y + this.Speed);
-            }
-            if ((keyState.IsKeyDown(Keys.D) && this.id == 2) || (keyState.IsKeyDown(Keys.Right) && this.id == 1))
-            {
-                this.Position = new Vector2(this.Position.X + this.Speed, this.Position.Y);
-            }
-
-            // Moving left and right through screen borders
-            if (this.Position.X <= -30 || this.Position.X >= Globals.Globals.MAIN_SCREEN_WIDTH)
-            {
-                if (this.Position.X > Globals.Globals.MAIN_SCREEN_WIDTH)
-                {
-                    this.Position = new Vector2(this.Position.X - Globals.Globals.MAIN_SCREEN_WIDTH, this.Position.Y);
-                }
-                else if (this.Position.X < -30)
-                {
-                    this.Position = new Vector2(Globals.Globals.MAIN_SCREEN_WIDTH, this.Position.Y);
-                }
-            }
-            if (this.Position.Y <= 0)
-            {
-                this.Position = new Vector2(this.Position.X, 0);
-            }
-            if (this.Position.Y >= Globals.Globals.MAIN_SCREEN_HEIGHT - this.Texture.Height)
-            {
-                this.Position = new Vector2(this.Position.X, Globals.Globals.MAIN_SCREEN_HEIGHT - this.Texture.Height);
-            }
-
         }
 
-        // Player shooting method
-        private void Shoot()
-        {
-            if (this.BulletDelay >= 0)
-            {
-                this.BulletDelay--;
-            }
-
-            if (this.BulletDelay <= 0)
-            {
-                this.sm.playerShootSound.Play();
-
-                var newBulletPosition = new Vector2(this.Position.X + 32 - this.bulletTexture.Width / 2, this.Position.Y + 10);
-
-                Bullet newBullet = new Bullet(this.bulletTexture, newBulletPosition, this.Id, this.BulletDamage);
-
-                if (Bullet.Bullets.Where(b => b.ShooterId == this.Id).ToList().Count < 20)
-                {
-                    Bullet.Bullets.Add(newBullet);
-                }
-            }
-            if (this.BulletDelay == 0)
-            {
-                this.BulletDelay = 10;
-            }
-        }
-
-        public override void ReactOnColission(GameObject target)
+        public override void ReactOnColission(IGameObject target)
         {
             string currentTargetType = target.GetType().Name;
 
@@ -268,7 +198,6 @@ namespace SpaceShipFartrothu.GameObjects
                 //this.hud.playerscore += 5;
 
                 this.Health = -target.Damage;
-
             }
 
             else if (currentTargetType == "Enemy")

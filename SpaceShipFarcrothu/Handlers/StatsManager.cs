@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace SpaceShipFartrothu.Handlers
 {
+    using SpaceShipFartrothu.Interfaces;
+
     public static class StatsManager
     {
         private static bool player1HasEnoughToNextLevel;
@@ -20,7 +22,7 @@ namespace SpaceShipFartrothu.Handlers
 
         private static int currentPlayerID;
 
-        public static void UpdatePlayersStats(List<Player> players)
+        public static void UpdatePlayersStats(IList<IPlayer> players)
         {
 
             for (int i = 0; i < players.Count; i++)

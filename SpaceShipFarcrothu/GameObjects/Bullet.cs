@@ -1,15 +1,15 @@
 ﻿namespace SpaceShipFartrothu.GameObjects
 {
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Globals;
+    using Interfaces;
 
-    public class Bullet : GameObject
+    public class Bullet : GameObject, IBullet
     {
-        private const int DefaultSpeed = 5;
+        private const int DefaultSpeed = 6;
 
-        public static List<Bullet> Bullets = new List<Bullet>();
+      //public static List<Bullet> Bullets = new List<Bullet>();
 
         // Enemy = 0; Player1 = 1; Player2 = 2; Boss = 3
         private int shooterId;
@@ -22,7 +22,7 @@
             this.ShooterId = shooterId;
             this.Damage = bulletDamage;
 
-            Bullets.Add(this);
+           // Bullets.Add(this);
         }
 
         public int ShooterId { get; set; }
@@ -52,16 +52,6 @@
                     this.IsVisible = false;
                 }
             }
-
-            //Remove all not visible Bullets
-            for (int i = 0; i < Bullets.Count; i++)
-            {
-                if (!Bullets[i].IsVisible)
-                {
-                    Bullets.RemoveAt(i);
-                    i--;
-                }
-            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -69,7 +59,7 @@
             spriteBatch.Draw(this.Texture, this.Position, Color.White);
         }
 
-        public override void ReactOnColission(GameObject target = null)
+        public override void ReactOnColission(IGameObject target = null)
         {
             this.IsVisible = false;
         }

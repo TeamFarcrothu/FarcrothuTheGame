@@ -8,6 +8,8 @@ namespace SpaceShipFartrothu.Core
     using Microsoft.Xna.Framework.Input;
     using Globals;
     using System.Collections.Generic;
+    using SpaceShipFartrothu.Interfaces;
+
     public class HUD
     {
         public int p1neededPointsToNextLevel;
@@ -66,12 +68,12 @@ namespace SpaceShipFartrothu.Core
             this.player1DamagePos = new Vector2(50, 110);
             this.player2DamagePos = new Vector2(1110, 110);
         }
-        public void UpdatePlayersInfo(List<Player> players)//***
+        public void UpdatePlayersInfo(IList<IPlayer> players)//***
         {
             playersCount = players.Count;
             for (int i = 0; i < players.Count; i++)
             {
-                Player currentPlayer = players[i];
+                IPlayer currentPlayer = players[i];
                 playersLevels.Add(currentPlayer.Level);
                 playersScores.Add(currentPlayer.Score);
                 playersHealth.Add(currentPlayer.Health);

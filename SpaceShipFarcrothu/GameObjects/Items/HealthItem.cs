@@ -6,6 +6,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using System;
     using System.Collections.Generic;
+    using SpaceShipFartrothu.Interfaces;
 
     public class HealthItem : Item
     {
@@ -73,7 +74,7 @@
             }
         }
 
-        public override void ReactOnColission(GameObject target = null)
+        public override void ReactOnColission(IGameObject target = null)
         {
             if (target is Player)
             {

@@ -4,7 +4,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using Interfaces;
 
-    public abstract class GameObject : ICollidable
+    public abstract class GameObject : ICollidable, IGameObject
     {
         protected Texture2D texture;
         protected Rectangle boundingBox;
@@ -36,6 +36,6 @@
 
         public abstract void Draw(SpriteBatch spriteBatch);
 
-        public abstract void ReactOnColission(GameObject target = null);
+        public abstract void ReactOnColission(IGameObject target = null);
     }
 }

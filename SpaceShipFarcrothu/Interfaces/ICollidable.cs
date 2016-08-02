@@ -4,6 +4,6 @@
 
     public interface ICollidable
     {
-        void ReactOnColission(GameObject target);
+        void ReactOnColission(IGameObject target);
     }
 }

@@ -4,26 +4,29 @@
     using GameObjects.Items;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.CompilerServices;
+    using Interfaces;
 
     public static class CollisionHandler
     {
         //check players for gameobjects collisions
-        public static void CheckForCollision(List<GameObject> targets)
+        public static void CheckForCollision(IList<IGameObject> targets, IList<IPlayer> players, IList<IExplosion> explosions)
         {
             for (int i = 0; i < targets.Count; i++)
             {
-                GameObject currentTarget = targets[i];
+                IGameObject currentTarget = targets[i];
 
-                foreach (var player in Player.Players)
+                foreach (var player in players)
                 {
                     if (player.BoundingBox.Intersects(currentTarget.BoundingBox))
                     {
-                        if (currentTarget is EnemyEntity)
+                        if (currentTarget is IExplodable)
                         {
                             player.Score += (currentTarget as EnemyEntity).ScorePoints;
 
                             player.ReactOnColission(currentTarget);
                             currentTarget.ReactOnColission();
+                            (currentTarget as EnemyEntity).ColideAndExplode(explosions);
                         }
                         else if (currentTarget is Item)
                         {
@@ -37,18 +40,16 @@
             }
         }
 
-
-
         //check if player bullets collides with gameobjects
-        public static void CheckPlayerBulletsCollisions(List<GameObject> targets)
+        public static void CheckPlayerBulletsCollisions(List<IGameObject> targets, IList<IBullet> bullets, IList<IPlayer> players, IList<IExplosion> explosions)
         {
-            foreach (var player in Player.Players)
+            foreach (var player in players)
             {
-                var playerBullets = Bullet.Bullets.Where(b => b.ShooterId == player.Id).ToList();
+                var playerBullets = bullets.Where(b => b.ShooterId == player.Id).ToList();
 
                 for (int i = 0; i < targets.Count; i++)
                 {
-                    GameObject currentTarget = targets[i];
+                    IGameObject currentTarget = targets[i];
 
                     foreach (var playerBullet in playerBullets)
                     {
@@ -60,6 +61,8 @@
 
                             playerBullet.ReactOnColission();
                             currentTarget.ReactOnColission();
+                            (currentTarget as EnemyEntity).ColideAndExplode(explosions);
+
                         }
                     }
                 }
@@ -68,11 +71,11 @@
         }
 
         //check enemies bullets for collision with palyer
-        public static void CheckEnemiesBulletsCollisions()
+        public static void CheckEnemiesBulletsCollisions(IList<IBullet> bullets, IList<IPlayer> players)
         {
-            var enemiesBullets = Bullet.Bullets.Where(b => b.ShooterId == 0).ToList();
+            var enemiesBullets = bullets.Where(b => b.ShooterId == 0).ToList();
 
-            foreach (Player player in Player.Players)
+            foreach (Player player in players)
             {
                 for (int i = 0; i < enemiesBullets.Count; i++)
                 {
@@ -88,11 +91,11 @@
         }
 
         //check boss bullets for collision with players
-        public static void CheckBossBulletsCollisions()
+        public static void CheckBossBulletsCollisions(IList<Bullet> bullets, IList<IPlayer> players)
         {
-            var bossBullets = Bullet.Bullets.Where(b => b.ShooterId == 3).ToList();
+            var bossBullets = bullets.Where(b => b.ShooterId == 3).ToList();
 
-            foreach (Player player in Player.Players)
+            foreach (Player player in players)
             {
                 for (int i = 0; i < bossBullets.Count; i++)
                 {

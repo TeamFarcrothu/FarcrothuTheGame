@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using SpaceShipFartrothu.Core;
-using SpaceShipFartrothu.GameObjects;
-
-namespace SpaceShipFartrothu.Effects
+﻿namespace SpaceShipFartrothu.Effects
 {
-    public class Explosion : GameObject
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
+    using Microsoft.Xna.Framework.Graphics;
+    using Core;
+    using GameObjects;
+    using Interfaces;
+
+    public class Explosion : GameObject, IExplosion
     {
         private float timer;
         private float interval;
@@ -15,25 +15,23 @@ namespace SpaceShipFartrothu.Effects
         private int frameRow, frameCol, spriteWidth, spriteHeight;
         private Rectangle sourceRect;
 
-        public static List<Explosion> Explosions = new List<Explosion>();
-        //public static Texture2D explosionTexture;
-
-        public Explosion(Vector2 position)
-            :base(null, position)
+        public Explosion(Texture2D texture, Vector2 position)
+            : base(texture, position)
         {
+            //this.Texture = texture;
             this.timer = 0f;
             this.interval = 20;
             this.frameRow = 1;
             this.spriteWidth = 100;
             this.spriteHeight = 100;
-            this.isVisible = true;
-
-            Explosions.Add(this);
+            this.IsVisible = true;
         }
 
-        public void LoadContent(ContentManager Content)
+       // public new Texture2D Texture { get; set; }
+
+        public void LoadContent(ContentManager content)
         {
-          
+            this.texture = content.Load<Texture2D>("explosion");
         }
 
         public override void Update(GameTime gameTime)
@@ -57,31 +55,24 @@ namespace SpaceShipFartrothu.Effects
             }
 
 
-            this.sourceRect = new Rectangle(this.frameCol *this.spriteWidth, this.frameRow *this.spriteHeight, this.spriteWidth, this.spriteHeight);
+            this.sourceRect = new Rectangle(this.frameCol * this.spriteWidth, this.frameRow * this.spriteHeight, this.spriteWidth, this.spriteHeight);
             this.origin = new Vector2(this.sourceRect.Width / 2, this.sourceRect.Height / 2);
 
-            //Clear invisible explosions
-            for (int i = 0; i < Explosions.Count; i++)
-            {
-                if (!Explosions[i].IsVisible)
-                {
-                    Explosions.RemoveAt(i);
-                    i--;
-                }
-            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (this.isVisible)
+            if (this.IsVisible)
             {
                 //spriteBatch.Draw(this.texture, this.position, this.sourceRect, Color.White, 0f, this.origin, 1.0f, SpriteEffects.None, 0);
-                spriteBatch.Draw(GameEngine.explosionTexture, this.Position, this.sourceRect, Color.White, 0f, this.origin, 1.0f, SpriteEffects.None, 0);
+                spriteBatch.Draw(this.Texture, this.Position, this.sourceRect, Color.White, 0f, this.origin, 1.0f, SpriteEffects.None, 0);
             }
         }
 
-        public override void ReactOnColission(GameObject target = null)
-        {           
+        public override void ReactOnColission(IGameObject target = null)
+        {
+            //play sound?
+            this.IsVisible = false;
         }
     }
 }

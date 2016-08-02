@@ -2,6 +2,7 @@
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using SpaceShipFartrothu.Interfaces;
 
     public class DamageItem : Item
     {
@@ -27,7 +28,7 @@
             throw new System.NotImplementedException();
         }
 
-        public override void ReactOnColission(GameObject target = null)
+        public override void ReactOnColission(IGameObject target = null)
         {
             throw new System.NotImplementedException();
         }
