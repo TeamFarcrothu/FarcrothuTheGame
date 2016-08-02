@@ -72,7 +72,6 @@
     <Compile Include="GameObjects\Items\HealthItem.cs" />
     <Compile Include="GameObjects\Items\Item.cs" />
     <Compile Include="Globals\Globals.cs" />
-    <Compile Include="Handlers\HealtItem.cs" />
     <Compile Include="Handlers\StatsManager.cs" />
     <Compile Include="Interfaces\ICollectable.cs" />
     <Compile Include="Interfaces\ICollidable.cs" />
