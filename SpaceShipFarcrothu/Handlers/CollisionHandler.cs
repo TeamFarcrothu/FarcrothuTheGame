@@ -4,7 +4,6 @@
     using GameObjects.Items;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using Interfaces;
 
     public static class CollisionHandler
@@ -26,7 +25,7 @@
 
                             player.ReactOnColission(currentTarget);
                             currentTarget.ReactOnColission();
-                            (currentTarget as EnemyEntity).ColideAndExplode(explosions);
+                            //(currentTarget as EnemyEntity).ColideAndExplode(explosions);
                         }
                         else if (currentTarget is Item)
                         {
@@ -61,7 +60,7 @@
 
                             playerBullet.ReactOnColission();
                             currentTarget.ReactOnColission();
-                            (currentTarget as EnemyEntity).ColideAndExplode(explosions);
+                            //(currentTarget as EnemyEntity).ColideAndExplode(explosions);
 
                         }
                     }

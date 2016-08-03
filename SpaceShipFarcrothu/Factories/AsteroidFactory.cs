@@ -1,9 +1,7 @@
 ﻿namespace SpaceShipFartrothu.Factories
 {
     using System;
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core;
     using GameObjects;
     using Interfaces;
 
@@ -17,16 +15,6 @@
             if (asteroids.GetCount() < 15)
             {
                 asteroids.AddEntity(new Asteroid(new Vector2(randomX, randomY)));
-                //asteroids.Add(new Asteroid(new Vector2(randomX, randomY)));
-            }
-
-            for (int i = 0; i < asteroids.GetCount(); i++)
-            {
-                if (!asteroids.GetAll()[i].IsVisible)
-                {
-                    asteroids.RemoveAt(i);
-                    i--;
-                }
             }
         }
     }

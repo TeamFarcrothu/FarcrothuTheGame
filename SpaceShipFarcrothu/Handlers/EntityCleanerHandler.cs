@@ -1,6 +1,5 @@
 ﻿namespace SpaceShipFartrothu.Handlers
 {
-    using System.Collections.Generic;
     using Interfaces;
 
     public static class EntityCleanerHandler
@@ -24,6 +23,18 @@
                 if (!enemies.GetAll()[i].IsVisible)
                 {
                     enemies.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+
+        public static void ClearAsteroids(IRepository<IAsteroid> asteroids)
+        {
+            for (int i = 0; i < asteroids.GetCount(); i++)
+            {
+                if (!asteroids.GetAll()[i].IsVisible)
+                {
+                    asteroids.RemoveAt(i);
                     i--;
                 }
             }

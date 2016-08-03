@@ -240,37 +240,24 @@ namespace SpaceShipFartrothu.Core
             {
                 for (int i = 0; i < this.db.Enemies.GetCount(); i++)
                 {
-                    this.db.Enemies.GetAll()[i].Update(gameTime);
-
                     BulletsFactory.EnemyShoot(this.db.Bullets, this.db.Enemies.GetAll()[i]);
                 }
 
-                foreach (var asteroid in this.db.Asteroids.GetAll())
-                {
-                    asteroid.Update(gameTime);
-                }
+                //Creating entities
+                EnemyFactory.CreateEnemies(this.db.Enemies, this.random);
+                AsteroidFactory.CreateAsteroids(this.db.Asteroids, this.random);
 
+                ItemFactory.CreateItems(this.db.Items, this.db.Enemies.GetAll().Cast<IGameObject>().ToList(), this.random);
+                ItemFactory.CreateItems(this.db.Items, this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.random);
 
-                // Cycle through health items, remove invisible and update visible ones.
-                for (int i = 0; i < this.db.Items.GetCount(); i++)
-                {
-                    var item = this.db.Items.GetAll()[i];
-                    if (!item.IsVisible)
-                    {
-                        this.db.Items.RemoveAt(i);
-                    }
-                    else
-                    {
-                        item.Update(gameTime);
-                    }
-                }
+                ExplosionFactory.CreateExplosion(this.db.Explosions, this.db.Enemies.GetAll().Cast<IGameObject>().ToList());
+                ExplosionFactory.CreateExplosion(this.db.Explosions, this.db.Asteroids.GetAll().Cast<IGameObject>().ToList());
 
-                /*
-                 * foreach (var item in HealthItem.HealthItems)
-                 * {
-                 *     item.Update(gameTime);
-                 * }
-                 */
+                //Updating entities
+                this.db.Enemies.GetAll().ForEach(e => e.Update(gameTime));
+                this.db.Asteroids.GetAll().ForEach(a => a.Update(gameTime));
+                this.db.Items.GetAll().ForEach(i => i.Update(gameTime));
+                //this.db.Explosions.GetAll().ForEach(e => e.Update(gameTime));
 
                 // Handle collisions between players and enemy objects
                 CollisionHandler.CheckForCollision(this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
@@ -279,20 +266,19 @@ namespace SpaceShipFartrothu.Core
                 // Handle collisions between players and enemy items
                 CollisionHandler.CheckPlayerItemCollisions(this.db.Items.GetAll(), this.db.Players.GetAll());
 
-                EnemyFactory.CreateEnemies(this.db.Enemies, this.random);
-                AsteroidFactory.CreateAsteroids(this.db.Asteroids, this.random);
-                ItemFactory.CreateItems(this.db.Items, this.db.Enemies.GetAll().Cast<IGameObject>().ToList(), this.random);
-                ItemFactory.CreateItems(this.db.Items, this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.random);
-
-                // CLeaning
+                // Cleaning with mr.Proper
                 EntityCleanerHandler.ClearEnemyBullets(this.db.Bullets);
                 EntityCleanerHandler.ClearEnemies(this.db.Enemies);
+                EntityCleanerHandler.ClearAsteroids(this.db.Asteroids);
                 EntityCleanerHandler.ClearExplosion(this.db.Explosions);
-                //EntityCleanerHandler.ClearPlayers(this.Players);
+                EntityCleanerHandler.ClearPlayers(this.db.Players);
             }
 
-            this.hud.UpdatePlayersInfo(this.db.Players.GetAll());
+            //Update all explosions
+            this.db.Explosions.GetAll().ForEach(e => e.Update(gameTime));
 
+
+            this.hud.UpdatePlayersInfo(this.db.Players.GetAll());
             StatsManager.UpdatePlayersStats(this.db.Players.GetAll());
 
             //Handle collisions between bullets and gameobjects
@@ -305,9 +291,6 @@ namespace SpaceShipFartrothu.Core
             {
                 this.db.Bullets.GetAll()[i].Update(gameTime);
             }
-
-            //Update all explosions
-            this.db.Explosions.GetAll().ForEach(e => e.Update(gameTime));
         }
 
         //private void EnableBossMode(GameTime gameTime)
@@ -384,6 +367,7 @@ namespace SpaceShipFartrothu.Core
             this.db.Enemies.GetAll().ForEach(e => e.Draw(this.spriteBatch));
             this.db.Bullets.GetAll().ForEach(b => b.Draw(this.spriteBatch));
             this.db.Asteroids.GetAll().ForEach(a => a.Draw(this.spriteBatch));
+
             this.db.Explosions.GetAll().ForEach(e => e.Draw(this.spriteBatch));
 
             foreach (var item in this.db.Items.GetAll())

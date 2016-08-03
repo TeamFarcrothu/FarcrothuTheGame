@@ -1,6 +1,6 @@
 ﻿namespace SpaceShipFartrothu.Interfaces
 {
-    public interface IEnemy : IGameObject, IExplodable
+    public interface IEnemy : IGameObject//, IExplodable
     {
         int BulletDamage { get; }
 

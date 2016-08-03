@@ -78,7 +78,7 @@
         {
             //explosions.Add(new Explosion(this.Position));
             this.IsVisible = false;
-
+            //target.IsVisible = false;
             //TODO
 
             // Sound

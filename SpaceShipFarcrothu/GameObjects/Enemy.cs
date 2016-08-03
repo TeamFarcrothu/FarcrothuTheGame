@@ -27,7 +27,6 @@
             : base(position)
         {
             this.Texture = TexturesManager.EnemyTexture;
-            //this.BulletTexture = bulleTexture;
 
             this.Health = DefaultHealth;
             this.BulletDelay = Globals.DefaultEnemyBulletDelay;

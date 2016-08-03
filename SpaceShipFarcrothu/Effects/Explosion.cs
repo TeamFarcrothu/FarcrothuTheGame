@@ -1,5 +1,6 @@
 ﻿namespace SpaceShipFartrothu.Effects
 {
+    using System.Diagnostics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
@@ -27,13 +28,6 @@
             this.IsVisible = true;
         }
 
-       // public new Texture2D Texture { get; set; }
-
-        public void LoadContent(ContentManager content)
-        {
-            this.texture = content.Load<Texture2D>("explosion");
-        }
-
         public override void Update(GameTime gameTime)
         {
             this.timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -48,7 +42,7 @@
                 if (this.frameRow == 8)
                 {
                     this.frameRow = 0;
-                    this.isVisible = false;
+                    this.IsVisible = false;
                 }
                 this.frameRow++;
                 this.frameCol = 0;
@@ -62,6 +56,7 @@
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            
             if (this.IsVisible)
             {
                 //spriteBatch.Draw(this.texture, this.position, this.sourceRect, Color.White, 0f, this.origin, 1.0f, SpriteEffects.None, 0);

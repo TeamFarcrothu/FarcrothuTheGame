@@ -21,11 +21,11 @@
 
 
         // NEed fix
-        public void ColideAndExplode(IList<IExplosion> explosions)
-        {
+       // public void ColideAndExplode(IList<IExplosion> explosions)
+       // {
            // IExplosion newExplosion = ExplosionFactory.CreateExplosion(this.ExplosionTexture, this.Position);
 
            // explosions.Add(newExplosion);
-        }
+       // }
     }
 }
