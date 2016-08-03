@@ -21,6 +21,7 @@ namespace SpaceShipFartrothu.Core
 
     public class GameEngine : Game
     {
+        
         //Set first state 
         private State gameState = State.Intro;
 
@@ -67,7 +68,7 @@ namespace SpaceShipFartrothu.Core
 
 
         public List<IGameObject> Asteroids = new List<IGameObject>();
-
+        
         public List<IBullet> Bullets = new List<IBullet>();
 
         public List<IGameObject> Enemies = new List<IGameObject>();
@@ -76,6 +77,8 @@ namespace SpaceShipFartrothu.Core
         public List<IPlayer> Players = new List<IPlayer>();
 
         public List<IExplosion> Explosions = new List<IExplosion>();
+
+        public List<Item> Items = new List<Item>();
 
 
         public GameEngine()
@@ -289,12 +292,12 @@ namespace SpaceShipFartrothu.Core
 
 
                 // Cycle through health items, remove invisible and update visible ones.
-                for (int i = 0; i < HealthItem.HealthItems.Count; i++)
+                for (int i = 0; i < Items.Count; i++)
                 {
-                    var item = HealthItem.HealthItems[i];
+                    var item = Items[i];
                     if (!item.IsVisible)
                     {
-                        HealthItem.HealthItems.RemoveAt(i);
+                        Items.RemoveAt(i);
                     }
                     else
                     {
@@ -423,7 +426,7 @@ namespace SpaceShipFartrothu.Core
             this.Asteroids.ForEach(a => a.Draw(this.spriteBatch));
             this.Explosions.ForEach(e => e.Draw(this.spriteBatch));
 
-            foreach (var item in HealthItem.HealthItems)
+            foreach (var item in Items)
             {
                 item.Draw(this.spriteBatch);
             }
@@ -435,8 +438,8 @@ namespace SpaceShipFartrothu.Core
                 this.Asteroids.Clear();
             if (this.Enemies.Any())
                 this.Enemies.Clear();
-            if (HealthItem.HealthItems.Any())
-                HealthItem.HealthItems.Clear();
+            if (Items.Any())
+                Items.Clear();
 
             //this.boss.Draw(this.spriteBatch);
         }

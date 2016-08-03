@@ -139,8 +139,8 @@
         {
             //this.items.Add(item);
 
-            this.Health += item.Health;
-            this.BulletDamage += item.Damage;
+            //this.Health += item.Health;
+            //this.BulletDamage += item.Damage;
         }
 
         // Player load content method

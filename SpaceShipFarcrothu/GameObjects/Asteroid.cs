@@ -82,7 +82,6 @@
         {
             //explosions.Add(new Explosion(this.Position));
             this.IsVisible = false;
-            HealthItem.LoadItems(this.Position);
 
             //TODO
 

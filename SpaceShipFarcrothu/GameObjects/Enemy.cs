@@ -87,7 +87,6 @@
         public override void ReactOnColission(IGameObject target = null)
         {
             //Explosion.Explosions.Add(new Explosion(this.Position));
-            HealthItem.LoadItems(this.Position);
 
             this.IsVisible = false;
 
