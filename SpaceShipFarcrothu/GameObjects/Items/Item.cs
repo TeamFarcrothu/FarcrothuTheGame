@@ -2,7 +2,10 @@
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using Core;
+    using SpaceShipFartrothu.Interfaces;
     using Utils.Globals;
 
     public abstract class Item : FallingObject, ICollectable
@@ -47,7 +50,7 @@
 
         public override void ReactOnColission(IGameObject target = null)
         {
-            this.IsVisible = true;
+            this.IsVisible = false;
         }
     }
 }

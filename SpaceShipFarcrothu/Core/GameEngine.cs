@@ -50,7 +50,7 @@ namespace SpaceShipFartrothu.Core
 
         public List<IExplosion> Explosions = new List<IExplosion>();
 
-        public List<Item> Items = new List<Item>();
+        public List<IGameObject> Items = new List<IGameObject>();
 
         public GameEngine()
         {
@@ -280,10 +280,14 @@ namespace SpaceShipFartrothu.Core
                 // Handle collisions between players and enemy objects
                 CollisionHandler.CheckForCollision(this.Asteroids, this.Players, this.Explosions);
                 CollisionHandler.CheckForCollision(this.Enemies, this.Players, this.Explosions);
-                //CollisionHandler.CheckForCollision(HealthItem.HealthItems);
+                
+                // Handle collisions between players and enemy items
+                CollisionHandler.CheckPlayerItemCollisions(this.Items, this.Players);
 
                 EnemyFactory.CreateEnemies(this.Enemies, this.random);
                 AsteroidFactory.CreateAsteroids(this.Asteroids, this.random);
+                ItemFactory.CreateItems(this.Items, this.Enemies, this.random);
+                ItemFactory.CreateItems(this.Items, this.Asteroids, this.random);
 
                 // CLeaning
                 EntityCleanerHandler.ClearEnemyBullets(this.Bullets);

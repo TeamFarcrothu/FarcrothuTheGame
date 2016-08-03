@@ -45,7 +45,7 @@
 
                 var newBulletPosition = new Vector2(player.Position.X + 32 - TexturesManager.BulletTexture.Width / 2, player.Position.Y + 10);
 
-                Bullet newBullet = new Bullet(newBulletPosition, player.Id, player.BulletDamage);
+                Bullet newBullet = new Bullet(newBulletPosition, player.Id, player.BulletDamage, player.BulletSpeed);
 
                 if (bullets.Where(b => b.ShooterId == player.Id).ToList().Count < 20)
                 {

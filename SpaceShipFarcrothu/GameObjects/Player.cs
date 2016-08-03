@@ -15,6 +15,7 @@
         private const int DefaultSpeed = 5;
         private const int DefaultBulletDelay = 11;
         private const int DefaultHealth = 100;
+        private const int DefaultBulletSpeed = 6;
 
         private readonly Vector2 resetPosition;
        // private readonly Texture2D bulleTexture = AssetsLoader.BulletTexture;
@@ -33,6 +34,7 @@
 
         private int bulletDamage;
         private float bulletDelay;
+        private int bulletSpeed;
 
         private bool isColiding;
         public bool isAlive;
@@ -44,6 +46,8 @@
             this.Id = id;
             this.BulletDamage = DefaultBulletDamage;
             this.BulletDelay = DefaultBulletDelay;
+            this.BulletSpeed = DefaultBulletSpeed;
+
             this.Speed = DefaultSpeed;
             this.MaxHealth = DefaultHealth;
             this.Health = DefaultHealth;
@@ -97,6 +101,18 @@
                 }
 
                 this.bulletDamage = value;
+            }
+        }
+
+        public int BulletSpeed
+        {
+            get
+            {
+                return this.bulletSpeed;
+            }
+            private set
+            {
+                this.bulletSpeed = value;
             }
         }
 
@@ -180,8 +196,19 @@
         public override void ReactOnColission(IGameObject target)
         {
             string currentTargetType = target.GetType().Name;
+            string currentTargetBaseType = target.GetType().BaseType.Name;
 
-            if (currentTargetType == "Asteroid")
+            if (currentTargetBaseType == "Item")
+            {
+                Item item = target as Item;
+
+                this.Health = item.ItemHealth;
+                this.BulletDamage += item.ItemDamage;
+                this.BulletSpeed += item.ItemBulletSpeed;
+                //TO DO:
+                // this.Armor += item.ItemArmor;
+            }
+            else if (currentTargetType == "Asteroid")
             {
                 //TODO: add points to player score and reduce health
                 //this.soundManager.explodeSound.Play();

@@ -23,6 +23,16 @@
             this.Damage = bulletDamage;
         }
 
+        public Bullet(Vector2 position, int shooterId, int bulletDamage, int bulletSpeed)
+    : base(position)
+        {
+            this.Texture = TexturesManager.BulletTexture;
+            this.Speed = bulletSpeed;
+            this.IsVisible = true;
+            this.ShooterId = shooterId;
+            this.Damage = bulletDamage;
+        }
+
         public int ShooterId { get; set; }
 
         //public Texture2D BulleTexture { get; set; }

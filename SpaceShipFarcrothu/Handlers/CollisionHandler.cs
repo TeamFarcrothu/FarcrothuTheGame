@@ -109,6 +109,21 @@
                 }
             }
         }
+
+        public static void CheckPlayerItemCollisions(IList<IGameObject> items, IList<IPlayer> players)
+        {
+            foreach (Player player in players)
+            {
+                foreach (var item in items)
+                {
+                    if (player.BoundingBox.Intersects(item.BoundingBox))
+                    {
+                        player.ReactOnColission(item);
+                        item.ReactOnColission();
+                    }
+                }
+            }
+        }
     }
 }
 

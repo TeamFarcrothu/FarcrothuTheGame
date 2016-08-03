@@ -12,27 +12,33 @@ namespace SpaceShipFartrothu.Factories
 {
     public static class ItemFactory
     {
-        public static void CreateItems(IList<IGameObject> items, Random random, Vector2 potion)
+        public static void CreateItems(IList<IGameObject> items, List<IGameObject> entityList, Random random)
         {
-            int randomNumber = random.Next(0, 25);
+            int randomNumber = random.Next(0, 13);
 
-            if (items.Count < 1)
+            if (items.Count < 30)
             {
-                if (randomNumber > 9 && randomNumber <= 12)
+                foreach (var entity in entityList)
                 {
-                    items.Add(new BulletSpeedItem(potion));
-                }
-                if (randomNumber > 6 && randomNumber <= 9)
-                {
-                    items.Add(new ArmorItem(potion));
-                }
-                if (randomNumber > 3 && randomNumber <= 6)
-                {
-                    items.Add(new DamageItem(potion));
-                }
-                if (randomNumber <= 3)
-                {
-                    items.Add(new HealthItem(potion));
+                    if (!entity.IsVisible)
+                    {
+                        if (randomNumber > 9 && randomNumber <= 12)
+                        {
+                            items.Add(new BulletSpeedItem(entity.Position));
+                        }
+                        if (randomNumber > 6 && randomNumber <= 9)
+                        {
+                            items.Add(new ArmorItem(entity.Position));
+                        }
+                        if (randomNumber > 3 && randomNumber <= 6)
+                        {
+                            items.Add(new DamageItem(entity.Position));
+                        }
+                        if (randomNumber <= 3)
+                        {
+                            items.Add(new HealthItem(entity.Position));
+                        }
+                    }
                 }
             }
 

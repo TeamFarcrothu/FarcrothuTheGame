@@ -16,7 +16,11 @@
         public static Texture2D AsteroidTexture { get; private set; }
         public static Texture2D EnemyTexture { get; private set; }
 
-        public static Texture2D ItemTexture { get; private set; }
+        public static Texture2D ItemArmorTexture { get; private set; }
+        public static Texture2D ItemBulletSpeedTexture { get; private set; }
+        public static Texture2D ItemDamageTexture { get; private set; }
+        public static Texture2D ItemHealthTexture { get; private set; }
+
         public static Texture2D BossTexture { get; private set; }
         public static Texture2D HealthTexture { get; private set; }
 
@@ -31,7 +35,10 @@
             ExplosionTexture = content.Load<Texture2D>("explosion");
             BulletTexture = content.Load<Texture2D>("bullet");
 
-            ItemTexture = content.Load<Texture2D>("health_potion");//---------------------------------
+            ItemHealthTexture = content.Load<Texture2D>("health_potion");//---------------------------------
+            ItemArmorTexture = content.Load<Texture2D>("armor_potion");//---------------------------------
+            ItemDamageTexture = content.Load<Texture2D>("damage_potion");//---------------------------------
+            ItemBulletSpeedTexture = content.Load<Texture2D>("bullet_speed_potion");//---------------------------------
 
             BossTexture = content.Load<Texture2D>("space_Boss_Level_1");
             HealthTexture = content.Load<Texture2D>("healthbar");
