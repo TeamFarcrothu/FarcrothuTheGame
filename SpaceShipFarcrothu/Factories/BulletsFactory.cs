@@ -10,7 +10,7 @@
 
     public static class BulletsFactory
     {
-        public static void EnemyShoot(IList<IBullet> bullets, IEnemy enemy)
+        public static void EnemyShoot(IRepository<IBullet> bullets, IEnemy enemy)
         {
             if (enemy.BulletDelay >= 0)
             {
@@ -22,7 +22,7 @@
                 var newBulletPosition = new Vector2(enemy.Position.X + enemy.Texture.Width / 2 - TexturesManager.BulletTexture.Width / 2, enemy.Position.Y + TexturesManager.BulletTexture.Height);
 
                 Bullet newBullet = new Bullet(newBulletPosition, enemy.ShooterId, enemy.BulletDamage);
-                bullets.Add(newBullet);
+                bullets.AddEntity(newBullet);
 
                 if (enemy.BulletDelay == 0)
                 {
@@ -32,9 +32,9 @@
         }
 
 
-        public static void PlayerShoot(IList<IBullet> bullets, IList<IPlayer> players, int playerId)
+        public static void PlayerShoot(IRepository<IBullet> bullets, IRepository<IPlayer> players, int playerId)
         {
-            var currentPlayer = players.FirstOrDefault(p => p.Id == playerId);
+            var currentPlayer = players.GetAll().FirstOrDefault(p => p.Id == playerId);
             if (currentPlayer != null)
             {
                 if (currentPlayer.BulletDelay >= 0)
@@ -50,9 +50,9 @@
 
                     Bullet newBullet = new Bullet(newBulletPosition, currentPlayer.Id, currentPlayer.BulletDamage, currentPlayer.BulletSpeed);
 
-                    if (bullets.Where(b => b.ShooterId == currentPlayer.Id).ToList().Count < 20)
+                    if (bullets.GetAll().Where(b => b.ShooterId == currentPlayer.Id).ToList().Count < 20)
                     {
-                        bullets.Add(newBullet);
+                        bullets.AddEntity(newBullet);
                     }
                 }
 

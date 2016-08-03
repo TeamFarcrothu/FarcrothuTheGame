@@ -2,21 +2,21 @@
 {
     using System.Collections.Generic;
 
-    public interface IRepository
+    public interface IRepository<T> where T : IGameObject
     {
-        IDictionary<string, IList<IGameObject>> GetAllGameobjects();
+        //IDictionary<string, IList<IGameObject>> GetAllGameobjects();
 
-        IList<IPlayer> GetPlayers();
+        // List<T> ItemsByEntity { get; }
 
-        IList<IEnemy> GetEnemies();
+        List<T> GetAll();
 
-        IList<IAsteroid> GetAsteroids();
+        void AddEntity(T entity);
 
-        IList<IBullet> GetBullets();
+        void Dispose();
 
+        int GetCount();
 
-
-
-        void RemoveGameObject(IGameObject gameObjectToRemove);
+        void RemoveAt(int index);
+        //void RemoveGameObject(IGameObject gameObjectToRemove);
     }
 }

@@ -5,7 +5,7 @@
     using SpaceShipFartrothu.Interfaces;
     using Utils.Globals;
 
-    public abstract class Item : FallingObject, ICollectable
+    public abstract class Item : FallingObject, ICollectable, IItem
     {
         private const int DefaultSpeed = 4;
 

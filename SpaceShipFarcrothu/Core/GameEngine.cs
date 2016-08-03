@@ -1,18 +1,16 @@
 namespace SpaceShipFartrothu.Core
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Microsoft.Xna.Framework.Media;
+    using System.Linq;
     using Handlers;
     using GameObjects;
     using Factories;
     using Interfaces;
-    using SpaceShipFartrothu.Data;
+    using Data;
     using Utils.Assets;
     using Utils.Enums;
     using Utils.Globals;
@@ -39,21 +37,7 @@ namespace SpaceShipFartrothu.Core
         private bool bossHasInstance;
         private bool introPlayed;
 
-
-        private IRepository repo;
-        //Lists
-        public List<IGameObject> Asteroids = new List<IGameObject>();
-
-        public List<IBullet> Bullets = new List<IBullet>();
-
-        public List<IGameObject> Enemies = new List<IGameObject>();
-        public List<InputHandler> InputHandlers = new List<InputHandler>();
-
-        public List<IPlayer> Players = new List<IPlayer>();
-
-        public List<IExplosion> Explosions = new List<IExplosion>();
-
-        public List<IGameObject> Items = new List<IGameObject>();
+        private GameDatabase db;
 
         public GameEngine()
         {
@@ -73,7 +57,7 @@ namespace SpaceShipFartrothu.Core
 
         protected override void Initialize()
         {
-            this.repo = new Repository();
+            this.db = new GameDatabase();
             this.gameState = State.Intro;
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.videoPlayer = new VideoPlayer();
@@ -138,21 +122,18 @@ namespace SpaceShipFartrothu.Core
                         this.Play(gameTime);
 
                         //Clear dead players
-                        if (this.Players.Any(p => p.IsAlive == false))
-                        {
-                            this.Players.RemoveAll(p => p.IsAlive == false);
-                        }
+                        this.db.Players.GetAll().RemoveAll(p => p.IsAlive == false);
 
                         //Set gameover
-                        if (this.Players.All(p => p.IsAlive == false))
+                        if (this.db.Players.GetAll().All(p => p.IsAlive == false))
                         {
                             this.gameState = State.GameOver;
                         }
 
                         //update players
-                        this.Players.ForEach(p => p.Update(gameTime));
-                        this.Players.ForEach(p => p.InputHandler.Move(p));
-                        this.Players.ForEach(p => p.InputHandler.PlayerShoot(this.Bullets, this.Players, p.Id));
+                        this.db.Players.GetAll().ForEach(p => p.Update(gameTime));
+                        this.db.Players.GetAll().ForEach(p => p.InputHandler.Move(p));
+                        this.db.Players.GetAll().ForEach(p => p.InputHandler.PlayerShoot(this.db.Bullets, this.db.Players, p.Id));
 
                         this.starfield.Update(gameTime);
                         break;
@@ -201,10 +182,10 @@ namespace SpaceShipFartrothu.Core
             if (this.keyState.IsKeyDown(Keys.D2))
             {
                 this.player = new Player(new Vector2(600, 600), this.inputHandler, 1);
-                this.Players.Add(this.player);
+                this.db.Players.AddEntity(this.player);
 
                 this.player2 = new Player(new Vector2(700, 600), this.inputHandler, 2);
-                this.Players.Add(this.player2);
+                this.db.Players.AddEntity(this.player2);
 
                 this.gameState = State.Playing;
                 MediaPlayer.Play(SoundManager.BgMusic);
@@ -215,7 +196,7 @@ namespace SpaceShipFartrothu.Core
             if (this.keyState.IsKeyDown(Keys.D1))
             {
                 this.player = new Player(new Vector2(600, 600), this.inputHandler, 1);
-                this.Players.Add(this.player);
+                this.db.Players.AddEntity(this.player);
 
                 this.gameState = State.Playing;
                 MediaPlayer.Play(SoundManager.BgMusic);
@@ -236,14 +217,12 @@ namespace SpaceShipFartrothu.Core
         {
             MediaPlayer.Stop();
 
-            this.Enemies.Clear();
-            this.Asteroids.Clear();
-            this.Explosions.Clear();
-            this.Players.Clear();
-            //this.InputHandlers.Clear();
-
-            this.Bullets.Clear();
-            this.Items.Clear();
+            this.db.Enemies.Dispose();
+            this.db.Asteroids.Dispose();
+            this.db.Explosions.Dispose();
+            this.db.Players.Dispose();
+            this.db.Bullets.Dispose();
+            this.db.Items.Dispose();
 
             this.bossHasInstance = false;
 
@@ -253,32 +232,32 @@ namespace SpaceShipFartrothu.Core
         private void Play(GameTime gameTime)
         {
             //Enable boss mode if some of players have enough points   ## its 150 just for testing
-            if (this.Players.Any(s => s.Score >= 3000))
+            if (this.db.Players.GetAll().Any(s => s.Score >= 3000))
             {
                 // this.EnableBossMode(gameTime);
             }
             else
             {
-                for (int i = 0; i < this.Enemies.Count; i++)
+                for (int i = 0; i < this.db.Enemies.GetCount(); i++)
                 {
-                    this.Enemies[i].Update(gameTime);
+                    this.db.Enemies.GetAll()[i].Update(gameTime);
 
-                    BulletsFactory.EnemyShoot(this.Bullets, (IEnemy)this.Enemies[i]);
+                    BulletsFactory.EnemyShoot(this.db.Bullets, this.db.Enemies.GetAll()[i]);
                 }
 
-                foreach (var asteroid in this.Asteroids)
+                foreach (var asteroid in this.db.Asteroids.GetAll())
                 {
                     asteroid.Update(gameTime);
                 }
 
 
                 // Cycle through health items, remove invisible and update visible ones.
-                for (int i = 0; i < Items.Count; i++)
+                for (int i = 0; i < this.db.Items.GetCount(); i++)
                 {
-                    var item = Items[i];
+                    var item = this.db.Items.GetAll()[i];
                     if (!item.IsVisible)
                     {
-                        Items.RemoveAt(i);
+                        this.db.Items.RemoveAt(i);
                     }
                     else
                     {
@@ -294,46 +273,41 @@ namespace SpaceShipFartrothu.Core
                  */
 
                 // Handle collisions between players and enemy objects
-                CollisionHandler.CheckForCollision(this.Asteroids, this.Players, this.Explosions);
-                CollisionHandler.CheckForCollision(this.Enemies, this.Players, this.Explosions);
+                CollisionHandler.CheckForCollision(this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
+                CollisionHandler.CheckForCollision(this.db.Enemies.GetAll().Cast<IGameObject>().ToList(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
 
                 // Handle collisions between players and enemy items
-                CollisionHandler.CheckPlayerItemCollisions(this.Items, this.Players);
+                CollisionHandler.CheckPlayerItemCollisions(this.db.Items.GetAll(), this.db.Players.GetAll());
 
-                EnemyFactory.CreateEnemies(this.Enemies, this.random);
-                AsteroidFactory.CreateAsteroids(this.Asteroids, this.random);
-                ItemFactory.CreateItems(this.Items, this.Enemies, this.random);
-                ItemFactory.CreateItems(this.Items, this.Asteroids, this.random);
+                EnemyFactory.CreateEnemies(this.db.Enemies, this.random);
+                AsteroidFactory.CreateAsteroids(this.db.Asteroids, this.random);
+                ItemFactory.CreateItems(this.db.Items, this.db.Enemies.GetAll().Cast<IGameObject>().ToList(), this.random);
+                ItemFactory.CreateItems(this.db.Items, this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.random);
 
                 // CLeaning
-                EntityCleanerHandler.ClearEnemyBullets(this.Bullets);
-                EntityCleanerHandler.ClearEnemies(this.Enemies);
-                EntityCleanerHandler.ClearExplosion(this.Explosions);
+                EntityCleanerHandler.ClearEnemyBullets(this.db.Bullets);
+                EntityCleanerHandler.ClearEnemies(this.db.Enemies);
+                EntityCleanerHandler.ClearExplosion(this.db.Explosions);
                 //EntityCleanerHandler.ClearPlayers(this.Players);
             }
 
-            //this.InputHandlers.ForEach(i => i.PlayerShoot(this.keyState, this.Bullets));
+            this.hud.UpdatePlayersInfo(this.db.Players.GetAll());
 
-            this.hud.UpdatePlayersInfo(this.Players);
-
-            StatsManager.UpdatePlayersStats(this.Players);
+            StatsManager.UpdatePlayersStats(this.db.Players.GetAll());
 
             //Handle collisions between bullets and gameobjects
-            CollisionHandler.CheckPlayerBulletsCollisions(this.Enemies, this.Bullets, this.Players, this.Explosions);
-            CollisionHandler.CheckPlayerBulletsCollisions(this.Asteroids, this.Bullets, this.Players, this.Explosions);
-            CollisionHandler.CheckEnemiesBulletsCollisions(this.Bullets, this.Players);
+            CollisionHandler.CheckPlayerBulletsCollisions(this.db.Enemies.GetAll().Cast<IGameObject>().ToList(), this.db.Bullets.GetAll(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
+            CollisionHandler.CheckPlayerBulletsCollisions(this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.db.Bullets.GetAll(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
+            CollisionHandler.CheckEnemiesBulletsCollisions(this.db.Bullets.GetAll(), this.db.Players.GetAll());
 
             //Update all bullets 
-            for (int i = 0; i < this.Bullets.Count; i++)
+            for (int i = 0; i < this.db.Bullets.GetCount(); i++)
             {
-                this.Bullets[i].Update(gameTime);
+                this.db.Bullets.GetAll()[i].Update(gameTime);
             }
 
             //Update all explosions
-            this.Explosions.ForEach(e => e.Update(gameTime));
-
-            // Updates static list in HealthItem class - integrated in HealthItem instance update method.
-            // HealthItem.Update(); 
+            this.db.Explosions.GetAll().ForEach(e => e.Update(gameTime));
         }
 
         //private void EnableBossMode(GameTime gameTime)
@@ -406,21 +380,13 @@ namespace SpaceShipFartrothu.Core
 
         private void DrawAllGameObjects()
         {
-            foreach (var kvp in this.repo.GetAllGameobjects())
-            {
-                foreach (var gameObject in kvp.Value)
-                {
-                    gameObject.Draw(this.spriteBatch);
-                }
-            }
+            this.db.Players.GetAll().ForEach(p => p.Draw(this.spriteBatch));
+            this.db.Enemies.GetAll().ForEach(e => e.Draw(this.spriteBatch));
+            this.db.Bullets.GetAll().ForEach(b => b.Draw(this.spriteBatch));
+            this.db.Asteroids.GetAll().ForEach(a => a.Draw(this.spriteBatch));
+            this.db.Explosions.GetAll().ForEach(e => e.Draw(this.spriteBatch));
 
-            this.Players.ForEach(p => p.Draw(this.spriteBatch));
-            this.Enemies.ForEach(e => e.Draw(this.spriteBatch));
-            this.Bullets.ForEach(b => b.Draw(this.spriteBatch));
-            this.Asteroids.ForEach(a => a.Draw(this.spriteBatch));
-            this.Explosions.ForEach(e => e.Draw(this.spriteBatch));
-
-            foreach (var item in Items)
+            foreach (var item in this.db.Items.GetAll())
             {
                 item.Draw(this.spriteBatch);
             }
@@ -428,12 +394,12 @@ namespace SpaceShipFartrothu.Core
 
         private void DrawBoss()
         {
-            if (this.Asteroids.Any())
-                this.Asteroids.Clear();
-            if (this.Enemies.Any())
-                this.Enemies.Clear();
-            if (this.Items.Any())
-                this.Items.Clear();
+            if (this.db.Asteroids.GetCount() == 0)
+                this.db.Asteroids.Dispose();
+            if (this.db.Enemies.GetCount() == 0)
+                this.db.Enemies.Dispose();
+            if (this.db.Items.GetCount() == 0)
+                this.db.Items.Dispose();
 
             //this.boss.Draw(this.spriteBatch);
         }

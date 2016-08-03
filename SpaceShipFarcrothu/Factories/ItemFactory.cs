@@ -4,19 +4,15 @@ using SpaceShipFartrothu.GameObjects.Items;
 using SpaceShipFartrothu.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace SpaceShipFartrothu.Factories
 {
     public static class ItemFactory
     {
-        public static void CreateItems(IList<IGameObject> items, List<IGameObject> entityList, Random random)
+        public static void CreateItems(IRepository<IItem> items, List<IGameObject> entityList, Random random)
         {
             int randomNumber = random.Next(0, 13);
 
-            if (items.Count < 30)
+            if (items.GetCount() < 30)
             {
                 foreach (var entity in entityList)
                 {
@@ -24,27 +20,27 @@ namespace SpaceShipFartrothu.Factories
                     {
                         if (randomNumber > 9 && randomNumber <= 12)
                         {
-                            items.Add(new BulletSpeedItem(entity.Position));
+                            items.AddEntity(new BulletSpeedItem(entity.Position));
                         }
                         if (randomNumber > 6 && randomNumber <= 9)
                         {
-                            items.Add(new ArmorItem(entity.Position));
+                            items.AddEntity(new ArmorItem(entity.Position));
                         }
                         if (randomNumber > 3 && randomNumber <= 6)
                         {
-                            items.Add(new DamageItem(entity.Position));
+                            items.AddEntity(new DamageItem(entity.Position));
                         }
                         if (randomNumber <= 3)
                         {
-                            items.Add(new HealthItem(entity.Position));
+                            items.AddEntity(new HealthItem(entity.Position));
                         }
                     }
                 }
             }
 
-            for (int i = 0; i < items.Count; i++)
+            for (int i = 0; i < items.GetCount(); i++)
             {
-                if (!items[i].IsVisible)
+                if (!items.GetAll()[i].IsVisible)
                 {
                     items.RemoveAt(i);
                     i--;

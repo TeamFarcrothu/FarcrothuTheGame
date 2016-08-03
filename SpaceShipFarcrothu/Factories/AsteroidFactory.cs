@@ -9,19 +9,20 @@
 
     public static class AsteroidFactory
     {
-        public static void CreateAsteroids(IList<IGameObject> asteroids, Random random)
+        public static void CreateAsteroids(IRepository<IAsteroid> asteroids, Random random)
         {
             int randomX = random.Next(0, 1200) - random.Next(0, 20);
             int randomY = random.Next(-700, -50) + random.Next(0, 100);
 
-            if (asteroids.Count < 15)
+            if (asteroids.GetCount() < 15)
             {
-                asteroids.Add(new Asteroid(new Vector2(randomX, randomY)));
+                asteroids.AddEntity(new Asteroid(new Vector2(randomX, randomY)));
+                //asteroids.Add(new Asteroid(new Vector2(randomX, randomY)));
             }
 
-            for (int i = 0; i < asteroids.Count; i++)
+            for (int i = 0; i < asteroids.GetCount(); i++)
             {
-                if (!asteroids[i].IsVisible)
+                if (!asteroids.GetAll()[i].IsVisible)
                 {
                     asteroids.RemoveAt(i);
                     i--;

@@ -1,41 +1,43 @@
 ﻿namespace SpaceShipFartrothu.Data
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Interfaces;
 
-    public class Repository : IRepository
+    public class Repository<T> : IRepository<T> where T : IGameObject
     {
-        private IDictionary<string, IList<IGameObject>> allGameObjects;
+        // private IDictionary<string, IList<IGameObject>> allGameObjects;
 
         public Repository()
         {
-            this.allGameObjects = new Dictionary<string, IList<IGameObject>>();
+            this.ItemsByEntity = new List<T>();
         }
 
+        protected IList<T> ItemsByEntity { get; set; }
 
-        public IDictionary<string, IList<IGameObject>> GetAllGameobjects()
+        public List<T> GetAll()
         {
-            return new Dictionary<string, IList<IGameObject>>(this.allGameObjects);
+            return this.ItemsByEntity.ToList();
         }
 
-        public IList<IPlayer> GetPlayers()
+        public void AddEntity(T entity)
         {
-            throw new System.NotImplementedException();
+            this.ItemsByEntity.Add(entity);
         }
 
-        public IList<IEnemy> GetEnemies()
+        public void Dispose()
         {
-            throw new System.NotImplementedException();
+           this.ItemsByEntity.Clear();
         }
 
-        public IList<IAsteroid> GetAsteroids()
+        public int GetCount()
         {
-            throw new System.NotImplementedException();
+            return this.ItemsByEntity.Count;
         }
 
-        public IList<IBullet> GetBullets()
+        public void RemoveAt(int index)
         {
-            throw new System.NotImplementedException();
+            this.ItemsByEntity.RemoveAt(index);
         }
 
         public void RemoveGameObject(IGameObject gameObjectToRemove)

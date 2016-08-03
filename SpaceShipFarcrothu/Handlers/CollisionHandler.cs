@@ -110,7 +110,7 @@
             }
         }
 
-        public static void CheckPlayerItemCollisions(IList<IGameObject> items, IList<IPlayer> players)
+        public static void CheckPlayerItemCollisions(IList<IItem> items, IList<IPlayer> players)
         {
             foreach (Player player in players)
             {

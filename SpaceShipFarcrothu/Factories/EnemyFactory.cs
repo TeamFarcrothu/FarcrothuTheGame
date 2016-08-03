@@ -8,14 +8,14 @@
 
     public static class EnemyFactory
     {
-        public static void CreateEnemies(IList<IGameObject> enemies, Random random)
+        public static void CreateEnemies(IRepository<IEnemy> enemies, Random random)
         {          
             int randomX = random.Next(0, 1200) - random.Next(0, 20);
             int randomY = random.Next(-700, -50) + random.Next(0, 100);
 
-            if (enemies.Count < 5)
+            if (enemies.GetCount() < 5)
             {
-                enemies.Add(new Enemy(new Vector2(randomX, randomY)));
+                enemies.AddEntity(new Enemy(new Vector2(randomX, randomY)));
             }
         }
     }

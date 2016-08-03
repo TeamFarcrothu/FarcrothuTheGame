@@ -39,6 +39,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Data\GameDatabase.cs" />
     <Compile Include="Data\Repository.cs" />
     <Compile Include="Factories\AsteroidFactory.cs" />
     <Compile Include="Factories\BulletsFactory.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Interfaces\IExplodable.cs" />
     <Compile Include="Interfaces\IExplosion.cs" />
     <Compile Include="Interfaces\IGameObject.cs" />
+    <Compile Include="Interfaces\IItem.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Utils\Assets\VideoManager.cs" />

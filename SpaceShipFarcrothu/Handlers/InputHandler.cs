@@ -59,7 +59,7 @@
             }
         }
 
-        public void PlayerShoot(IList<IBullet> bullets, IList<IPlayer> players, int playerId)
+        public void PlayerShoot(IRepository<IBullet> bullets, IRepository<IPlayer> players, int playerId)
         {
             KeyboardState keyState = Keyboard.GetState();
 
