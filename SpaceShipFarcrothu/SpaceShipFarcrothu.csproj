@@ -77,8 +77,6 @@
     <Compile Include="GameObjects\Items\DamageItem.cs" />
     <Compile Include="GameObjects\Items\HealthItem.cs" />
     <Compile Include="GameObjects\Items\Item.cs" />
-    <Compile Include="Utils\Assets\AssetsLoader.cs" />
-    <Compile Include="Utils\Globals\Globals.cs" />
     <Compile Include="Handlers\EntityCleanerHandler.cs" />
     <Compile Include="Handlers\InputHandler.cs" />
     <Compile Include="Handlers\StatsManager.cs" />
@@ -102,7 +100,9 @@
     <Compile Include="Multimedia\SoundManager.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Utils\Assets\AssetsLoader.cs" />
     <Compile Include="Utils\Enums\State.cs" />
+    <Compile Include="Utils\Globals\Globals.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
