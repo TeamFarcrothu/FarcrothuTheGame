@@ -32,31 +32,37 @@
         }
 
 
-        public static void PlayerShoot(IList<IBullet> bullets, IPlayer player)
+        public static void PlayerShoot(IList<IBullet> bullets, IList<IPlayer> players, int playerId)
         {
-            if (player.BulletDelay >= 0)
+            var currentPlayer = players.FirstOrDefault(p => p.Id == playerId);
+            if (currentPlayer != null)
             {
-                player.BulletDelay--;
-            }
-
-            if (player.BulletDelay <= 0)
-            {
-                SoundManager.PlayerShootSound.Play();
-
-                var newBulletPosition = new Vector2(player.Position.X + 32 - TexturesManager.BulletTexture.Width / 2, player.Position.Y + 10);
-
-                Bullet newBullet = new Bullet(newBulletPosition, player.Id, player.BulletDamage, player.BulletSpeed);
-
-                if (bullets.Where(b => b.ShooterId == player.Id).ToList().Count < 20)
+                if (currentPlayer.BulletDelay >= 0)
                 {
-                    bullets.Add(newBullet);
+                    currentPlayer.BulletDelay--;
                 }
+
+                if (currentPlayer.BulletDelay <= 0)
+                {
+                    SoundManager.PlayerShootSound.Play();
+
+                    var newBulletPosition = new Vector2(currentPlayer.Position.X + 32 - TexturesManager.BulletTexture.Width / 2, currentPlayer.Position.Y + 10);
+
+                    Bullet newBullet = new Bullet(newBulletPosition, currentPlayer.Id, currentPlayer.BulletDamage, currentPlayer.BulletSpeed);
+
+                    if (bullets.Where(b => b.ShooterId == currentPlayer.Id).ToList().Count < 20)
+                    {
+                        bullets.Add(newBullet);
+                    }
+                }
+
+                if (currentPlayer.BulletDelay == 0)
+                {
+                    currentPlayer.BulletDelay = Globals.DefaultPlayerBulletDelay;
+                }
+
             }
 
-            if (player.BulletDelay == 0)
-            {
-                player.BulletDelay = Globals.DefaultPlayerBulletDelay;
-            }
         }
     }
 }

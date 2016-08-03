@@ -1,6 +1,7 @@
 ﻿namespace SpaceShipFartrothu.Interfaces
 {
     using Microsoft.Xna.Framework.Graphics;
+    using SpaceShipFartrothu.Handlers;
     using SpaceShipFartrothu.Utils.Assets;
 
     public interface IPlayer : IGameObject
@@ -23,7 +24,7 @@
 
         int Level { get; set; }
 
-        Texture2D BulletTexture { get; set; }
+       InputHandler InputHandler { get; set; }
 
     }
 }

@@ -1,9 +1,6 @@
 ﻿namespace SpaceShipFartrothu.GameObjects.Items
 {
-    using System;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using SpaceShipFartrothu.Interfaces;
     using Utils.Assets;
 
     public class DamageItem : Item
@@ -14,7 +11,7 @@
             : base(position)
         {
             this.Texture = TexturesManager.ItemDamageTexture;
-            this.Damage = DamageConst;
+            this.ItemDamage = DamageConst;
         }
     }
 }

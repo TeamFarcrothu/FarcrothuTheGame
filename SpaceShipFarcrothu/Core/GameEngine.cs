@@ -12,6 +12,7 @@ namespace SpaceShipFartrothu.Core
     using GameObjects;
     using Factories;
     using Interfaces;
+    using SpaceShipFartrothu.Data;
     using Utils.Assets;
     using Utils.Enums;
     using Utils.Globals;
@@ -32,11 +33,14 @@ namespace SpaceShipFartrothu.Core
 
         private Player player;
         private Player player2;
+        private readonly InputHandler inputHandler;
         //private Boss boss;
 
         private bool bossHasInstance;
         private bool introPlayed;
 
+
+        private IRepository repo;
         //Lists
         public List<IGameObject> Asteroids = new List<IGameObject>();
 
@@ -55,6 +59,7 @@ namespace SpaceShipFartrothu.Core
         {
             this.starfield = new StarField();
             this.hud = new HUD();
+            this.inputHandler = new InputHandler();
             this.graphics = new GraphicsDeviceManager(this)
             {
                 IsFullScreen = false,
@@ -68,6 +73,7 @@ namespace SpaceShipFartrothu.Core
 
         protected override void Initialize()
         {
+            this.repo = new Repository();
             this.gameState = State.Intro;
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.videoPlayer = new VideoPlayer();
@@ -134,7 +140,6 @@ namespace SpaceShipFartrothu.Core
                         //Clear dead players
                         if (this.Players.Any(p => p.IsAlive == false))
                         {
-                            this.InputHandlers.RemoveAll(i => i.Player.IsAlive == false);
                             this.Players.RemoveAll(p => p.IsAlive == false);
                         }
 
@@ -146,7 +151,8 @@ namespace SpaceShipFartrothu.Core
 
                         //update players
                         this.Players.ForEach(p => p.Update(gameTime));
-                        this.InputHandlers.ForEach(i => i.Move(this.keyState));
+                        this.Players.ForEach(p => p.InputHandler.Move(p));
+                        this.Players.ForEach(p => p.InputHandler.PlayerShoot(this.Bullets, this.Players, p.Id));
 
                         this.starfield.Update(gameTime);
                         break;
@@ -194,12 +200,12 @@ namespace SpaceShipFartrothu.Core
             //Setup two players game
             if (this.keyState.IsKeyDown(Keys.D2))
             {
-                this.player = new Player(new Vector2(600, 600), 1);
+                this.player = new Player(new Vector2(600, 600), this.inputHandler, 1);
                 this.Players.Add(this.player);
-                this.InputHandlers.Add(new InputHandler(this.player));
-                this.player2 = new Player(new Vector2(700, 600), 2);
+
+                this.player2 = new Player(new Vector2(700, 600), this.inputHandler, 2);
                 this.Players.Add(this.player2);
-                this.InputHandlers.Add(new InputHandler(this.player2));
+
                 this.gameState = State.Playing;
                 MediaPlayer.Play(SoundManager.BgMusic);
                 MediaPlayer.Volume = 0.5f;
@@ -208,9 +214,9 @@ namespace SpaceShipFartrothu.Core
             //Setup single player game
             if (this.keyState.IsKeyDown(Keys.D1))
             {
-                this.player = new Player(new Vector2(600, 600), 1);
+                this.player = new Player(new Vector2(600, 600), this.inputHandler, 1);
                 this.Players.Add(this.player);
-                this.InputHandlers.Add(new InputHandler(this.player));
+
                 this.gameState = State.Playing;
                 MediaPlayer.Play(SoundManager.BgMusic);
                 MediaPlayer.Volume = 0.5f;
@@ -234,7 +240,7 @@ namespace SpaceShipFartrothu.Core
             this.Asteroids.Clear();
             this.Explosions.Clear();
             this.Players.Clear();
-            this.InputHandlers.Clear();
+            //this.InputHandlers.Clear();
 
             this.Bullets.Clear();
             this.Items.Clear();
@@ -306,7 +312,7 @@ namespace SpaceShipFartrothu.Core
                 //EntityCleanerHandler.ClearPlayers(this.Players);
             }
 
-            this.InputHandlers.ForEach(i => i.PlayerShoot(this.keyState, this.Bullets));
+            //this.InputHandlers.ForEach(i => i.PlayerShoot(this.keyState, this.Bullets));
 
             this.hud.UpdatePlayersInfo(this.Players);
 
@@ -400,6 +406,14 @@ namespace SpaceShipFartrothu.Core
 
         private void DrawAllGameObjects()
         {
+            foreach (var kvp in this.repo.GetAllGameobjects())
+            {
+                foreach (var gameObject in kvp.Value)
+                {
+                    gameObject.Draw(this.spriteBatch);
+                }
+            }
+
             this.Players.ForEach(p => p.Draw(this.spriteBatch));
             this.Enemies.ForEach(e => e.Draw(this.spriteBatch));
             this.Bullets.ForEach(b => b.Draw(this.spriteBatch));

@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Items;
     using Interfaces;
+    using Handlers;
     using Utils.Assets;
 
     public class Player : GameObject, IPlayer
@@ -39,7 +39,7 @@
         private bool isColiding;
         public bool isAlive;
 
-        public Player(Vector2 position, int id)
+        public Player(Vector2 position, InputHandler inputHandler, int id)
             : base(position)
         {
             this.Level = 1;
@@ -54,22 +54,26 @@
             this.Score = 0;
             this.items = new List<Item>();
 
+            this.InputHandler = inputHandler;
+
             this.Position = position;
             this.IsAlive = true;
 
             if (this.id == 1)
             {
                 this.Texture = TexturesManager.Player1Texture;
-                this.resetPosition = new Vector2(200, 600);
+                //this.resetPosition = new Vector2(200, 600);
             }
             else
             {
                 this.Texture = TexturesManager.Player2Texture;
-                this.resetPosition = new Vector2(1000, 600);
+               // this.resetPosition = new Vector2(1000, 600);
             }
         }
 
         public new Vector2 Position { get; set; }
+
+        public InputHandler InputHandler  { get; set; }
 
         public int Level //***
         {
@@ -141,21 +145,32 @@
 
         public int MaxHealth { get; set; }
 
-        public void AddItem(Item item)
+        // Player update method
+        public override void Update(GameTime gameTime)
         {
-            //this.items.Add(item);
+            // if player health is below zero set isAlive flag to false
+            if (this.Health <= 0)
+            {
+                this.IsAlive = false;
+            }
 
-            //this.Health += item.Health;
-            //this.BulletDamage += item.Damage;
-        }
+           //this.InputHandler.Move(this.keyState, p));
+            //this.Players.ForEach(p =>p.InputHandler.PlayerShoot(this.keyState, this.Bullets, p));
 
-        // Player load content method
-        public void LoadContent(ContentManager content)
-        {
-            // this.Texture = content.Load<Texture2D>(this.shipTextureFile);
-            //this.BulletTexture = content.Load<Texture2D>("bullet");
-            // this.healthTexture = content.Load<Texture2D>("healthbar");
-            // this.SoundManager.LoadContent(content);
+            //// if isAlive flag is false the player should be dead, so we reset it's Position depending on id
+            //if (!this.IsAlive)
+            //{
+            //    this.Position = this.resetPosition;
+            //    return;
+            //}
+
+            // Create bounding box around the player
+            this.BoundingBox = new Rectangle(
+                    (int)this.Position.X,
+                    (int)this.Position.Y,
+                    this.Texture.Width - 5,
+                    this.Texture.Height - 5
+                );
         }
 
         // Player draw method
@@ -166,31 +181,6 @@
             {
                 spriteBatch.Draw(this.Texture, this.Position, Color.White);
             }
-        }
-
-        // Player update method
-        public override void Update(GameTime gameTime)
-        {
-            // if player health is below zero set isAlive flag to false
-            if (this.Health <= 0)
-            {
-                this.IsAlive = false;
-            }
-
-            // if isAlive flag is false the player should be dead, so we reset it's Position depending on id
-            if (!this.IsAlive)
-            {
-                this.Position = this.resetPosition;
-                return;
-            }
-
-            // Create bounding box around the player
-            this.BoundingBox = new Rectangle(
-                    (int)this.Position.X,
-                    (int)this.Position.Y,
-                    this.Texture.Width - 5,
-                    this.Texture.Height - 5
-                );
         }
 
         public override void ReactOnColission(IGameObject target)
