@@ -4,10 +4,10 @@ TODO:
 
 Till next project defence:
 
-- move lists with enemy, asteroids and all other static lists to GameEngine
-- instead of cleaning lists with present enemies, asteroids, bullets and etc. after they are dead or out of screen, set their vertical position at 0 to -300
+- move lists with enemy, asteroids and all other static lists to GameEngine - done
+- instead of cleaning lists with present enemies, asteroids, bullets and etc. after they are dead or out of screen, set their vertical position at 0 to -300 - maybe not needed?
 - add more types of enemy ships/bosses
-- add collectable items
+- add collectable items - done
 
 Other things to do:
 
@@ -15,7 +15,7 @@ Other things to do:
 	- entity.Die()
 	- entity.AddScore()
 	- entity.Restart/Reposition()
-- input handler class
+- input handler class - done
 - game level class
 
 
