@@ -4,7 +4,7 @@
 
     public static class EntityCleanerHandler
     {
-        public static void ClearEnemyBullets(IRepository<IBullet> bullets)
+        public static void ClearBullets(IRepository<IBullet> bullets)
         {
             for (int i = 0; i < bullets.GetCount(); i++)
             {

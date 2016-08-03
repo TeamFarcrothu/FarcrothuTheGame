@@ -1,6 +1,5 @@
 ﻿namespace SpaceShipFartrothu.Factories
 {
-    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Xna.Framework;
     using GameObjects;
@@ -63,6 +62,44 @@
 
             }
 
+        }
+
+        public static void BossShoot(IRepository<IBullet> bullets, Boss boss)
+        {
+            if (boss.BulletDelay >= 0)
+            {
+                boss.BulletDelay--;
+            }
+
+            if (boss.BulletDelay <= 0)
+            {
+                if (bullets.GetAll().Where(b => b.ShooterId == 3).ToList().Count < 20)
+                {
+                    var newBulletPosition = new Vector2(
+                        boss.Position.X + boss.Texture.Width / 2 - TexturesManager.BulletTexture.Width / 2,
+                        boss.Position.Y + boss.Texture.Height - 100);
+                    Bullet newBullet = new Bullet(newBulletPosition, 3, boss.BulletDamage);
+
+                    bullets.AddEntity(newBullet);
+
+                    var newLeftBulletPosition = new Vector2(
+                       boss.Position.X + boss.Texture.Width / 2 - TexturesManager.BulletTexture.Width / 2 - 130,
+                        boss.Position.Y + boss.Texture.Height - 210);
+                    Bullet newLeftBullet = new Bullet(newLeftBulletPosition, 3, boss.BulletDamage);
+                    bullets.AddEntity(newLeftBullet);
+
+                    var newRightBulletPosition = new Vector2(
+                       boss.Position.X + boss.Texture.Width / 2 - TexturesManager.BulletTexture.Width / 2 + 130,
+                        boss.Position.Y + boss.Texture.Height - 210);
+                    Bullet newRightBullet = new Bullet(newRightBulletPosition, 3, boss.BulletDamage);
+                    bullets.AddEntity(newRightBullet);
+                }
+
+                if (boss.BulletDelay == 0)
+                {
+                    boss.BulletDelay = Globals.DefaultBossBulletDelay;
+                }
+            }
         }
     }
 }

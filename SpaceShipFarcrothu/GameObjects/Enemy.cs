@@ -84,8 +84,6 @@
 
         public override void ReactOnColission(IGameObject target = null)
         {
-            //Explosion.Explosions.Add(new Explosion(this.Position));
-
             this.IsVisible = false;
 
             //TODO: Sound

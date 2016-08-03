@@ -7,5 +7,6 @@
 
         public static readonly int DefaultEnemyBulletDelay = 40;
         public static readonly int DefaultPlayerBulletDelay = 20;
+        public static readonly int DefaultBossBulletDelay = 10;
     }
 }

@@ -59,7 +59,7 @@
                             player.Score += (currentTarget as EnemyEntity).ScorePoints;
 
                             playerBullet.ReactOnColission();
-                            currentTarget.ReactOnColission();
+                            currentTarget.ReactOnColission(player);
                             //(currentTarget as EnemyEntity).ColideAndExplode(explosions);
 
                         }
@@ -90,7 +90,7 @@
         }
 
         //check boss bullets for collision with players
-        public static void CheckBossBulletsCollisions(IList<Bullet> bullets, IList<IPlayer> players)
+        public static void CheckBossBulletsCollisions(IList<IBullet> bullets, IList<IPlayer> players)
         {
             var bossBullets = bullets.Where(b => b.ShooterId == 3).ToList();
 

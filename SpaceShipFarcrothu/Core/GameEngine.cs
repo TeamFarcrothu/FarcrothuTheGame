@@ -1,6 +1,7 @@
 namespace SpaceShipFartrothu.Core
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -32,7 +33,8 @@ namespace SpaceShipFartrothu.Core
         private Player player;
         private Player player2;
         private readonly InputHandler inputHandler;
-        //private Boss boss;
+
+        private Boss boss;
 
         private bool bossHasInstance;
         private bool introPlayed;
@@ -75,7 +77,7 @@ namespace SpaceShipFartrothu.Core
             this.hud.LoadContent(this.Content);
             this.starfield.LoadContent(this.Content);
 
-            //MediaPlayer.Play(this.soundManager.intro);
+            MediaPlayer.Play(SoundManager.IntroSong);
         }
 
         protected override void UnloadContent()
@@ -203,12 +205,6 @@ namespace SpaceShipFartrothu.Core
                 MediaPlayer.Volume = 0.5f;
             }
 
-            //foreach (Player player in this.Players)
-            //{
-            //   // player.LoadContent(this.Content);
-            //    this.InputHandlers.Add(new InputHandler(this.player));
-            //}
-
             this.starfield.Update(gameTime);
             this.starfield.Speed = 1;
         }
@@ -232,9 +228,9 @@ namespace SpaceShipFartrothu.Core
         private void Play(GameTime gameTime)
         {
             //Enable boss mode if some of players have enough points   ## its 150 just for testing
-            if (this.db.Players.GetAll().Any(s => s.Score >= 3000))
+            if (this.db.Players.GetAll().Any(s => s.Score >= 30))
             {
-                // this.EnableBossMode(gameTime);
+               this.EnableBossMode(gameTime);
             }
             else
             {
@@ -257,7 +253,6 @@ namespace SpaceShipFartrothu.Core
                 this.db.Enemies.GetAll().ForEach(e => e.Update(gameTime));
                 this.db.Asteroids.GetAll().ForEach(a => a.Update(gameTime));
                 this.db.Items.GetAll().ForEach(i => i.Update(gameTime));
-                //this.db.Explosions.GetAll().ForEach(e => e.Update(gameTime));
 
                 // Handle collisions between players and enemy objects
                 CollisionHandler.CheckForCollision(this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
@@ -267,14 +262,14 @@ namespace SpaceShipFartrothu.Core
                 CollisionHandler.CheckPlayerItemCollisions(this.db.Items.GetAll(), this.db.Players.GetAll());
 
                 // Cleaning with mr.Proper
-                EntityCleanerHandler.ClearEnemyBullets(this.db.Bullets);
                 EntityCleanerHandler.ClearEnemies(this.db.Enemies);
                 EntityCleanerHandler.ClearAsteroids(this.db.Asteroids);
                 EntityCleanerHandler.ClearExplosion(this.db.Explosions);
                 EntityCleanerHandler.ClearPlayers(this.db.Players);
             }
 
-            //Update all explosions
+            //Update 
+            this.db.Bullets.GetAll().ForEach(b => b.Update(gameTime));
             this.db.Explosions.GetAll().ForEach(e => e.Update(gameTime));
 
 
@@ -286,31 +281,29 @@ namespace SpaceShipFartrothu.Core
             CollisionHandler.CheckPlayerBulletsCollisions(this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.db.Bullets.GetAll(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
             CollisionHandler.CheckEnemiesBulletsCollisions(this.db.Bullets.GetAll(), this.db.Players.GetAll());
 
-            //Update all bullets 
-            for (int i = 0; i < this.db.Bullets.GetCount(); i++)
-            {
-                this.db.Bullets.GetAll()[i].Update(gameTime);
-            }
+            EntityCleanerHandler.ClearBullets(this.db.Bullets);        
         }
 
-        //private void EnableBossMode(GameTime gameTime)
-        //{
-        //    this.boss = Boss.Instance;
-        //    this.bossHasInstance = true;
+        private void EnableBossMode(GameTime gameTime)
+        {
+            this.boss = Boss.Instance;
+            this.bossHasInstance = true;
 
-        //    if (this.bossHasInstance)
-        //    {
-        //        CollisionHandler.CheckBossBulletsCollisions();
-        //        //CollisionHandler.CheckPlayerBulletsCollisions(new List<GameObject>() { this.boss });
+            if (this.bossHasInstance)
+            {
+                CollisionHandler.CheckBossBulletsCollisions(this.db.Bullets.GetAll(), this.db.Players.GetAll());
+                CollisionHandler.CheckPlayerBulletsCollisions(new List<IGameObject>() { this.boss }, this.db.Bullets.GetAll(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
 
-        //        this.boss.Update(gameTime);
+                BulletsFactory.BossShoot(this.db.Bullets, this.boss);
 
-        //        if (!this.boss.IsVisible)
-        //        {
-        //            this.gameState = State.Winning;
-        //        }
-        //    }
-        //}
+                this.boss.Update(gameTime);
+
+                if (!this.boss.IsVisible)
+                {
+                    this.gameState = State.Winning;
+                }
+            }
+        }
 
         protected override void Draw(GameTime gameTime)
         {
@@ -378,14 +371,12 @@ namespace SpaceShipFartrothu.Core
 
         private void DrawBoss()
         {
-            if (this.db.Asteroids.GetCount() == 0)
+            if (this.db.Asteroids.GetAll().Any())
                 this.db.Asteroids.Dispose();
-            if (this.db.Enemies.GetCount() == 0)
+            if (this.db.Enemies.GetAll().Any())
                 this.db.Enemies.Dispose();
-            if (this.db.Items.GetCount() == 0)
-                this.db.Items.Dispose();
 
-            //this.boss.Draw(this.spriteBatch);
+            this.boss.Draw(this.spriteBatch);
         }
 
         private void DrawStarfield(Texture2D stateImage)

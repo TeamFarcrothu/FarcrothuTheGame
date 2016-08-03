@@ -1,6 +1,5 @@
 ﻿namespace SpaceShipFartrothu.GameObjects
 {
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Interfaces;
 
@@ -18,14 +17,5 @@
         public int ScorePoints { get; set; }
 
         public int BulletDelay { get; set; }
-
-
-        // NEed fix
-       // public void ColideAndExplode(IList<IExplosion> explosions)
-       // {
-           // IExplosion newExplosion = ExplosionFactory.CreateExplosion(this.ExplosionTexture, this.Position);
-
-           // explosions.Add(newExplosion);
-       // }
     }
 }
