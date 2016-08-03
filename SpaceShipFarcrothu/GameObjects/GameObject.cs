@@ -3,6 +3,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Interfaces;
+    using System;
 
     public abstract class GameObject : ICollidable, IGameObject
     {
@@ -30,6 +31,7 @@
 
         public int Damage { get; protected set; }
 
+        public int Health { get; protected set; }
 
         public abstract void Update(GameTime gameTime);
 

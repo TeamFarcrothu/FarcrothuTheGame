@@ -48,6 +48,7 @@
     <Compile Include="Factories\ItemFactory.cs" />
     <Compile Include="GameObjects\Items\ArmorItem.cs" />
     <Compile Include="GameObjects\Items\BulletSpeedItem.cs" />
+    <Compile Include="GameObjects\Items\ShipSpeedItem.cs" />
     <Compile Include="Handlers\CollisionHandler.cs" />
     <Compile Include="Core\HUD.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -158,6 +159,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\ship_p2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ship_speed_potion.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\space.jpg">

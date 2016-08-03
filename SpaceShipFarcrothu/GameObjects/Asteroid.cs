@@ -12,6 +12,8 @@
         private const int DefaultSpeed = 4;
         private const int DefaultDamage = 10;
         private const int DefaultScorePoints = 10;
+        private const int DefaultHealth = 10;
+
         private const string Type = nameof(Asteroid);
 
         private static Random random = new Random();
@@ -28,6 +30,7 @@
             this.Texture = TexturesManager.AsteroidTexture;
             this.Speed = DefaultSpeed;
             this.Damage = DefaultDamage;
+            this.Health = DefaultHealth;
             this.ScorePoints = DefaultScorePoints;
             //    // Rotation is not working at the moment in order to get proper collision
             //    //this.Origin.X = Texture.Width / 2;
@@ -76,12 +79,11 @@
 
         public override void ReactOnColission(IGameObject target = null)
         {
-            //explosions.Add(new Explosion(this.Position));
-            this.IsVisible = false;
-            //target.IsVisible = false;
-            //TODO
-
-            // Sound
+            this.Health -= (target as Player).BulletDamage;
+            if (Health <= 0)
+            {
+                this.IsVisible = false;
+            }
         }
     }
 }

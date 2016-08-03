@@ -20,6 +20,7 @@
         public static Texture2D ItemBulletSpeedTexture { get; private set; }
         public static Texture2D ItemDamageTexture { get; private set; }
         public static Texture2D ItemHealthTexture { get; private set; }
+        public static Texture2D ItemShipSpeedTexture { get; private set; }
 
         public static Texture2D BossTexture { get; private set; }
         public static Texture2D HealthTexture { get; private set; }
@@ -39,6 +40,7 @@
             ItemArmorTexture = content.Load<Texture2D>("armor_potion");//---------------------------------
             ItemDamageTexture = content.Load<Texture2D>("damage_potion");//---------------------------------
             ItemBulletSpeedTexture = content.Load<Texture2D>("bullet_speed_potion");//---------------------------------
+            ItemShipSpeedTexture = content.Load<Texture2D>("ship_speed_potion");
 
             BossTexture = content.Load<Texture2D>("space_Boss_Level_1");
             HealthTexture = content.Load<Texture2D>("healthbar");

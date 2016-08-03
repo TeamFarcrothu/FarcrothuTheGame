@@ -17,6 +17,8 @@
 
         int Damage { get; }
 
+        int Health { get; }
+
         void Update(GameTime gameTime);
 
         void Draw(SpriteBatch spriteBatch);

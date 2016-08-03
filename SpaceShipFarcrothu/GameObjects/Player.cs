@@ -16,7 +16,7 @@
         private const int DefaultBulletDelay = 11;
         private const int DefaultHealth = 100;
         private const int DefaultBulletSpeed = 6;
-
+        private const int DefaultArmor = 0;
         private readonly Vector2 resetPosition;
         // private readonly Texture2D bulleTexture = AssetsLoader.BulletTexture;
 
@@ -30,7 +30,9 @@
         private int health;
         private int maxHealth;
 
-        private int level; //***
+        private int armor;
+
+        private int level;
 
         private int bulletDamage;
         private float bulletDelay;
@@ -47,10 +49,10 @@
             this.BulletDamage = DefaultBulletDamage;
             this.BulletDelay = DefaultBulletDelay;
             this.BulletSpeed = DefaultBulletSpeed;
-
             this.Speed = DefaultSpeed;
             this.MaxHealth = DefaultHealth;
             this.Health = DefaultHealth;
+            this.Armor = DefaultArmor;
             this.Score = 0;
             this.items = new List<Item>();
 
@@ -96,7 +98,10 @@
 
         public int BulletDamage
         {
-            get { return this.bulletDamage; }
+            get
+            {
+                return this.bulletDamage;
+            }
             set
             {
                 if (value < 0)
@@ -117,6 +122,18 @@
             set
             {
                 this.bulletSpeed = value;
+            }
+        }
+
+        public int Armor
+        {
+            get
+            {
+                return this.armor;
+            }
+            set
+            {
+                this.armor = value;
             }
         }
 
@@ -195,8 +212,8 @@
                 this.Health = item.ItemHealth;
                 this.BulletDamage += item.ItemDamage;
                 this.BulletSpeed += item.ItemBulletSpeed;
-                //TO DO:
-                // this.Armor += item.ItemArmor;
+                this.Armor += item.ItemArmor;
+                this.Speed += item.ItemShipSpeed;
             }
             else if (currentTargetType == "Asteroid")
             {
@@ -204,21 +221,30 @@
                 //this.soundManager.explodeSound.Play();
                 //this.hud.playerscore += 5;
 
-                this.Health = -target.Damage;
+                if (this.Armor <= target.Damage)
+                {
+                    this.Health = -target.Damage + this.Armor;
+                }
             }
 
             else if (currentTargetType == "Enemy")
             {
 
                 //TODO: add points to player score and reduce health
-                this.Health = -target.Damage;
+                if (this.Armor <= target.Damage)
+                {
+                    this.Health = -target.Damage + this.Armor;
+                }
             }
 
             else if (currentTargetType == "Boss")
             {
 
                 //TODO: add points to player score and reduce health
-                this.Health = -target.Damage;
+                if (this.Armor <= target.Damage)
+                {
+                    this.Health = -target.Damage + this.Armor;
+                }
             }
 
             else if (currentTargetType == "Bullet")
@@ -228,8 +254,10 @@
                 //var bullet = target as Bullet;
                 //var bulletId = bullet.ShooterId;
                 //if(bulletId == 0)
-
-                this.Health = -target.Damage;
+                if (this.Armor <= target.Damage )
+                {
+                    this.Health = -target.Damage + this.Armor;
+                }
             }
         }
     }

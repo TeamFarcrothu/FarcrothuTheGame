@@ -11,9 +11,9 @@
     public class Enemy : EnemyEntity
     {
         private const int DefaultScorePoints = 15;
-        private const int DefaultBulletDamage = 5;
+        private const int DefaultBulletDamage = 10;
         private const int DefaultDamage = 10;
-        private const int DefaultHealth = 5;
+        private const int DefaultHealth = 20;
         private const int DefaultSpeed = 2;
         private const int DefaultShooterId = 0;
 
@@ -84,9 +84,11 @@
 
         public override void ReactOnColission(IGameObject target = null)
         {
-            this.IsVisible = false;
-
-            //TODO: Sound
+            this.Health -= (target as Player).BulletDamage;
+            if (Health <= 0)
+            {
+                this.IsVisible = false;
+            }
         }
 
     }

@@ -10,7 +10,7 @@ namespace SpaceShipFartrothu.Factories
     {
         public static void CreateItems(IRepository<IItem> items, List<IGameObject> entityList, Random random)
         {
-            int randomNumber = random.Next(0, 13);
+            int randomNumber = random.Next(0, 16);
 
             if (items.GetCount() < 30)
             {
@@ -18,6 +18,10 @@ namespace SpaceShipFartrothu.Factories
                 {
                     if (!entity.IsVisible)
                     {
+                        if (randomNumber > 12 && randomNumber <= 15)
+                        {
+                            items.AddEntity(new ShipSpeedItem(entity.Position));
+                        }
                         if (randomNumber > 9 && randomNumber <= 12)
                         {
                             items.AddEntity(new BulletSpeedItem(entity.Position));

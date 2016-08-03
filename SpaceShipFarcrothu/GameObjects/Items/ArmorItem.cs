@@ -11,7 +11,7 @@ namespace SpaceShipFartrothu.GameObjects.Items
     using Utils.Assets;
     public class ArmorItem : Item
     {
-        private const int ArmorConst = 5;
+        private const int ArmorConst = 1;
 
         public ArmorItem(Vector2 position) 
             : base(position)

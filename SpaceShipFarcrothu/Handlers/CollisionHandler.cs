@@ -19,15 +19,13 @@
                 {
                     if (player.BoundingBox.Intersects(currentTarget.BoundingBox))
                     {
-                        if (currentTarget is IExplodable)
-                        {
-                            player.Score += (currentTarget as EnemyEntity).ScorePoints;
 
-                            player.ReactOnColission(currentTarget);
-                            currentTarget.ReactOnColission();
-                            //(currentTarget as EnemyEntity).ColideAndExplode(explosions);
-                        }
-                        else if (currentTarget is Item)
+                        player.Score += (currentTarget as EnemyEntity).ScorePoints;
+
+                        player.ReactOnColission(currentTarget);
+                        currentTarget.ReactOnColission(player);
+                        //(currentTarget as EnemyEntity).ColideAndExplode(explosions);
+                        if (currentTarget is Item)
                         {
                             if (currentTarget.IsVisible)
                             {

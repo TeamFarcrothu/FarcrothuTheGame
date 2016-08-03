@@ -228,7 +228,7 @@ namespace SpaceShipFartrothu.Core
         private void Play(GameTime gameTime)
         {
             //Enable boss mode if some of players have enough points   ## its 150 just for testing
-            if (this.db.Players.GetAll().Any(s => s.Score >= 30))
+            if (this.db.Players.GetAll().Any(s => s.Score >= 1000))
             {
                this.EnableBossMode(gameTime);
             }

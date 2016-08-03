@@ -6,5 +6,6 @@
         int ItemDamage { get; }
         int ItemArmor { get; }
         int ItemBulletSpeed { get; }
+        int ItemShipSpeed { get; }
     }
 }

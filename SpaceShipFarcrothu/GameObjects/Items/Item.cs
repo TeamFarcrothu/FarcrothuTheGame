@@ -19,6 +19,7 @@
         public int ItemDamage { get; protected set; }
         public int ItemArmor { get; protected set; }
         public int ItemBulletSpeed { get; protected set; }
+        public int ItemShipSpeed { get; protected set; }
 
         public override void Update(GameTime gameTime)
         {

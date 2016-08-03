@@ -22,6 +22,8 @@
 
         int Level { get; set; }
 
+        int Armor { get; set; }
+
         InputHandler InputHandler { get; set; }
     }
 }
