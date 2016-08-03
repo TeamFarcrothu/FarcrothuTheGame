@@ -5,9 +5,10 @@
     using Microsoft.Xna.Framework.Input;
     using GameObjects;
     using Microsoft.Xna.Framework.Graphics;
-    using SpaceShipFartrothu.Factories;
-    using SpaceShipFartrothu.Interfaces;
-    using SpaceShipFartrothu.Multimedia;
+    using Factories;
+    using Interfaces;
+    using Multimedia;
+    using Utils.Globals;
 
     public class InputHandler
     {
@@ -45,16 +46,16 @@
             }
 
             // Moving left and right through screen borders
-            if (this.player.Position.X <= -30 || this.player.Position.X >= Globals.Globals.MAIN_SCREEN_WIDTH)
+            if (this.player.Position.X <= -30 || this.player.Position.X >= Globals.MAIN_SCREEN_WIDTH)
             {
-                if (this.player.Position.X > Globals.Globals.MAIN_SCREEN_WIDTH)
+                if (this.player.Position.X > Globals.MAIN_SCREEN_WIDTH)
                 {
-                    this.player.Position = new Vector2(this.player.Position.X - Globals.Globals.MAIN_SCREEN_WIDTH,
+                    this.player.Position = new Vector2(this.player.Position.X - Globals.MAIN_SCREEN_WIDTH,
                         this.player.Position.Y);
                 }
                 else if (this.player.Position.X < -30)
                 {
-                    this.player.Position = new Vector2(Globals.Globals.MAIN_SCREEN_WIDTH, this.player.Position.Y);
+                    this.player.Position = new Vector2(Globals.MAIN_SCREEN_WIDTH, this.player.Position.Y);
                 }
             }
 
@@ -62,10 +63,10 @@
             {
                 this.player.Position = new Vector2(this.player.Position.X, 0);
             }
-            if (this.player.Position.Y >= Globals.Globals.MAIN_SCREEN_HEIGHT - this.player.Texture.Height)
+            if (this.player.Position.Y >= Globals.MAIN_SCREEN_HEIGHT - this.player.Texture.Height)
             {
                 this.player.Position = new Vector2(this.player.Position.X,
-                    Globals.Globals.MAIN_SCREEN_HEIGHT - this.player.Texture.Height);
+                    Globals.MAIN_SCREEN_HEIGHT - this.player.Texture.Height);
             }
         }
 

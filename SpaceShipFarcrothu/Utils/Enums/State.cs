@@ -1,4 +1,4 @@
-﻿namespace SpaceShipFartrothu.Core
+﻿namespace SpaceShipFartrothu.Utils.Enums
 {
     public enum State
     {

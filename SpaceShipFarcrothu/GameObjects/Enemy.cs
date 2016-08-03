@@ -3,9 +3,9 @@
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Globals;
     using Items;
     using Interfaces;
+    using SpaceShipFartrothu.Utils.Globals;
 
     public class Enemy : EnemyEntity
     {

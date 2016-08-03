@@ -1,4 +1,4 @@
-﻿namespace SpaceShipFartrothu.Globals
+﻿namespace SpaceShipFartrothu.Utils.Globals
 {
     public static class Globals
     {

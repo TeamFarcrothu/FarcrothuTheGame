@@ -7,11 +7,11 @@
     using GameObjects;
     using Interfaces;
     using Multimedia;
-    using  Globals;
+    using SpaceShipFartrothu.Utils.Globals;
 
     public static class BulletsFactory
     {
-        public static void EnemyShoot(IList<IBullet> bullets, IEnemy enemy, Texture2D bullletTexture)
+        public static void EnemyShoot(IList<IBullet> bullets, IEnemy enemy, Texture2D bulletTexture)
         {
             if (enemy.BulletDelay >= 0)
             {
@@ -20,9 +20,9 @@
 
             if (enemy.BulletDelay <= 0)
             {
-                var newBulletPosition = new Vector2(enemy.Position.X + enemy.Texture.Width / 2 - enemy.BulletTexture.Width / 2, enemy.Position.Y + enemy.BulletTexture.Height);
+                var newBulletPosition = new Vector2(enemy.Position.X + enemy.Texture.Width / 2 - enemy.BulletTexture.Width / 2, enemy.Position.Y + bulletTexture.Height);
 
-                Bullet newBullet = new Bullet(bullletTexture, newBulletPosition, enemy.ShooterId, enemy.BulletDamage);
+                Bullet newBullet = new Bullet(bulletTexture, newBulletPosition, enemy.ShooterId, enemy.BulletDamage);
                 bullets.Add(newBullet);
 
                 if (enemy.BulletDelay == 0)

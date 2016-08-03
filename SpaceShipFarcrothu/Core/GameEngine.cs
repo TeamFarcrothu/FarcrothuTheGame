@@ -1,5 +1,3 @@
-using SpaceShipFartrothu.Multimedia;
-
 namespace SpaceShipFartrothu.Core
 {
     using System;
@@ -10,18 +8,20 @@ namespace SpaceShipFartrothu.Core
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Microsoft.Xna.Framework.Media;
+    using Multimedia;
 
     using Handlers;
     using Effects;
     using GameObjects;
-    using Globals;
     using GameObjects.Items;
     using Factories;
     using Interfaces;
+    using Utils.Assets;
+    using Utils.Enums;
+    using Utils.Globals;
 
     public class GameEngine : Game
-    {
-        
+    {     
         //Set first state 
         private State gameState = State.Intro;
 
@@ -42,37 +42,18 @@ namespace SpaceShipFartrothu.Core
         //private Boss boss;
         private bool bossHasInstance;
 
-        private Texture2D menuImage;
-        private Texture2D gameoverImage;
-        private Texture2D winningImage;
-
-        private Texture2D player1Texture;
-        private Texture2D player2Texture;
-
-        public Texture2D explosionTexture;
-        public Texture2D bulletTexture;
-        public Texture2D asteroidTexture;
-        public Texture2D enemyTexture;
-
-        public static Texture2D itemTexture; //-------------------------
-        public static Texture2D bossTexture;
-        public static Texture2D healthTexture;
-
         private VideoManager videoManager = new VideoManager();
         private Texture2D texture;
         private VideoPlayer videoPlayer = new VideoPlayer();
         private bool introPlayed;
 
-        //Factories
-
-
-
+        //Lists
         public List<IGameObject> Asteroids = new List<IGameObject>();
         
         public List<IBullet> Bullets = new List<IBullet>();
 
         public List<IGameObject> Enemies = new List<IGameObject>();
-        public List<InputHandler> inputHandlers = new List<InputHandler>();
+        public List<InputHandler> InputHandlers = new List<InputHandler>();
 
         public List<IPlayer> Players = new List<IPlayer>();
 
@@ -80,6 +61,7 @@ namespace SpaceShipFartrothu.Core
 
         public List<Item> Items = new List<Item>();
 
+        private AssetsLoader assetsLoader;
 
         public GameEngine()
         {
@@ -92,45 +74,32 @@ namespace SpaceShipFartrothu.Core
 
             this.Window.Title = "Traveling to FARCROTHU";
             this.Content.RootDirectory = "Content";
-            this.menuImage = null;
-            this.gameoverImage = null;
-            this.winningImage = null;
         }
 
         protected override void Initialize()
         {
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+            this.assetsLoader = new AssetsLoader(this.Content);
+
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            this.assetsLoader.LoadAllAssets();
+
             this.hud.LoadContent(this.Content);
             this.starfield.LoadContent(this.Content);
             this.soundManager.LoadContent(this.Content);
             //MediaPlayer.Play(this.soundManager.intro);
-
-            this.menuImage = this.Content.Load<Texture2D>("menu_image");
-            this.gameoverImage = this.Content.Load<Texture2D>("gameover_image");
-            this.winningImage = this.Content.Load<Texture2D>("winning_image");
-            this.player1Texture = this.Content.Load<Texture2D>("ship_p1");
-            this.player2Texture = this.Content.Load<Texture2D>("ship_p2");
-            this.asteroidTexture = this.Content.Load<Texture2D>("asteroid");
-
-            this.explosionTexture = this.Content.Load<Texture2D>("explosion");
-          
-            this.bulletTexture = this.Content.Load<Texture2D>("bullet");
-
-            itemTexture = this.Content.Load<Texture2D>("health_potion");//---------------------------------
-            bossTexture = this.Content.Load<Texture2D>("space_Boss_Level_1");
-            healthTexture = this.Content.Load<Texture2D>("healthbar");
-            this.enemyTexture = this.Content.Load<Texture2D>("enemy_ship");
 
             this.videoManager.LoadContent(this.Content);
         }
 
         protected override void UnloadContent()
         {
+            this.Content.Unload();
+            this.Exit();
         }
 
         protected override void Update(GameTime gameTime)
@@ -174,7 +143,7 @@ namespace SpaceShipFartrothu.Core
 
                         //update players
                         this.Players.ForEach(p => p.Update(gameTime));
-                        this.inputHandlers.ForEach(i => i.Move(this.keyState));
+                        this.InputHandlers.ForEach(i => i.Move(this.keyState));
 
                         this.starfield.Update(gameTime);
                         break;
@@ -222,10 +191,10 @@ namespace SpaceShipFartrothu.Core
             //Setup two players game
             if (this.keyState.IsKeyDown(Keys.D2))
             {
-                this.player = new Player(this.player1Texture, new Vector2(600, 600), 1);
+                this.player = new Player(this.assetsLoader.Player1Texture, new Vector2(600, 600), 1);
                 this.Players.Add(this.player);
 
-                this.player2 = new Player(this.player2Texture, new Vector2(700, 600), 2);
+                this.player2 = new Player(this.assetsLoader.Player2Texture, new Vector2(700, 600), 2);
                 this.Players.Add(this.player2);
 
                 this.gameState = State.Playing;
@@ -236,7 +205,7 @@ namespace SpaceShipFartrothu.Core
             //Setup single player game
             if (this.keyState.IsKeyDown(Keys.D1))
             {
-                this.player = new Player(this.player1Texture, new Vector2(600, 600), 1);
+                this.player = new Player(this.assetsLoader.Player1Texture, new Vector2(600, 600), 1);
                 this.Players.Add(this.player);
 
                 this.gameState = State.Playing;
@@ -247,7 +216,7 @@ namespace SpaceShipFartrothu.Core
             foreach (Player player in this.Players)
             {
                 player.LoadContent(this.Content);
-                this.inputHandlers.Add(new InputHandler(this.player));
+                this.InputHandlers.Add(new InputHandler(this.player));
             }
 
             this.starfield.Update(gameTime);
@@ -282,7 +251,7 @@ namespace SpaceShipFartrothu.Core
                 {
                     this.Enemies[i].Update(gameTime);
 
-                    BulletsFactory.EnemyShoot(this.Bullets, (IEnemy)this.Enemies[i], this.bulletTexture);
+                    BulletsFactory.EnemyShoot(this.Bullets, (IEnemy)this.Enemies[i], this.assetsLoader.BulletTexture);
                 }
 
                 foreach (var asteroid in this.Asteroids)
@@ -317,8 +286,8 @@ namespace SpaceShipFartrothu.Core
                 CollisionHandler.CheckForCollision(this.Enemies, this.Players, this.Explosions);
                 //CollisionHandler.CheckForCollision(HealthItem.HealthItems);
 
-                EnemyFactory.CreateEnemies(this.Enemies, this.random, this.enemyTexture, this.bulletTexture);
-                AsteroidFactory.CreateAsteroids(this.Asteroids, this.random, this.asteroidTexture);
+                EnemyFactory.CreateEnemies(this.Enemies, this.random, this.assetsLoader.EnemyTexture, this.assetsLoader.BulletTexture);
+                AsteroidFactory.CreateAsteroids(this.Asteroids, this.random, this.assetsLoader.AsteroidTexture);
 
                 // CLeaning
                 EntityCleanerHandler.ClearEnemyBullets(this.Bullets);
@@ -326,7 +295,7 @@ namespace SpaceShipFartrothu.Core
                 EntityCleanerHandler.ClearExplosion(this.Explosions);
             }
 
-            this.inputHandlers.ForEach(i => i.PlayerShoot(this.keyState, this.Bullets, this.bulletTexture, this.soundManager));
+            this.InputHandlers.ForEach(i => i.PlayerShoot(this.keyState, this.Bullets, this.assetsLoader.BulletTexture, this.soundManager));
 
             this.hud.UpdatePlayersInfo(this.Players);
 
@@ -391,25 +360,25 @@ namespace SpaceShipFartrothu.Core
                 // DRAWING MENU STATE
                 case State.Menu:
                     {
-                        this.DrawStarfield(this.menuImage); break;
+                        this.DrawStarfield(this.assetsLoader.MenuImage); break;
                     }
                 // DRAWING GAMEOVER STATE
                 case State.GameOver:
                     {
-                        this.DrawStarfield(this.gameoverImage); break;
+                        this.DrawStarfield(this.assetsLoader.GameoverImage); break;
                     }
                 // DRAWING WINNING STATE
                 case State.Winning:
                     {
-                        this.DrawStarfield(this.winningImage); break;
+                        this.DrawStarfield(this.assetsLoader.WinningImage); break;
                     }
 
                 //DRAWING INTRO VIDEO
                 case State.Intro:
-                    if (videoPlayer.State != MediaState.Stopped)
+                    if (this.videoPlayer.State != MediaState.Stopped)
                     {
-                        texture = videoPlayer.GetTexture();
-                        spriteBatch.Draw(texture, GraphicsDevice.Viewport.Bounds, Color.White);
+                        this.texture = this.videoPlayer.GetTexture();
+                        this.spriteBatch.Draw(this.texture, this.GraphicsDevice.Viewport.Bounds, Color.White);
                     }
                     break;
             }

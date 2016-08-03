@@ -2,14 +2,14 @@
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Globals;
     using Interfaces;
+    using Microsoft.Xna.Framework.Content;
+    using SpaceShipFartrothu.Utils.Globals;
 
     public class Bullet : GameObject, IBullet
     {
         private const int DefaultSpeed = 6;
-
-      //public static List<Bullet> Bullets = new List<Bullet>();
+        
 
         // Enemy = 0; Player1 = 1; Player2 = 2; Boss = 3
         private int shooterId;
@@ -21,11 +21,16 @@
             this.IsVisible = true;
             this.ShooterId = shooterId;
             this.Damage = bulletDamage;
-
-           // Bullets.Add(this);
         }
 
         public int ShooterId { get; set; }
+        //public Texture2D BulleTexture { get; set; }
+
+        //public static void LoadContent(ContentManager content)
+        //{
+        //    bulleTexture = content.Load<Texture2D>("bullet");
+        //}
+
 
         public override void Update(GameTime gameTime)
         {

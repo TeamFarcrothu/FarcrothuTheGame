@@ -2,11 +2,11 @@
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Globals;
     using System;
     using System.Collections.Generic;
     using Core;
     using SpaceShipFartrothu.Interfaces;
+    using SpaceShipFartrothu.Utils.Globals;
 
     public abstract class Item : FallingObject, ICollectable
     {

@@ -5,6 +5,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using System;
     using SpaceShipFartrothu.Interfaces;
+    using SpaceShipFartrothu.Utils.Globals;
 
     public class Asteroid : EnemyEntity, IAsteroid
     {
@@ -44,7 +45,7 @@
 
             this.Position = new Vector2(this.Position.X, this.Position.Y + this.Speed);
 
-            if (this.Position.Y >= Globals.Globals.MAIN_SCREEN_HEIGHT)
+            if (this.Position.Y >= Globals.MAIN_SCREEN_HEIGHT)
             {
                 this.Position = new Vector2(this.Position.X, this.Position.Y - 75);
                 this.IsVisible = false;
