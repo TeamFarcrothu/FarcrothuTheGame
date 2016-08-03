@@ -1,11 +1,11 @@
 ﻿namespace SpaceShipFartrothu.GameObjects
 {
-    using Items;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using System;
-    using SpaceShipFartrothu.Interfaces;
-    using SpaceShipFartrothu.Utils.Globals;
+    using Interfaces;
+    using Utils.Assets;
+    using Utils.Globals;
 
     public class Asteroid : EnemyEntity, IAsteroid
     {
@@ -22,11 +22,10 @@
         //public float RandomX;
         //public float RandomY;
 
-        //public static List<GameObject> Asteroids = new List<GameObject>();
-
-        public Asteroid(Texture2D texture, Vector2 position)
-            : base(texture, position)
+        public Asteroid(Vector2 position)
+            : base(position)
         {
+            this.Texture = TexturesManager.AsteroidTexture;
             this.Speed = DefaultSpeed;
             this.Damage = DefaultDamage;
             this.ScorePoints = DefaultScorePoints;
@@ -34,10 +33,6 @@
             //    //this.Origin.X = Texture.Width / 2;
             //    //this.Origin.Y = Texture.Height / 2;
         }
-
-        //public void LoadContent(ContentManager content)
-        //{
-        //}
 
         public override void Update(GameTime gameTime)
         {

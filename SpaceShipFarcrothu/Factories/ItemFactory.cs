@@ -12,7 +12,7 @@ namespace SpaceShipFartrothu.Factories
 {
     public static class ItemFactory
     {
-        public static void CreateItems(IList<IGameObject> items, Random random, IList<Texture2D> itemTextures, Vector2 potion)
+        public static void CreateItems(IList<IGameObject> items, Random random, Vector2 potion)
         {
             int randomNumber = random.Next(0, 25);
 
@@ -20,19 +20,19 @@ namespace SpaceShipFartrothu.Factories
             {
                 if (randomNumber > 9 && randomNumber <= 12)
                 {
-                    items.Add(new BulletSpeedItem(itemTextures[3], potion));
+                    items.Add(new BulletSpeedItem(potion));
                 }
                 if (randomNumber > 6 && randomNumber <= 9)
                 {
-                    items.Add(new ArmorItem(itemTextures[2], potion));
+                    items.Add(new ArmorItem(potion));
                 }
                 if (randomNumber > 3 && randomNumber <= 6)
                 {
-                    items.Add(new DamageItem(itemTextures[1], potion));
+                    items.Add(new DamageItem(potion));
                 }
                 if (randomNumber <= 3)
                 {
-                    items.Add(new HealthItem(itemTextures[0], potion));
+                    items.Add(new HealthItem(potion));
                 }
             }
 

@@ -3,9 +3,9 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using Core;
     using GameObjects;
     using Interfaces;
+    using Utils.Assets;
 
     public class Explosion : GameObject, IExplosion
     {
@@ -15,10 +15,10 @@
         private int frameRow, frameCol, spriteWidth, spriteHeight;
         private Rectangle sourceRect;
 
-        public Explosion(Texture2D texture, Vector2 position)
-            : base(texture, position)
+        public Explosion(Vector2 position)
+            : base(position)
         {
-            //this.Texture = texture;
+            this.Texture = TexturesManager.ExplosionTexture;
             this.timer = 0f;
             this.interval = 20;
             this.frameRow = 1;

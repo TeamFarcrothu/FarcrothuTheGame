@@ -4,10 +4,8 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
     using GameObjects;
-    using Microsoft.Xna.Framework.Graphics;
     using Factories;
     using Interfaces;
-    using Multimedia;
     using Utils.Globals;
 
     public class InputHandler
@@ -70,14 +68,14 @@
             }
         }
 
-        public void PlayerShoot(KeyboardState keyState, IList<IBullet> bullets, Texture2D bullletTexture, SoundManager soundManager)
+        public void PlayerShoot(KeyboardState keyState, IList<IBullet> bullets)
         {
             // Player shooting
             if ((keyState.IsKeyDown(Keys.LeftControl) && this.player.Id == 2) ||
                 (keyState.IsKeyDown(Keys.LeftControl) && this.player.Id == 1))
             {
                 //this.Shoot();
-                BulletsFactory.PlayerShoot(bullets, this.player, bullletTexture, soundManager);
+                BulletsFactory.PlayerShoot(bullets, this.player);
             }
         }
     }

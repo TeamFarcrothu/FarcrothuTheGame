@@ -1,8 +1,7 @@
 ﻿namespace SpaceShipFartrothu.Handlers
 {
     using System.Collections.Generic;
-    using SpaceShipFartrothu.GameObjects;
-    using SpaceShipFartrothu.Interfaces;
+    using Interfaces;
 
     public static class EntityCleanerHandler
     {

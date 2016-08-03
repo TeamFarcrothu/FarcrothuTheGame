@@ -1,13 +1,7 @@
-﻿using SpaceShipFartrothu.GameObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpaceShipFartrothu.Handlers
+﻿namespace SpaceShipFartrothu.Handlers
 {
-    using SpaceShipFartrothu.Interfaces;
+    using System.Collections.Generic;
+    using Interfaces;
 
     public static class StatsManager
     {

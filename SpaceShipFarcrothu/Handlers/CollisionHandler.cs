@@ -41,7 +41,7 @@
         }
 
         //check if player bullets collides with gameobjects
-        public static void CheckPlayerBulletsCollisions(List<IGameObject> targets, IList<IBullet> bullets, IList<IPlayer> players, IList<IExplosion> explosions)
+        public static void CheckPlayerBulletsCollisions(IList<IGameObject> targets, IList<IBullet> bullets, IList<IPlayer> players, IList<IExplosion> explosions)
         {
             foreach (var player in players)
             {

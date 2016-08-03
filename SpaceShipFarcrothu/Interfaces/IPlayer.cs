@@ -1,7 +1,7 @@
 ﻿namespace SpaceShipFartrothu.Interfaces
 {
     using Microsoft.Xna.Framework.Graphics;
-    using SpaceShipFartrothu.Multimedia;
+    using SpaceShipFartrothu.Utils.Assets;
 
     public interface IPlayer : IGameObject
     {
@@ -23,6 +23,5 @@
 
         Texture2D BulletTexture { get; set; }
 
-        SoundManager SoundManager { get; set; }
     }
 }

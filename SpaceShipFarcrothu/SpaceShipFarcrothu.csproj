@@ -92,15 +92,15 @@
     <Compile Include="Interfaces\IExplosion.cs" />
     <Compile Include="Interfaces\IGameObject.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
-    <Compile Include="Multimedia\VideoManager.cs" />
+    <Compile Include="Utils\Assets\VideoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\StarField.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Multimedia\SoundManager.cs">
+    <Compile Include="Utils\Assets\SoundManager.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Utils\Assets\AssetsLoader.cs" />
+    <Compile Include="Utils\Assets\TexturesManager.cs" />
     <Compile Include="Utils\Enums\State.cs" />
     <Compile Include="Utils\Globals\Globals.cs" />
   </ItemGroup>

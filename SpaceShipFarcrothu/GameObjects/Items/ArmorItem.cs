@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace SpaceShipFartrothu.GameObjects.Items
+﻿namespace SpaceShipFartrothu.GameObjects.Items
 {
+    using Microsoft.Xna.Framework;
+
     public class ArmorItem : Item
     {
         private const int ArmorConst = 5;
 
-        public ArmorItem(Texture2D texture, Vector2 position) 
-            : base(texture, position)
+        public ArmorItem(Vector2 position)
+            : base(position)
         {
+            //this.Texture = AssetsLoader.
             this.ItemArmor = ArmorConst;
         }
     }

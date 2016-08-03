@@ -2,18 +2,15 @@
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using System;
-    using System.Collections.Generic;
-    using Core;
-    using SpaceShipFartrothu.Interfaces;
-    using SpaceShipFartrothu.Utils.Globals;
+    using Interfaces;
+    using Utils.Globals;
 
     public abstract class Item : FallingObject, ICollectable
     {
         private const int DefaultSpeed = 4;
 
-        protected Item(Texture2D texture, Vector2 position)
-            : base(texture, position)
+        protected Item(Vector2 position)
+            : base(position)
         {
             this.Speed = DefaultSpeed;
         }

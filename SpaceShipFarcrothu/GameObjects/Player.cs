@@ -6,19 +6,18 @@
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Items;
-    using Multimedia;
     using Interfaces;
+    using Utils.Assets;
 
     public class Player : GameObject, IPlayer
     {
         private const int DefaultBulletDamage = 2;
         private const int DefaultSpeed = 5;
-        private const int DefaultBulletDelay = 20;
+        private const int DefaultBulletDelay = 11;
         private const int DefaultHealth = 100;
 
-        private Texture2D bulletTexture, healthTexture;
-
         private readonly Vector2 resetPosition;
+       // private readonly Texture2D bulleTexture = AssetsLoader.BulletTexture;
 
         private Rectangle healthRectangle;
         private List<Item> items;
@@ -37,11 +36,9 @@
 
         private bool isColiding;
         public bool isAlive;
-        //public bool isSecondBulletActive;
-        //public bool isThirdBulletActive;
 
-        public Player(Texture2D texture, Vector2 position, int id)
-            : base(texture, position)
+        public Player(Vector2 position, int id)
+            : base(position)
         {
             this.Level = 1;
             this.Id = id;
@@ -52,25 +49,20 @@
             this.Health = DefaultHealth;
             this.Score = 0;
             this.items = new List<Item>();
-            this.SoundManager = new SoundManager();
+                     
             this.Position = position;
-            //TODO: check if needed
-            // this.isColiding = false;
-
-            //this.isSecondBulletActive = false;
-            // this.isThirdBulletActive = false;
-
             this.IsAlive = true;
+
             if (this.id == 1)
             {
+                this.Texture = TexturesManager.Player1Texture;
                 this.resetPosition = new Vector2(200, 600);
             }
             else
             {
+                this.Texture = TexturesManager.Player2Texture;
                 this.resetPosition = new Vector2(1000, 600);
             }
-
-            // Players.Add(this);
         }
 
         public new Vector2 Position { get; set; }
@@ -87,6 +79,8 @@
                 this.level = value;
             }
         }
+
+        public Texture2D BulletTexture { get; set; }
 
         public int Id { get { return this.id; } set { this.id = value; } }
 
@@ -131,10 +125,6 @@
 
         public int MaxHealth { get; set; }
 
-        public Texture2D BulletTexture { get; set; }
-
-        public SoundManager SoundManager { get; set; }
-
         public void AddItem(Item item)
         {
             //this.items.Add(item);
@@ -146,10 +136,10 @@
         // Player load content method
         public void LoadContent(ContentManager content)
         {
-            //this.Texture = content.Load<Texture2D>(this.shipTextureFile);
-            this.BulletTexture = content.Load<Texture2D>("bullet");
-            this.healthTexture = content.Load<Texture2D>("healthbar");
-            this.SoundManager.LoadContent(content);
+           // this.Texture = content.Load<Texture2D>(this.shipTextureFile);
+           //this.BulletTexture = content.Load<Texture2D>("bullet");
+           // this.healthTexture = content.Load<Texture2D>("healthbar");
+           // this.SoundManager.LoadContent(content);
         }
 
         // Player draw method

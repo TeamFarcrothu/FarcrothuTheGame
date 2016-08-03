@@ -2,23 +2,14 @@
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Interfaces;
-    using Effects;
-    using Factories;
 
     public abstract class EnemyEntity : GameObject, IEnemy
     {
-        protected EnemyEntity(Texture2D texture, Vector2 position)
-            : base(texture, position)
+        protected EnemyEntity(Vector2 position)
+            : base(position)
         {
         }
-
-        public Texture2D BulletTexture { get; set; }
-
-        // ???
-        public Texture2D ExplosionTexture { get; set; }
-
 
         public int BulletDamage { get; set; }
 

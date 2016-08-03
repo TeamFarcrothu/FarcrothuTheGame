@@ -5,14 +5,16 @@
     using Microsoft.Xna.Framework.Graphics;
     using Items;
     using Interfaces;
-    using SpaceShipFartrothu.Utils.Globals;
+    using Utils.Assets;
+    using Utils.Globals;
 
     public class Enemy : EnemyEntity
     {
         private const int DefaultScorePoints = 15;
-
+        private const int DefaultBulletDamage = 5;
+        private const int DefaultDamage = 10;
         private const int DefaultHealth = 5;
-
+        private const int DefaultSpeed = 2;
         private const int DefaultShooterId = 0;
 
         private static Random random = new Random();
@@ -21,26 +23,23 @@
 
         private int bulletDamage;
 
-        public Enemy(Texture2D texture, Vector2 position, Texture2D bulleTexture)
-            : base(texture, position)
+        public Enemy(Vector2 position)
+            : base(position)
         {
-            this.Texture = texture;
-
-            this.BulletTexture = bulleTexture;
+            this.Texture = TexturesManager.EnemyTexture;
+            //this.BulletTexture = bulleTexture;
 
             this.Health = DefaultHealth;
             this.BulletDelay = Globals.DefaultEnemyBulletDelay;
-            this.Speed = 2;
-            this.IsVisible = true;
-            this.BulletDamage = 5;
-            this.Damage = 10;
+            this.Speed = DefaultSpeed;
+            this.BulletDamage = DefaultBulletDamage;
+            this.Damage = DefaultDamage;
             this.ScorePoints = DefaultScorePoints;
             this.currentDifficultyLevel = 1;
             this.ShooterId = DefaultShooterId;
         }
 
         public int Health { get; set; }
-
 
         public void AddScore(int score)
         {
@@ -62,7 +61,7 @@
 
         public override void Update(GameTime gameTime)
         {
-            this.UpdateEnemyMovement();            
+            this.UpdateEnemyMovement();
         }
 
         private void UpdateEnemyMovement()
@@ -82,7 +81,7 @@
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(this.Texture, this.Position, Color.White);
-        }      
+        }
 
         public override void ReactOnColission(IGameObject target = null)
         {

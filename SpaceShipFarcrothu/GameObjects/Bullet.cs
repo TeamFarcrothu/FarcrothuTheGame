@@ -3,20 +3,20 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Interfaces;
-    using Microsoft.Xna.Framework.Content;
-    using SpaceShipFartrothu.Utils.Globals;
+    using Utils.Assets;
+    using Utils.Globals;
 
     public class Bullet : GameObject, IBullet
     {
         private const int DefaultSpeed = 6;
         
-
         // Enemy = 0; Player1 = 1; Player2 = 2; Boss = 3
         private int shooterId;
         
-        public Bullet(Texture2D texture, Vector2 position, int shooterId, int bulletDamage)
-            : base(texture, position)
+        public Bullet(Vector2 position, int shooterId, int bulletDamage)
+            : base(position)
         {
+            this.Texture = TexturesManager.BulletTexture;
             this.Speed = DefaultSpeed;
             this.IsVisible = true;
             this.ShooterId = shooterId;
@@ -24,13 +24,8 @@
         }
 
         public int ShooterId { get; set; }
+
         //public Texture2D BulleTexture { get; set; }
-
-        //public static void LoadContent(ContentManager content)
-        //{
-        //    bulleTexture = content.Load<Texture2D>("bullet");
-        //}
-
 
         public override void Update(GameTime gameTime)
         {

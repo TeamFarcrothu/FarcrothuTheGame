@@ -7,9 +7,9 @@
 
     public static class ExplosionFactory
     {
-        public static IExplosion CreateExplosion(Texture2D texture, Vector2 position)
+        public static IExplosion CreateExplosion(Vector2 position)
         {
-            return new Explosion(texture, position);
+            return new Explosion(position);
         }
     }
 }

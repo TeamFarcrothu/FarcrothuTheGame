@@ -12,9 +12,8 @@
         protected bool isVisible;
         protected int speed;
 
-        protected GameObject(Texture2D texture, Vector2 position)
+        protected GameObject(Vector2 position)
         {
-            this.Texture = texture;
             this.Position = position;
             this.IsVisible = true;
         }
