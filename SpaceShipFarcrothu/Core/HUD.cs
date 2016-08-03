@@ -43,11 +43,11 @@ namespace SpaceShipFartrothu.Core
 
         public HUD()
         {
-            playersLevels = new List<int>();
-            playersScores = new List<int>();
-            playersHealth = new List<int>();
-            playersMaxHealth = new List<int>();
-            playersBulletDamage = new List<int>();
+            this.playersLevels = new List<int>();
+            this.playersScores = new List<int>();
+            this.playersHealth = new List<int>();
+            this.playersMaxHealth = new List<int>();
+            this.playersBulletDamage = new List<int>();
             this.showHUD = true;
             this.screenWidth = Globals.MAIN_SCREEN_WIDTH;
             this.screenHeight = Globals.MAIN_SCREEN_HEIGHT;

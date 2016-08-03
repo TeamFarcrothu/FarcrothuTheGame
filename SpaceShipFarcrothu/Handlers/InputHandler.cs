@@ -71,7 +71,7 @@
         public void PlayerShoot(KeyboardState keyState, IList<IBullet> bullets)
         {
             // Player shooting
-            if ((keyState.IsKeyDown(Keys.LeftControl) && this.player.Id == 2) ||
+            if ((keyState.IsKeyDown(Keys.RightControl) && this.player.Id == 2) ||
                 (keyState.IsKeyDown(Keys.LeftControl) && this.player.Id == 1))
             {
                 //this.Shoot();

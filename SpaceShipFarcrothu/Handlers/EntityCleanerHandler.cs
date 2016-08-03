@@ -29,6 +29,19 @@
             }
         }
 
+        public static void ClearPlayers(IList<IPlayer> players)
+        {
+            for (int i = 0; i < players.Count; i++)
+            {
+                IPlayer currentPlayer = players[i];
+                if (!currentPlayer.IsAlive)
+                {
+                    players.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+
         public static void ClearExplosion(IList<IExplosion> explosions)
         {
             for (int i = 0; i < explosions.Count; i++)

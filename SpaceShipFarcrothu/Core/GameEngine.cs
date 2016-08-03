@@ -132,8 +132,11 @@ namespace SpaceShipFartrothu.Core
 
                         this.Play(gameTime);
 
+                        
+
                         if (this.Players.Any(p => p.IsAlive == false))
                         {
+                            this.Players.RemoveAll(p => !p.IsAlive);
                             this.gameState = State.GameOver;
                         }
 
@@ -189,10 +192,10 @@ namespace SpaceShipFartrothu.Core
             {
                 this.player = new Player(new Vector2(600, 600), 1);
                 this.Players.Add(this.player);
-
+                this.InputHandlers.Add(new InputHandler(this.player));
                 this.player2 = new Player(new Vector2(700, 600), 2);
                 this.Players.Add(this.player2);
-
+                this.InputHandlers.Add(new InputHandler(this.player2));
                 this.gameState = State.Playing;
                 MediaPlayer.Play(SoundManager.BgMusic);
                 MediaPlayer.Volume = 0.5f;
@@ -203,17 +206,17 @@ namespace SpaceShipFartrothu.Core
             {
                 this.player = new Player(new Vector2(600, 600), 1);
                 this.Players.Add(this.player);
-
+                this.InputHandlers.Add(new InputHandler(this.player));
                 this.gameState = State.Playing;
                 MediaPlayer.Play(SoundManager.BgMusic);
                 MediaPlayer.Volume = 0.5f;
             }
 
-            foreach (Player player in this.Players)
-            {
-                player.LoadContent(this.Content);
-                this.InputHandlers.Add(new InputHandler(this.player));
-            }
+            //foreach (Player player in this.Players)
+            //{
+            //   // player.LoadContent(this.Content);
+            //    this.InputHandlers.Add(new InputHandler(this.player));
+            //}
 
             this.starfield.Update(gameTime);
             this.starfield.Speed = 1;
@@ -223,11 +226,15 @@ namespace SpaceShipFartrothu.Core
         {
             MediaPlayer.Stop();
 
+            this.player = null;
+            this.player2 = null;
+
             this.Enemies.Clear();
             this.Asteroids.Clear();
             this.Explosions.Clear();
             this.Players.Clear();
             this.Bullets.Clear();
+            this.Items.Clear();
 
             this.bossHasInstance = false;
 
@@ -280,7 +287,7 @@ namespace SpaceShipFartrothu.Core
                 // Handle collisions between players and enemy objects
                 CollisionHandler.CheckForCollision(this.Asteroids, this.Players, this.Explosions);
                 CollisionHandler.CheckForCollision(this.Enemies, this.Players, this.Explosions);
-                
+
                 // Handle collisions between players and enemy items
                 CollisionHandler.CheckPlayerItemCollisions(this.Items, this.Players);
 
@@ -293,6 +300,7 @@ namespace SpaceShipFartrothu.Core
                 EntityCleanerHandler.ClearEnemyBullets(this.Bullets);
                 EntityCleanerHandler.ClearEnemies(this.Enemies);
                 EntityCleanerHandler.ClearExplosion(this.Explosions);
+                //EntityCleanerHandler.ClearPlayers(this.Players);
             }
 
             this.InputHandlers.ForEach(i => i.PlayerShoot(this.keyState, this.Bullets));
