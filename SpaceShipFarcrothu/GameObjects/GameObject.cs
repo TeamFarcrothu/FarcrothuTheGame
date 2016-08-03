@@ -22,7 +22,7 @@
 
         public Rectangle BoundingBox { get; protected set; }
 
-        public Vector2 Position { get; protected set; }
+        public Vector2 Position { get;  set; }
 
         public bool IsVisible { get; protected set; }
 

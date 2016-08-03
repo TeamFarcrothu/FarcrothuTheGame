@@ -18,7 +18,7 @@
         private const int DefaultBulletSpeed = 6;
 
         private readonly Vector2 resetPosition;
-       // private readonly Texture2D bulleTexture = AssetsLoader.BulletTexture;
+        // private readonly Texture2D bulleTexture = AssetsLoader.BulletTexture;
 
         private Rectangle healthRectangle;
         private List<Item> items;
@@ -53,7 +53,7 @@
             this.Health = DefaultHealth;
             this.Score = 0;
             this.items = new List<Item>();
-                     
+
             this.Position = position;
             this.IsAlive = true;
 
@@ -110,7 +110,7 @@
             {
                 return this.bulletSpeed;
             }
-            private set
+            set
             {
                 this.bulletSpeed = value;
             }
@@ -152,10 +152,10 @@
         // Player load content method
         public void LoadContent(ContentManager content)
         {
-           // this.Texture = content.Load<Texture2D>(this.shipTextureFile);
-           //this.BulletTexture = content.Load<Texture2D>("bullet");
-           // this.healthTexture = content.Load<Texture2D>("healthbar");
-           // this.SoundManager.LoadContent(content);
+            // this.Texture = content.Load<Texture2D>(this.shipTextureFile);
+            //this.BulletTexture = content.Load<Texture2D>("bullet");
+            // this.healthTexture = content.Load<Texture2D>("healthbar");
+            // this.SoundManager.LoadContent(content);
         }
 
         // Player draw method

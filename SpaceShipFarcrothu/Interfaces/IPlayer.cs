@@ -17,6 +17,8 @@
 
         int BulletDelay { get; set; }
 
+        int BulletSpeed { get; set; }
+
         int MaxHealth { get; set; }
 
         int Level { get; set; }

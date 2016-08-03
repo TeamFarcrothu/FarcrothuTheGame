@@ -32,7 +32,7 @@
         }
 
 
-        public static void PlayerShoot(IList<IBullet> bullets, Player player)
+        public static void PlayerShoot(IList<IBullet> bullets, IPlayer player)
         {
             if (player.BulletDelay >= 0)
             {

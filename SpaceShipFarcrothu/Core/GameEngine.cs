@@ -10,7 +10,6 @@ namespace SpaceShipFartrothu.Core
     using Microsoft.Xna.Framework.Media;
     using Handlers;
     using GameObjects;
-    using GameObjects.Items;
     using Factories;
     using Interfaces;
     using Utils.Assets;
@@ -132,11 +131,16 @@ namespace SpaceShipFartrothu.Core
 
                         this.Play(gameTime);
 
-                        
-
+                        //Clear dead players
                         if (this.Players.Any(p => p.IsAlive == false))
                         {
-                            this.Players.RemoveAll(p => !p.IsAlive);
+                            this.InputHandlers.RemoveAll(i => i.Player.IsAlive == false);
+                            this.Players.RemoveAll(p => p.IsAlive == false);
+                        }
+
+                        //Set gameover
+                        if (this.Players.All(p => p.IsAlive == false))
+                        {
                             this.gameState = State.GameOver;
                         }
 
@@ -226,13 +230,12 @@ namespace SpaceShipFartrothu.Core
         {
             MediaPlayer.Stop();
 
-            this.player = null;
-            this.player2 = null;
-
             this.Enemies.Clear();
             this.Asteroids.Clear();
             this.Explosions.Clear();
             this.Players.Clear();
+            this.InputHandlers.Clear();
+
             this.Bullets.Clear();
             this.Items.Clear();
 

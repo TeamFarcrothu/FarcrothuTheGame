@@ -9,7 +9,7 @@
 
         Rectangle BoundingBox { get; }
 
-        Vector2 Position { get; }
+        Vector2 Position { get; set; }
 
         bool IsVisible { get; }
 
