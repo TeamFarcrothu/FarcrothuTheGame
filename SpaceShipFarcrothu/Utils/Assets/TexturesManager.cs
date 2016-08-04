@@ -16,6 +16,8 @@
         public static Texture2D AsteroidTexture { get; private set; }
         public static Texture2D EnemyTexture { get; private set; }
 
+        public static SpriteFont PlayerScoreFont { get; private set; }
+
         public static Texture2D ItemArmorTexture { get; private set; }
         public static Texture2D ItemBulletSpeedTexture { get; private set; }
         public static Texture2D ItemDamageTexture { get; private set; }
@@ -35,6 +37,8 @@
             AsteroidTexture = content.Load<Texture2D>("asteroid");
             ExplosionTexture = content.Load<Texture2D>("explosion");
             BulletTexture = content.Load<Texture2D>("bullet");
+
+            PlayerScoreFont = content.Load<SpriteFont>("georgia");
 
             ItemHealthTexture = content.Load<Texture2D>("health_potion");//---------------------------------
             ItemArmorTexture = content.Load<Texture2D>("armor_potion");//---------------------------------

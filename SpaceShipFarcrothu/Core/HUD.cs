@@ -1,166 +1,157 @@
-﻿using SpaceShipFartrothu.GameObjects;
-
+﻿
 namespace SpaceShipFartrothu.Core
 {
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using Microsoft.Xna.Framework.Input;
-    using System.Collections.Generic;
-    using SpaceShipFartrothu.Interfaces;
-    using SpaceShipFartrothu.Utils.Globals;
+    using Interfaces;
+    using Utils.Assets;
 
-    public class HUD
+    public class HUD : IHUD
     {
-        public int p1neededPointsToNextLevel;
-        public int p2neededPointsToNextLevel;
+        private int healthBarSize;
+        private int playerScore;
+        private int playerHealth;
+        private int playerLevel;
+        private int playerDamage;
+        private int playerSpeed;
+        private int playerBulletSpeed;
+        private int playerArmor;
+        private int playerId;
+        private Vector2 playerHudPosition;
 
-        public bool p1hasEnoughToNextLevel = false;
-        public bool p2hasEnoughToNextLevel = false;
-
-        private int screenWidth, screenHeight;
-        private SpriteFont playerScoreFont;
-        private bool showHUD;
-
-        public List<int> playersLevels; //***
-        public List<int> playersScores; //***
-        public List<int> playersHealth;
-        public List<int> playersMaxHealth;
-        public List<int> playersBulletDamage; //***
-        public List<int> playersArmor;
-        public List<int> playersSpeed;//***
-        public List<int> playersBulletSpeed;//***
-
-        private int playersCount;
-
-        private Vector2 player1LevelPos;
-        private Vector2 player2LevelPos;
-
-        private Vector2 player1ScorePos;
-        private Vector2 player2ScorePos;
-
-        private Vector2 player1DamagePos;
-        private Vector2 player2DamagePos;
-
-        private Vector2 player1HealthPos;
-        private Vector2 player2HealthPos;
-
-        private Vector2 player1ArmorPos;
-        private Vector2 player2ArmorPos;
-
-        private Vector2 player1SpeedPos;
-        private Vector2 player2SpeedPos;
-
-        private Vector2 player1BulletSpeedPos;
-        private Vector2 player2BulletSpeedPos;
-
-        public HUD()
+        public HUD(IPlayer player)
         {
-            this.playersLevels = new List<int>();
-            this.playersScores = new List<int>();
-            this.playersHealth = new List<int>();
-            this.playersMaxHealth = new List<int>();
-            this.playersBulletDamage = new List<int>();
-            this.playersArmor = new List<int>();
-            this.playersSpeed = new List<int>();
-            this.playersBulletSpeed = new List<int>();
-
-            this.showHUD = true;
-            this.screenWidth = Globals.MAIN_SCREEN_WIDTH;
-            this.screenHeight = Globals.MAIN_SCREEN_HEIGHT;
-            this.playerScoreFont = null;
-
-            this.p1neededPointsToNextLevel = 150;
-            this.p2neededPointsToNextLevel = 150;
-
-            this.player1HealthPos = new Vector2(50, 50);
-            this.player2HealthPos = new Vector2(1110, 50);
-
-            this.player1LevelPos = new Vector2(50, 80);
-            this.player2LevelPos = new Vector2(1110, 80);
-
-            this.player1ScorePos = new Vector2(50, 20);
-            this.player2ScorePos = new Vector2(1110, 20);
-
-            this.player1DamagePos = new Vector2(50, 110);
-            this.player2DamagePos = new Vector2(1110, 110);
-
-            this.player1ArmorPos = new Vector2(50, 140);
-            this.player2ArmorPos = new Vector2(1110, 140);
-
-            this.player1SpeedPos = new Vector2(50, 170);
-            this.player2SpeedPos = new Vector2(1110, 170);
-
-            this.player1BulletSpeedPos = new Vector2(50, 200);
-            this.player2BulletSpeedPos = new Vector2(1110, 200);
-
-        }
-        public void UpdatePlayersInfo(IList<IPlayer> players)//***
-        {
-            playersCount = players.Count;
-            for (int i = 0; i < players.Count; i++)
-            {
-                IPlayer currentPlayer = players[i];
-                playersLevels.Add(currentPlayer.Level);
-                playersScores.Add(currentPlayer.Score);
-                playersHealth.Add(currentPlayer.Health);
-                playersMaxHealth.Add(currentPlayer.MaxHealth);
-                playersBulletDamage.Add(currentPlayer.BulletDamage);
-                playersArmor.Add(currentPlayer.Armor);
-                playersSpeed.Add(currentPlayer.Speed);
-                playersBulletSpeed.Add(currentPlayer.BulletSpeed);
-            }
+            this.HealthBarSize = player.MaxHealth;
+            this.PlayerScore = player.Score;
+            this.PlayerHealth = player.Health;
+            this.PlayerLevel = player.Level;
+            this.PlayerDamage = player.BulletDamage;
+            this.PlayerId = player.Id;
+            this.PlayerHudPosition = HudPosition();
+            this.PlayerBulletSpeed = player.BulletSpeed;
+            this.PlayerArmor = player.Armor;
+            this.PlayerSpeed = player.Speed;
         }
 
-        public void LoadContent(ContentManager content)
+        public int HealthBarSize
         {
-            this.playerScoreFont = content.Load<SpriteFont>("georgia");
+            get { return this.healthBarSize; }
+            set { this.healthBarSize = value; }
         }
 
-        //public void Update(GameTime gameTime)
-        //{
-        //    foreach (Player player in Player.Players)
-        //    {
-        //        if (player.Id == 1)
-        //            this.player1score = player.Score;
-        //        else if (player.Id == 2)
-        //            this.player2score = player.Score;
-        //    }
-        //}
+        public int PlayerScore
+        {
+            get { return this.playerScore; }
+            set { this.playerScore = value; }
+        }
+
+        public int PlayerHealth
+        {
+            get { return this.playerHealth; }
+            set { this.playerHealth = value; }
+        }
+
+        public int PlayerLevel
+        {
+            get { return this.playerLevel; }
+            set { this.playerLevel = value; }
+        }
+
+        public int PlayerId
+        {
+            get { return this.playerId; }
+            private set { this.playerId = value; }
+        }
+
+        private Vector2 PlayerHudPosition
+        {
+            get { return this.playerHudPosition; }
+            set { this.playerHudPosition = value; }
+        }
+
+        public int PlayerDamage
+        {
+            get { return this.playerDamage; }
+            set { this.playerDamage = value; }
+        }
+
+        public int PlayerBulletSpeed
+        {
+            get { return this.playerBulletSpeed; }
+            set { this.playerBulletSpeed = value; }
+        }
+
+        public int PlayerArmor
+        {
+            get { return this.playerArmor; }
+            set { this.playerArmor = value; }
+        }
+
+        public int PlayerSpeed
+        {
+            get { return this.playerSpeed; }
+            set { this.playerSpeed = value; }
+        }
+
+        public void Update(IPlayer player)
+        {
+            this.HealthBarSize = player.MaxHealth;
+            this.PlayerScore = player.Score;
+            this.PlayerHealth = player.Health;
+            this.PlayerLevel = player.Level;
+            this.PlayerDamage = player.BulletDamage;
+            this.PlayerBulletSpeed = player.BulletSpeed;
+            this.PlayerArmor = player.Armor;
+            this.PlayerSpeed = player.Speed;
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (this.showHUD)
+            spriteBatch.DrawString(
+                TexturesManager.PlayerScoreFont,
+                $"Player {this.PlayerId}: {this.PlayerScore}",
+                this.PlayerHudPosition,
+                Color.Red);
+            spriteBatch.DrawString(
+                TexturesManager.PlayerScoreFont,
+                $"Health: {this.PlayerHealth} / {this.HealthBarSize}",
+                new Vector2(this.PlayerHudPosition.X, this.PlayerHudPosition.Y + 20),
+                Color.Red);
+            spriteBatch.DrawString(
+                TexturesManager.PlayerScoreFont,
+                $"Level: {this.PlayerLevel}",
+                new Vector2(this.PlayerHudPosition.X, this.PlayerHudPosition.Y + 40),
+                Color.Blue);
+            spriteBatch.DrawString(
+                TexturesManager.PlayerScoreFont,
+                $"Damage: {this.PlayerDamage}",
+                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 60),
+                Color.Green);
+            spriteBatch.DrawString(
+                TexturesManager.PlayerScoreFont,
+                $"Bullet Speed: {this.PlayerBulletSpeed}",
+                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 80),
+                Color.Green);
+            spriteBatch.DrawString(
+                TexturesManager.PlayerScoreFont,
+                $"Ship Speed: {this.PlayerSpeed}",
+                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 100),
+                Color.Green);
+            spriteBatch.DrawString(
+                TexturesManager.PlayerScoreFont,
+                $"Ship Armor: {this.PlayerArmor}",
+                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 60),
+                Color.Green);
+        }
+        private Vector2 HudPosition()
+        {
+            if (this.playerId == 1)
             {
-                if (playersCount >= 1)
-                {
-                    spriteBatch.DrawString(this.playerScoreFont, "Player 1: " + this.playersScores[0], this.player1ScorePos, Color.Red);
-                    spriteBatch.DrawString(this.playerScoreFont, $"Health: {this.playersHealth[0]} / {this.playersMaxHealth[0]}", this.player1HealthPos, Color.Red);
-                    spriteBatch.DrawString(this.playerScoreFont, "Level: " + this.playersLevels[0], this.player1LevelPos, Color.Blue);
-                    spriteBatch.DrawString(this.playerScoreFont, "Damage: " + this.playersBulletDamage[0], this.player1DamagePos, Color.Green);
-                    spriteBatch.DrawString(this.playerScoreFont, "Armor: " + this.playersArmor[0], this.player1ArmorPos, Color.White);
-                    spriteBatch.DrawString(this.playerScoreFont, "Speed: " + this.playersSpeed[0], this.player1SpeedPos, Color.Orange);
-                    spriteBatch.DrawString(this.playerScoreFont, "BulletSpeed: " + this.playersBulletSpeed[0], this.player1BulletSpeedPos, Color.Yellow);
-
-                }
-                if (playersCount == 2)
-                {
-                    spriteBatch.DrawString(this.playerScoreFont, "Player 2: " + this.playersScores[1], this.player2ScorePos, Color.Red);
-                    spriteBatch.DrawString(this.playerScoreFont, $"Health: {this.playersHealth[1]} / {this.playersMaxHealth[1]}", this.player2HealthPos, Color.Red);
-                    spriteBatch.DrawString(this.playerScoreFont, "Level: " + this.playersLevels[1], this.player2LevelPos, Color.Blue);
-                    spriteBatch.DrawString(this.playerScoreFont, "Damage: " + this.playersBulletDamage[1], this.player2DamagePos, Color.Green);
-                    spriteBatch.DrawString(this.playerScoreFont, "Armor: " + this.playersArmor[1], this.player2ArmorPos, Color.White);
-                    spriteBatch.DrawString(this.playerScoreFont, "Speed: " + this.playersSpeed[1], this.player2SpeedPos, Color.Orange);
-                    spriteBatch.DrawString(this.playerScoreFont, "BulletSpeed: " + this.playersBulletSpeed[1], this.player2BulletSpeedPos, Color.Yellow);
-                }
-                playersLevels.Clear();
-                playersScores.Clear();
-                playersHealth.Clear();
-                playersMaxHealth.Clear();
-                playersBulletDamage.Clear();
-                playersArmor.Clear();
-                playersSpeed.Clear();
-                playersBulletSpeed.Clear();
+                return new Vector2(50, 50);
+            }
+            else
+            {
+                return new Vector2(1110, 50);
             }
         }
     }

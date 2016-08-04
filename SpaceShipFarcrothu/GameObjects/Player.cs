@@ -8,6 +8,7 @@
     using Interfaces;
     using Handlers;
     using Utils.Assets;
+    using Core;
 
     public class Player : GameObject, IPlayer
     {
@@ -41,6 +42,8 @@
         private bool isColiding;
         public bool isAlive;
 
+        private HUD hud;
+
         public Player(Vector2 position, InputHandler inputHandler, int id)
             : base(position)
         {
@@ -55,6 +58,8 @@
             this.Armor = DefaultArmor;
             this.Score = 0;
             this.items = new List<Item>();
+
+            this.hud = new HUD(this);
 
             this.InputHandler = inputHandler;
 
@@ -170,7 +175,7 @@
             {
                 this.IsAlive = false;
             }
-
+            this.hud.Update(this);
            //this.InputHandler.Move(this.keyState, p));
             //this.Players.ForEach(p =>p.InputHandler.PlayerShoot(this.keyState, this.Bullets, p));
 
@@ -197,6 +202,7 @@
             if (this.isAlive)
             {
                 spriteBatch.Draw(this.Texture, this.Position, Color.White);
+                this.hud.Draw(spriteBatch);
             }
         }
 

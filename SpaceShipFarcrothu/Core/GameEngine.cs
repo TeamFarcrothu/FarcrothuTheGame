@@ -44,7 +44,6 @@ namespace SpaceShipFartrothu.Core
         public GameEngine()
         {
             this.starfield = new StarField();
-            this.hud = new HUD();
             this.inputHandler = new InputHandler();
             this.graphics = new GraphicsDeviceManager(this)
             {
@@ -74,7 +73,6 @@ namespace SpaceShipFartrothu.Core
             SoundManager.LoadContent(this.Content);
             VideoManager.LoadContent(this.Content);
 
-            this.hud.LoadContent(this.Content);
             this.starfield.LoadContent(this.Content);
 
             MediaPlayer.Play(SoundManager.IntroSong);
@@ -246,6 +244,13 @@ namespace SpaceShipFartrothu.Core
                 ItemFactory.CreateItems(this.db.Items, this.db.Enemies.GetAll().Cast<IGameObject>().ToList(), this.random);
                 ItemFactory.CreateItems(this.db.Items, this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.random);
 
+                // Handle collisions between players and enemy objects
+                CollisionHandler.CheckForCollision(this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
+                CollisionHandler.CheckForCollision(this.db.Enemies.GetAll().Cast<IGameObject>().ToList(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
+
+                // Handle collisions between players and enemy items
+                CollisionHandler.CheckPlayerItemCollisions(this.db.Items.GetAll(), this.db.Players.GetAll());
+
                 ExplosionFactory.CreateExplosion(this.db.Explosions, this.db.Enemies.GetAll().Cast<IGameObject>().ToList());
                 ExplosionFactory.CreateExplosion(this.db.Explosions, this.db.Asteroids.GetAll().Cast<IGameObject>().ToList());
 
@@ -253,13 +258,6 @@ namespace SpaceShipFartrothu.Core
                 this.db.Enemies.GetAll().ForEach(e => e.Update(gameTime));
                 this.db.Asteroids.GetAll().ForEach(a => a.Update(gameTime));
                 this.db.Items.GetAll().ForEach(i => i.Update(gameTime));
-
-                // Handle collisions between players and enemy objects
-                CollisionHandler.CheckForCollision(this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
-                CollisionHandler.CheckForCollision(this.db.Enemies.GetAll().Cast<IGameObject>().ToList(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
-
-                // Handle collisions between players and enemy items
-                CollisionHandler.CheckPlayerItemCollisions(this.db.Items.GetAll(), this.db.Players.GetAll());
 
                 // Cleaning with mr.Proper
                 EntityCleanerHandler.ClearEnemies(this.db.Enemies);
@@ -273,7 +271,6 @@ namespace SpaceShipFartrothu.Core
             this.db.Explosions.GetAll().ForEach(e => e.Update(gameTime));
 
 
-            this.hud.UpdatePlayersInfo(this.db.Players.GetAll());
             StatsManager.UpdatePlayersStats(this.db.Players.GetAll());
 
             //Handle collisions between bullets and gameobjects
@@ -316,7 +313,7 @@ namespace SpaceShipFartrothu.Core
                 case State.Playing:
                     {
                         this.starfield.Draw(this.spriteBatch);
-                        this.hud.Draw(this.spriteBatch);
+                        //this.hud.Draw(this.spriteBatch);
                         this.DrawAllGameObjects();
 
                         if (this.bossHasInstance)
