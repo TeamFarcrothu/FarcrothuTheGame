@@ -353,17 +353,16 @@ namespace SpaceShipFartrothu.Core
 
         private void DrawAllGameObjects()
         {
-            this.db.Players.GetAll().ForEach(p => p.Draw(this.spriteBatch));
             this.db.Enemies.GetAll().ForEach(e => e.Draw(this.spriteBatch));
             this.db.Bullets.GetAll().ForEach(b => b.Draw(this.spriteBatch));
             this.db.Asteroids.GetAll().ForEach(a => a.Draw(this.spriteBatch));
-
             this.db.Explosions.GetAll().ForEach(e => e.Draw(this.spriteBatch));
 
             foreach (var item in this.db.Items.GetAll())
             {
                 item.Draw(this.spriteBatch);
             }
+            this.db.Players.GetAll().ForEach(p => p.Draw(this.spriteBatch));
         }
 
         private void DrawBoss()
