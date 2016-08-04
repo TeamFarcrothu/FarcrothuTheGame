@@ -7,9 +7,4 @@
         int ItemArmor { get; }
         int ItemBulletSpeed { get; }
     }
-
-    public class Test
-    {
-       
-    }
 }

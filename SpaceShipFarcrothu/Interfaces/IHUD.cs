@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using SpaceShipFartrothu.Interfaces;
-
-namespace SpaceShipFartrothu.Core
+﻿namespace SpaceShipFartrothu.Core
 {
+    using Microsoft.Xna.Framework.Graphics;
+    using Interfaces;
+
     public interface IHUD
     {
         int HealthBarSize { get; set; }

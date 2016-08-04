@@ -6,8 +6,6 @@
 
     public class Repository<T> : IRepository<T> where T : IGameObject
     {
-        // private IDictionary<string, IList<IGameObject>> allGameObjects;
-
         public Repository()
         {
             this.ItemsByEntity = new List<T>();
@@ -27,7 +25,7 @@
 
         public void Dispose()
         {
-           this.ItemsByEntity.Clear();
+            this.ItemsByEntity.Clear();
         }
 
         public int GetCount()
@@ -39,12 +37,5 @@
         {
             this.ItemsByEntity.RemoveAt(index);
         }
-
-        public void RemoveGameObject(IGameObject gameObjectToRemove)
-        {
-            throw new System.NotImplementedException();
-        }
     }
-
-
 }

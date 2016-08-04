@@ -16,15 +16,6 @@
                     explosions.AddEntity(newExplosion);
                 }
             }
-
-            //for (int i = 0; i < explosions.GetCount(); i++)
-            //{
-            //    if (!explosions.GetAll()[i].IsVisible)
-            //    {
-            //        explosions.RemoveAt(i);
-            //        i--;
-            //    }
-            //}
         }
     }
 }

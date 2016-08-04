@@ -1,5 +1,4 @@
-﻿
-namespace SpaceShipFartrothu.Core
+﻿namespace SpaceShipFartrothu.Core
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -140,7 +139,7 @@ namespace SpaceShipFartrothu.Core
             spriteBatch.DrawString(
                 TexturesManager.PlayerScoreFont,
                 $"Ship Armor: {this.PlayerArmor}",
-                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 60),
+                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 120),
                 Color.Green);
         }
         private Vector2 HudPosition()

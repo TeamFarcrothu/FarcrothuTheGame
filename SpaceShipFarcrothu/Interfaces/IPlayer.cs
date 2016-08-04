@@ -12,8 +12,6 @@
 
         int Score { get; set; }
 
-        int Health { get; set; }
-
         int BulletDelay { get; set; }
 
         int BulletSpeed { get; set; }
