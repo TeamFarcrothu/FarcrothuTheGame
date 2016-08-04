@@ -176,9 +176,7 @@
                 this.IsAlive = false;
             }
             this.hud.Update(this);
-           //this.InputHandler.Move(this.keyState, p));
-            //this.Players.ForEach(p =>p.InputHandler.PlayerShoot(this.keyState, this.Bullets, p));
-
+          
             //// if isAlive flag is false the player should be dead, so we reset it's Position depending on id
             //if (!this.IsAlive)
             //{
@@ -223,48 +221,39 @@
             }
             else if (currentTargetType == "Asteroid")
             {
-                //TODO: add points to player score and reduce health
-                //this.soundManager.explodeSound.Play();
-                //this.hud.playerscore += 5;
+                this.PlayerStatsReaction(target);
 
-                if (this.Armor <= target.Damage)
-                {
-                    this.Health = -target.Damage + this.Armor;
-                }
             }
 
             else if (currentTargetType == "Enemy")
             {
-
-                //TODO: add points to player score and reduce health
-                if (this.Armor <= target.Damage)
-                {
-                    this.Health = -target.Damage + this.Armor;
-                }
+                this.PlayerStatsReaction(target);
             }
 
             else if (currentTargetType == "Boss")
             {
+                this.PlayerStatsReaction(target);
 
-                //TODO: add points to player score and reduce health
-                if (this.Armor <= target.Damage)
-                {
-                    this.Health = -target.Damage + this.Armor;
-                }
             }
 
             else if (currentTargetType == "Bullet")
             {
-                //CHeck bullet id :   If is 0 = enemy ;If is > 2 = some boss or other enemy
-                //Then initiate proper reaction 
-                //var bullet = target as Bullet;
-                //var bulletId = bullet.ShooterId;
-                //if(bulletId == 0)
-                if (this.Armor <= target.Damage )
+                this.PlayerStatsReaction(target);
+            }
+        }
+
+
+        private void PlayerStatsReaction(IGameObject target)
+        {
+            if (this.Armor <= target.Damage)
+            {
+                this.Health = -target.Damage + this.Armor;
+                if (this.Armor > 0)
                 {
-                    this.Health = -target.Damage + this.Armor;
+                    this.Armor--;
                 }
             }
         }
+
     }
 }

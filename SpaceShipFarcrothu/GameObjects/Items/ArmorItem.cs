@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace SpaceShipFartrothu.GameObjects.Items
+﻿namespace SpaceShipFartrothu.GameObjects.Items
 {
+    using Microsoft.Xna.Framework;
     using Utils.Assets;
+
     public class ArmorItem : Item
     {
         private const int ArmorConst = 1;

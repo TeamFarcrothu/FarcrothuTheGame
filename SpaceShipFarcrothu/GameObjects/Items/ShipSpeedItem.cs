@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using SpaceShipFartrothu.Utils.Assets;
-
-namespace SpaceShipFartrothu.GameObjects.Items
+﻿namespace SpaceShipFartrothu.GameObjects.Items
 {
+    using Microsoft.Xna.Framework;
+    using SpaceShipFartrothu.Utils.Assets;
+
     public class ShipSpeedItem : Item
     {
-        private const int DefaultSpeed = 5;
+        private const int DefaultSpeed = 2;
 
         public ShipSpeedItem(Vector2 position) : base(position)
         {

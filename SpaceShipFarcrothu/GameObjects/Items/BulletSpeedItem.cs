@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SpaceShipFartrothu.Utils.Assets;
-
-namespace SpaceShipFartrothu.GameObjects.Items
+﻿namespace SpaceShipFartrothu.GameObjects.Items
 {
+    using Microsoft.Xna.Framework;
+    using Utils.Assets;
+
     public class BulletSpeedItem : Item
     {
-        private const int BulletSpeedConst = 5;
+        private const int BulletSpeedConst = 2;
 
         public BulletSpeedItem(Vector2 position) : base(position)
         {
             this.Texture = TexturesManager.ItemBulletSpeedTexture;
-            ItemBulletSpeed = BulletSpeedConst;
+            this.ItemBulletSpeed = BulletSpeedConst;
         }
     }
 }

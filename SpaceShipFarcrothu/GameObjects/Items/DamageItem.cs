@@ -5,7 +5,7 @@
 
     public class DamageItem : Item
     {
-        private const int DamageConst = 5;
+        private const int DamageConst = 3;
 
         public DamageItem(Vector2 position) 
             : base(position)
