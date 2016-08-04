@@ -108,39 +108,44 @@
         {
             spriteBatch.DrawString(
                 TexturesManager.PlayerScoreFont,
-                $"Player {this.PlayerId}: {this.PlayerScore}",
+                $"Player {this.PlayerId}",
                 this.PlayerHudPosition,
-                Color.Red);
-            spriteBatch.DrawString(
-                TexturesManager.PlayerScoreFont,
-                $"Health: {this.PlayerHealth} / {this.HealthBarSize}",
-                new Vector2(this.PlayerHudPosition.X, this.PlayerHudPosition.Y + 20),
-                Color.Red);
+                Color.LightGreen);
             spriteBatch.DrawString(
                 TexturesManager.PlayerScoreFont,
                 $"Level: {this.PlayerLevel}",
-                new Vector2(this.PlayerHudPosition.X, this.PlayerHudPosition.Y + 40),
-                Color.Blue);
+                new Vector2(this.PlayerHudPosition.X, this.PlayerHudPosition.Y + 20),
+                Color.LightGreen);
             spriteBatch.DrawString(
                 TexturesManager.PlayerScoreFont,
-                $"Damage: {this.PlayerDamage}",
-                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 60),
-                Color.Green);
+                $"Score: {this.PlayerScore}",
+                new Vector2(this.PlayerHudPosition.X, this.PlayerHudPosition.Y + 40),
+                Color.LightGreen);
+            spriteBatch.DrawString(
+                TexturesManager.PlayerScoreFont,
+                $"Health: {this.PlayerHealth} / {this.HealthBarSize}",
+                new Vector2(this.PlayerHudPosition.X, this.PlayerHudPosition.Y + 60),
+                Color.LightGreen);
             spriteBatch.DrawString(
                 TexturesManager.PlayerScoreFont,
                 $"Bullet Speed: {this.PlayerBulletSpeed}",
                 new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 80),
-                Color.Green);
+                Color.LightSkyBlue);
+            spriteBatch.DrawString(
+                TexturesManager.PlayerScoreFont,
+                $"Damage: {this.PlayerDamage}",
+                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 100),
+                Color.LightSkyBlue);
             spriteBatch.DrawString(
                 TexturesManager.PlayerScoreFont,
                 $"Ship Speed: {this.PlayerSpeed}",
-                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 100),
-                Color.Green);
+                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 120),
+                Color.LightSkyBlue);
             spriteBatch.DrawString(
                 TexturesManager.PlayerScoreFont,
                 $"Ship Armor: {this.PlayerArmor}",
-                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 120),
-                Color.Green);
+                new Vector2(this.PlayerHudPosition.X, this.playerHudPosition.Y + 140),
+                Color.LightSkyBlue);
         }
         private Vector2 HudPosition()
         {
