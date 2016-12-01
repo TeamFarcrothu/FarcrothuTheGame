@@ -83,6 +83,7 @@ namespace SpaceShipFartrothu.Core
             buttons.CreateButton(new Vector2(500, 300), State.OnePlayer, "Singleplayer Mode");
             buttons.CreateButton(new Vector2(500, 400), State.TwoPlayers, "Multiplayer Mode");
             buttons.CreateButton(new Vector2(500, 500), State.LoadGame, "Load Game");
+            buttons.CreateButton(new Vector2(500, 600), State.HighScores, "HighScores");
 
 
             this.starfield.LoadContent(this.Content);

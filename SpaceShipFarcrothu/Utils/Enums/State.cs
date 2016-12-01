@@ -9,6 +9,7 @@
         Intro,
         TwoPlayers,
         LoadGame,
-        SaveGame
+        SaveGame,
+        HighScores
     }
 }
