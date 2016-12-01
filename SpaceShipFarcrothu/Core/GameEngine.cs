@@ -15,6 +15,7 @@ namespace SpaceShipFartrothu.Core
     using Utils.Assets;
     using Utils.Enums;
     using Utils.Globals;
+    using Handlers.Buttons;
 
     public class GameEngine : Game
     {
@@ -41,19 +42,24 @@ namespace SpaceShipFartrothu.Core
 
         private GameDatabase db;
 
+        private ButtonFactory buttons;
+
         public GameEngine()
         {
             this.starfield = new StarField();
             this.inputHandler = new InputHandler();
             this.graphics = new GraphicsDeviceManager(this)
             {
+                
                 IsFullScreen = false,
                 PreferredBackBufferWidth = Globals.MAIN_SCREEN_WIDTH,
                 PreferredBackBufferHeight = Globals.MAIN_SCREEN_HEIGHT
             };
 
+            this.IsMouseVisible = true;
             this.Window.Title = "Traveling to FARCROTHU";
             this.Content.RootDirectory = "Content";
+            this.buttons = new ButtonFactory();
         }
 
         protected override void Initialize()
@@ -62,6 +68,7 @@ namespace SpaceShipFartrothu.Core
             this.gameState = State.Intro;
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.videoPlayer = new VideoPlayer();
+
             this.random = new Random();
 
             base.Initialize();
@@ -72,6 +79,11 @@ namespace SpaceShipFartrothu.Core
             TexturesManager.LoadContent(this.Content);
             SoundManager.LoadContent(this.Content);
             VideoManager.LoadContent(this.Content);
+
+            buttons.CreateButton(new Vector2(500, 300), State.OnePlayer, "Singleplayer Mode");
+            buttons.CreateButton(new Vector2(500, 400), State.TwoPlayers, "Multiplayer Mode");
+            buttons.CreateButton(new Vector2(500, 500), State.LoadGame, "Load Game");
+
 
             this.starfield.LoadContent(this.Content);
 
@@ -115,7 +127,30 @@ namespace SpaceShipFartrothu.Core
                     this.GetIntroByStateIntro();
                     break;
 
-                case State.Playing:
+                case State.OnePlayer:
+                    {
+                        this.starfield.Speed = 3;
+
+                        this.Play(gameTime);
+
+                        //Clear dead players
+                        this.db.Players.GetAll().RemoveAll(p => p.IsAlive == false);
+
+                        //Set gameover
+                        if (this.db.Players.GetAll().All(p => p.IsAlive == false))
+                        {
+                            this.gameState = State.GameOver;
+                        }
+
+                        //update players
+                        this.db.Players.GetAll().ForEach(p => p.Update(gameTime));
+                        this.db.Players.GetAll().ForEach(p => p.InputHandler.Move(p));
+                        this.db.Players.GetAll().ForEach(p => p.InputHandler.PlayerShoot(this.db.Bullets, this.db.Players, p.Id));
+
+                        this.starfield.Update(gameTime);
+                        break;
+                    }
+                case State.TwoPlayers:
                     {
                         this.starfield.Speed = 3;
 
@@ -141,6 +176,10 @@ namespace SpaceShipFartrothu.Core
 
                 //UPDATING MENU STATE
                 case State.Menu:
+
+                    MouseState mouse = Mouse.GetState();
+                    gameState = this.buttons.ReturnButtonState(mouse, gameState);
+                    
                     this.ChoosePlayerModeByStateMenu(gameTime);
                     break;
 
@@ -178,8 +217,10 @@ namespace SpaceShipFartrothu.Core
         {
             this.keyState = Keyboard.GetState();
 
+
+
             //Setup two players game
-            if (this.keyState.IsKeyDown(Keys.D2))
+            if (this.gameState == State.TwoPlayers)
             {
                 this.player = new Player(new Vector2(600, 600), this.inputHandler, 1);
                 this.db.Players.AddEntity(this.player);
@@ -187,18 +228,18 @@ namespace SpaceShipFartrothu.Core
                 this.player2 = new Player(new Vector2(700, 600), this.inputHandler, 2);
                 this.db.Players.AddEntity(this.player2);
 
-                this.gameState = State.Playing;
+                this.gameState = State.TwoPlayers;
                 MediaPlayer.Play(SoundManager.BgMusic);
                 MediaPlayer.Volume = 0.5f;
             }
 
             //Setup single player game
-            if (this.keyState.IsKeyDown(Keys.D1))
+            if (this.gameState == State.OnePlayer)
             {
                 this.player = new Player(new Vector2(600, 600), this.inputHandler, 1);
                 this.db.Players.AddEntity(this.player);
 
-                this.gameState = State.Playing;
+                this.gameState = State.OnePlayer;
                 MediaPlayer.Play(SoundManager.BgMusic);
                 MediaPlayer.Volume = 0.5f;
             }
@@ -278,7 +319,7 @@ namespace SpaceShipFartrothu.Core
             CollisionHandler.CheckPlayerBulletsCollisions(this.db.Asteroids.GetAll().Cast<IGameObject>().ToList(), this.db.Bullets.GetAll(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
             CollisionHandler.CheckEnemiesBulletsCollisions(this.db.Bullets.GetAll(), this.db.Players.GetAll());
 
-            EntityCleanerHandler.ClearBullets(this.db.Bullets);        
+            EntityCleanerHandler.ClearBullets(this.db.Bullets);
         }
 
         private void EnableBossMode(GameTime gameTime)
@@ -310,7 +351,18 @@ namespace SpaceShipFartrothu.Core
             switch (this.gameState)
             {
                 // DRAWING PLAYING STATE
-                case State.Playing:
+                case State.TwoPlayers:
+                    {
+                        this.starfield.Draw(this.spriteBatch);
+                        //this.hud.Draw(this.spriteBatch);
+                        this.DrawAllGameObjects();
+
+                        if (this.bossHasInstance)
+                            this.DrawBoss();
+
+                        break;
+                    }
+                case State.OnePlayer:
                     {
                         this.starfield.Draw(this.spriteBatch);
                         //this.hud.Draw(this.spriteBatch);
@@ -324,7 +376,8 @@ namespace SpaceShipFartrothu.Core
                 // DRAWING MENU STATE
                 case State.Menu:
                     {
-                        this.DrawStarfield(TexturesManager.MenuImage); break;
+                        this.DrawStarfield(TexturesManager.MenuImage);
+                        this.buttons.DrawButtons(this.spriteBatch); break;
                     }
                 // DRAWING GAMEOVER STATE
                 case State.GameOver:
@@ -371,6 +424,8 @@ namespace SpaceShipFartrothu.Core
                 this.db.Asteroids.Dispose();
             if (this.db.Enemies.GetAll().Any())
                 this.db.Enemies.Dispose();
+            if(this.db.Items.GetAll().Any())
+                this.db.Items.Dispose();
 
             this.boss.Draw(this.spriteBatch);
         }

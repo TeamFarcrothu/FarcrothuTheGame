@@ -3,9 +3,12 @@
     public enum State
     {
         Menu,
-        Playing,
+        OnePlayer,
         GameOver,
         Winning,
-        Intro
+        Intro,
+        TwoPlayers,
+        LoadGame,
+        SaveGame
     }
 }

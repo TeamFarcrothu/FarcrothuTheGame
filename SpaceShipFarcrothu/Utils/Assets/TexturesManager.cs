@@ -5,6 +5,7 @@
 
     public static class TexturesManager
     {
+        public static Texture2D ButtonTexture { get; private set; }
         public static Texture2D MenuImage { get; private set; }
         public static Texture2D GameoverImage { get; private set; }
         public static Texture2D WinningImage { get; private set; }
@@ -37,6 +38,8 @@
             AsteroidTexture = content.Load<Texture2D>("asteroid");
             ExplosionTexture = content.Load<Texture2D>("explosion");
             BulletTexture = content.Load<Texture2D>("bullet");
+            ButtonTexture = content.Load<Texture2D>("button");
+
 
             PlayerScoreFont = content.Load<SpriteFont>("georgia");
 
