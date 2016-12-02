@@ -62,7 +62,7 @@
                             players[i].Health = players[i].MaxHealth;
                         }
                         players[i].BulletDamage++;
-                        player1HasEnoughToNextLevel = false;
+                        player2HasEnoughToNextLevel = false;
                     }
                 }
             }
