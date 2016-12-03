@@ -13,7 +13,7 @@
         {
             if (enemy.BulletDelay >= 0)
             {
-                enemy.BulletDelay--;
+                enemy.BulletDelay --;
             }
 
             if (enemy.BulletDelay <= 0)

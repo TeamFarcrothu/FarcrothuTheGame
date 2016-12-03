@@ -44,5 +44,10 @@ namespace SpaceShipFartrothu.Factories
                 buton.Draw(spriteBatch);
             }
         }
+
+        public void RemoveAllButtons()
+        {
+            this.buttons.Clear();
+        }
     }
 }

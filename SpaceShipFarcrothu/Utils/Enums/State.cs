@@ -10,6 +10,8 @@
         TwoPlayers,
         LoadGame,
         SaveGame,
-        HighScores
+        HighScores,
+        Quit,
+        Pause,
     }
 }
