@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>E:/Programing/VS/Farcrothu/trunk/SpaceShipFarcrothu/Content/epic1.wav</SourceFile>
+  <SourceTime>2016-11-30T13:44:27.932107+02:00</SourceTime>
+  <DestFile>E:/Programing/VS/Farcrothu/trunk/SpaceShipFarcrothu/Content/bin/Windows/epic1.xnb</DestFile>
+  <DestTime>2016-11-30T13:49:55.5864586+02:00</DestTime>
+  <Importer>WavImporter</Importer>
+  <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
+  <Processor>SoundEffectProcessor</Processor>
+  <ProcessorTime>2016-03-30T09:36:08+03:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

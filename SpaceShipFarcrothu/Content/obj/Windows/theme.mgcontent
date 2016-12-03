@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>E:/Programing/VS/Farcrothu/trunk/SpaceShipFarcrothu/Content/theme.mp3</SourceFile>
+  <SourceTime>2016-11-30T13:44:28.0026633+02:00</SourceTime>
+  <DestFile>E:/Programing/VS/Farcrothu/trunk/SpaceShipFarcrothu/Content/bin/Windows/theme.xnb</DestFile>
+  <DestTime>2016-11-30T13:50:01.316515+02:00</DestTime>
+  <Importer>Mp3Importer</Importer>
+  <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2016-03-30T09:36:08+03:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>E:/Programing/VS/Farcrothu/trunk/SpaceShipFarcrothu/Content/bin/Windows/theme.wma</string>
+  </BuildOutput>
+</PipelineBuildEvent>
