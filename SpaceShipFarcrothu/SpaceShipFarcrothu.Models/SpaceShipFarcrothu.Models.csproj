@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModelEntities\AsteroidModel.cs" />
+    <Compile Include="ModelEntities\EnemyModel.cs" />
+    <Compile Include="ModelEntities\GameModel.cs" />
     <Compile Include="ModelEntities\PlayerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

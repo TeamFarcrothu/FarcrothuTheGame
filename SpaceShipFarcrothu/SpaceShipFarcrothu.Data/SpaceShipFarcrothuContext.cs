@@ -12,5 +12,8 @@ namespace SpaceShipFarcrothu.Data
         {
         }
         public DbSet<PlayerModel> Players { get; set; }
+        public DbSet<AsteroidModel> Asteroids { get; set; }
+        public DbSet<EnemyModel> Enemies { get; set; }
+        public DbSet<GameModel> Games { get; set; }
     }
 }

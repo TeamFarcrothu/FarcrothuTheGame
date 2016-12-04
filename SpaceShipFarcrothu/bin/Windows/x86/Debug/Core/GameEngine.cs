@@ -48,7 +48,7 @@ namespace SpaceShipFartrothu.Core
         private ButtonFactory mainMenuButtons;
         private ButtonFactory pauseMenuButtons;
 
-        private Save save;
+        private DatabaseManager save;
 
         public GameEngine()
         {
@@ -66,7 +66,7 @@ namespace SpaceShipFartrothu.Core
             this.Content.RootDirectory = "Content";
             this.mainMenuButtons = new ButtonFactory();
             this.pauseMenuButtons = new ButtonFactory();
-            this.save = new Save();
+            this.save = new DatabaseManager();
         }
 
         protected override void Initialize()
@@ -216,7 +216,7 @@ namespace SpaceShipFartrothu.Core
                     this.starfield.Speed = 1;
                     break;
                 case State.SaveGame:
-                    this.save.SavePlayer(db.Players);
+                    this.save.SaveGame(db.Players, db.Enemies, db.Asteroids);
                     this.gameState = State.Pause;
                     Thread.Sleep(200);
                     break;

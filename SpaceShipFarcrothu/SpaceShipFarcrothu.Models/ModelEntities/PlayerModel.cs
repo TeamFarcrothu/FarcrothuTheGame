@@ -18,8 +18,8 @@ namespace SpaceShipFarcrothu.Models.ModelEntities
         public int MaxHealth { get; set; }
         public int Armor { get; set; }
         public int Score { get; set; }
-        public float PositionX  { get; set; }
-        public float PositionY { get; set; }
+        public double PositionX  { get; set; }
+        public double PositionY { get; set; }
         public bool IsAlive { get; set; }
         public int PlayerIdentity { get; set; }
     }
