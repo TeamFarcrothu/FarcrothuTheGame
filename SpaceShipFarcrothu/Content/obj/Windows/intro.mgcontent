@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>E:/Programing/VS/Farcrothu/trunk/SpaceShipFarcrothu/Content/intro.mp3</SourceFile>
-  <SourceTime>2016-11-30T13:44:27.958123+02:00</SourceTime>
-  <DestFile>E:/Programing/VS/Farcrothu/trunk/SpaceShipFarcrothu/Content/bin/Windows/intro.xnb</DestFile>
-  <DestTime>2016-11-30T13:49:57.9840906+02:00</DestTime>
+  <SourceFile>E:/VALERI/GitHub/trunk/SpaceShipFarcrothu/Content/intro.mp3</SourceFile>
+  <SourceTime>2016-12-03T11:48:47.336354+02:00</SourceTime>
+  <DestFile>E:/VALERI/GitHub/trunk/SpaceShipFarcrothu/Content/bin/Windows/intro.xnb</DestFile>
+  <DestTime>2016-12-03T16:25:52.6086772+02:00</DestTime>
   <Importer>Mp3Importer</Importer>
   <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
   <Processor>SongProcessor</Processor>
@@ -15,6 +15,6 @@
   <Dependencies />
   <BuildAsset />
   <BuildOutput>
-    <string>E:/Programing/VS/Farcrothu/trunk/SpaceShipFarcrothu/Content/bin/Windows/intro.wma</string>
+    <string>E:/VALERI/GitHub/trunk/SpaceShipFarcrothu/Content/bin/Windows/intro.wma</string>
   </BuildOutput>
 </PipelineBuildEvent>
