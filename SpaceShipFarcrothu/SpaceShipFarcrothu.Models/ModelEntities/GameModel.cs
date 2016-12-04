@@ -18,17 +18,17 @@ namespace SpaceShipFarcrothu.Models.ModelEntities
             this.asteroids = new HashSet<AsteroidModel>();
         }
         public int Id { get; set; }
-        public ICollection<PlayerModel> Players
+        public virtual ICollection<PlayerModel> Players
         {
             get { return this.players; }
             set { this.players = value; }
         }
-        public ICollection<EnemyModel> Enemies
+        public virtual ICollection<EnemyModel> Enemies
         {
             get { return this.enemies; }
             set { this.enemies = value; }
         }
-        public ICollection<AsteroidModel> Asteroids
+        public virtual ICollection<AsteroidModel> Asteroids
         {
             get { return this.asteroids; }
             set { this.asteroids = value; }

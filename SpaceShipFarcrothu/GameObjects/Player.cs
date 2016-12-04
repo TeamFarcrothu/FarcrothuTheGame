@@ -144,7 +144,7 @@
 
         public int Score { get; set; }
 
-        public int Health
+        public new int Health
         {
             get
             {

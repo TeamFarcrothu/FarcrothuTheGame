@@ -100,7 +100,6 @@
     <Compile Include="Interfaces\IItem.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Services\Load.cs" />
     <Compile Include="Services\DatabaseManager.cs" />
     <Compile Include="Utils\Assets\VideoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

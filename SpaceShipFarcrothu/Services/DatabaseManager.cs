@@ -1,5 +1,8 @@
-﻿using SpaceShipFarcrothu.Data;
+﻿using Microsoft.Xna.Framework;
+using SpaceShipFarcrothu.Data;
 using SpaceShipFarcrothu.Models.ModelEntities;
+using SpaceShipFartrothu.GameObjects;
+using SpaceShipFartrothu.Handlers;
 using SpaceShipFartrothu.Interfaces;
 
 namespace SpaceShipFartrothu.Services
@@ -51,6 +54,44 @@ namespace SpaceShipFartrothu.Services
             }
             context.Games.Add(game);
             context.SaveChanges();
+        }
+
+        public void LoadGame(IRepository<IPlayer> players, IRepository<IEnemy> enemies,
+            IRepository<IAsteroid> asteroids, InputHandler handler)
+        {
+            var context = new SpaceShipFarcrothuContext();
+            var game = context.Games.Find(2);
+            foreach (var player in game.Players)
+            {
+                IPlayer playerEntity = new Player(new Vector2(player.PositionX,
+                    player.PositionY), handler, player.PlayerIdentity)
+                {
+                    Armor = player.Armor,
+                    BulletDamage = player.BulletDamage,
+                    BulletDelay = player.BulletDelay,
+                    BulletSpeed = player.BulletSpeed,
+                    MaxHealth = player.MaxHealth,
+                    IsAlive = player.IsAlive,
+                    Score = player.Score,
+                    Speed = player.Speed,
+                    Level = player.Level
+                };
+                
+                playerEntity.Health = player.Health;
+
+                players.AddEntity(playerEntity);
+            }
+            foreach (var enemy in game.Enemies)
+            {
+                IEnemy enemyEntity = new Enemy(new Vector2(enemy.PositionX, enemy.PositionY));
+                enemies.AddEntity(enemyEntity);
+            }
+            foreach (var asteroid in game.Asteroids)
+            {
+                IAsteroid asteroidEntity = new Asteroid(new Vector2(asteroid.PositionX,
+                    asteroid.PositionY));
+                asteroids.AddEntity(asteroidEntity);
+            }
         }
     }
 }

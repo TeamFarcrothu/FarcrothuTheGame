@@ -27,7 +27,7 @@
 
         public bool IsVisible { get; protected set; }
 
-        public int Speed { get; protected set; }
+        public int Speed { get; set; }
 
         public int Damage { get; protected set; }
 

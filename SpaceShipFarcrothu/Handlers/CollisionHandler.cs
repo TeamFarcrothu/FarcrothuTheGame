@@ -9,7 +9,8 @@
     public static class CollisionHandler
     {
         //check players for gameobjects collisions
-        public static void CheckForCollision(IList<IGameObject> targets, IList<IPlayer> players, IList<IExplosion> explosions)
+        public static void CheckForCollision(IList<IGameObject> targets, 
+            IList<IPlayer> players, IList<IExplosion> explosions)
         {
             for (int i = 0; i < targets.Count; i++)
             {

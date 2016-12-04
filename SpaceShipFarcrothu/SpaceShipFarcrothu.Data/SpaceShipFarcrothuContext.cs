@@ -11,9 +11,9 @@ namespace SpaceShipFarcrothu.Data
             : base("name=SpaceShipFarcrothuContext")
         {
         }
-        public DbSet<PlayerModel> Players { get; set; }
-        public DbSet<AsteroidModel> Asteroids { get; set; }
-        public DbSet<EnemyModel> Enemies { get; set; }
-        public DbSet<GameModel> Games { get; set; }
+        public virtual DbSet<PlayerModel> Players { get; set; }
+        public virtual DbSet<AsteroidModel> Asteroids { get; set; }
+        public virtual DbSet<EnemyModel> Enemies { get; set; }
+        public virtual DbSet<GameModel> Games { get; set; }
     }
 }
