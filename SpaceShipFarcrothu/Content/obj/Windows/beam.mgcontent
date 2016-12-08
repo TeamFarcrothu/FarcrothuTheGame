@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>E:/VALERI/GitHub/trunk/SpaceShipFarcrothu/Content/beam.png</SourceFile>
-  <SourceTime>2016-12-03T11:48:19.8297787+02:00</SourceTime>
-  <DestFile>E:/VALERI/GitHub/trunk/SpaceShipFarcrothu/Content/bin/Windows/beam.xnb</DestFile>
-  <DestTime>2016-12-03T16:26:01.4055642+02:00</DestTime>
+  <SourceFile>E:/Programing/VS/06122016/trunk/SpaceShipFarcrothu/Content/beam.png</SourceFile>
+  <SourceTime>2016-12-06T14:04:54.8303116+02:00</SourceTime>
+  <DestFile>E:/Programing/VS/06122016/trunk/SpaceShipFarcrothu/Content/bin/Windows/beam.xnb</DestFile>
+  <DestTime>2016-12-06T14:12:47.5075799+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

@@ -11,13 +11,22 @@ namespace SpaceShipFarcrothu.Models.ModelEntities
         private ICollection<PlayerModel> players;
         private ICollection<EnemyModel> enemies;
         private ICollection<AsteroidModel> asteroids;
+        private ICollection<UserModel> users;
         public GameModel()
         {
+            this.users = new HashSet<UserModel>();
             this.players = new HashSet<PlayerModel>();
             this.enemies = new HashSet<EnemyModel>();
             this.asteroids = new HashSet<AsteroidModel>();
         }
         public int Id { get; set; }
+
+        public virtual ICollection<UserModel> Users
+        {
+            get { return this.users; }
+            set { this.users = value; }
+        }
+
         public virtual ICollection<PlayerModel> Players
         {
             get { return this.players; }

@@ -54,6 +54,7 @@
     <Compile Include="ModelEntities\EnemyModel.cs" />
     <Compile Include="ModelEntities\GameModel.cs" />
     <Compile Include="ModelEntities\PlayerModel.cs" />
+    <Compile Include="ModelEntities\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ using SpaceShipFartrothu.Interfaces;
 
 namespace SpaceShipFartrothu.Services
 {
-    public class DatabaseManager
+    public class SaveAndLoadDbManager
     {
         public void SaveGame(IRepository<IPlayer> players, IRepository<IEnemy> enemies,
             IRepository<IAsteroid> asteroids)

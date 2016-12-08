@@ -10,3 +10,15 @@ E:\VALERI\GitHub\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\Enti
 E:\VALERI\GitHub\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.csprojResolveAssemblyReference.cache
 E:\VALERI\GitHub\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.dll
 E:\VALERI\GitHub\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.pdb
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\SpaceShipFarcrothu.Data.dll.config
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\SpaceShipFarcrothu.Data.dll
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\SpaceShipFarcrothu.Data.pdb
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\EntityFramework.dll
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\EntityFramework.SqlServer.dll
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\SpaceShipFarcrothu.Models.dll
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\SpaceShipFarcrothu.Models.pdb
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\EntityFramework.xml
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\EntityFramework.SqlServer.xml
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.csprojResolveAssemblyReference.cache
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.dll
+E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.pdb

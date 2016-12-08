@@ -18,6 +18,7 @@ namespace SpaceShipFartrothu.Core
     using Handlers.Buttons;
     using System.Threading;
     using Services;
+    using Handlers.Forms;
 
     public class GameEngine : Game
     {
@@ -47,8 +48,14 @@ namespace SpaceShipFartrothu.Core
 
         private ButtonFactory mainMenuButtons;
         private ButtonFactory pauseMenuButtons;
+        private ButtonFactory singleLoginButtons;
 
-        private DatabaseManager databaseManager;
+        private FormFactory mainMenuForms;
+        private FormFactory singleLoginForms;
+
+        private SaveAndLoadDbManager databaseManager;
+        private UserDbManager userDbManager;
+        private UsersRepository users;
 
         public GameEngine()
         {
@@ -66,7 +73,13 @@ namespace SpaceShipFartrothu.Core
             this.Content.RootDirectory = "Content";
             this.mainMenuButtons = new ButtonFactory();
             this.pauseMenuButtons = new ButtonFactory();
-            this.databaseManager = new DatabaseManager();
+            this.singleLoginButtons = new ButtonFactory();
+            this.mainMenuForms = new FormFactory();
+            this.singleLoginForms = new FormFactory();
+            this.databaseManager = new SaveAndLoadDbManager();
+            this.userDbManager = new UserDbManager();
+            this.users = new UsersRepository();
+
         }
 
         protected override void Initialize()
@@ -86,9 +99,12 @@ namespace SpaceShipFartrothu.Core
             TexturesManager.LoadContent(this.Content);
             SoundManager.LoadContent(this.Content);
             VideoManager.LoadContent(this.Content);
-
+            this.mainMenuForms.CreateForm(new Vector2(900, 300), "Username:", true);
+            this.mainMenuForms.CreateForm(new Vector2(900, 363), "Password:", false);
+            this.mainMenuForms.CreateForm(new Vector2(900, 426), "Confirm Password:", false);
+            this.singleLoginForms.CreateForm(new Vector2(900, 300), "Username:", true);
+            this.singleLoginForms.CreateForm(new Vector2(900, 363), "Password:", false);
             this.starfield.LoadContent(this.Content);
-
             MediaPlayer.Play(SoundManager.IntroSong);
         }
 
@@ -192,12 +208,13 @@ namespace SpaceShipFartrothu.Core
 
                 case State.Menu:
 
-                    mainMenuButtons.CreateButton(new Vector2(500, 300), State.OnePlayer, "Singleplayer Mode");
+                    mainMenuButtons.CreateButton(new Vector2(500, 300), State.SingleLogInMenu, "Singleplayer Mode");
                     mainMenuButtons.CreateButton(new Vector2(500, 400), State.TwoPlayers, "Multiplayer Mode");
-                    mainMenuButtons.CreateButton(new Vector2(500, 500), State.LoadGame, "Load Game");
-                    mainMenuButtons.CreateButton(new Vector2(500, 600), State.HighScores, "HighScores");
+                    mainMenuButtons.CreateButton(new Vector2(500, 500), State.HighScores, "High Scores");
+                    mainMenuButtons.CreateButton(new Vector2(900, 500), State.Register, "Register User");
 
                     MouseState mouse = Mouse.GetState();
+                    mainMenuForms.UpdateForms(mouse);
                     gameState = this.mainMenuButtons.ReturnButtonState(mouse, gameState);
 
                     this.ChoosePlayerModeByStateMenu(gameTime);
@@ -225,13 +242,13 @@ namespace SpaceShipFartrothu.Core
                 case State.LoadGame:
                     this.databaseManager.LoadGame(db.Players, db.Enemies, db.Asteroids,
                         inputHandler);
-                    gameState = State.OnePlayer;
+                    gameState = State.TwoPlayers;
                     break;
                 //UPDATING GAMEOVER STATE or WINNING STATE
                 case State.GameOver:
                 case State.Winning:
                     this.keyState = Keyboard.GetState();
-                    
+
                     if (this.keyState.IsKeyDown(Keys.Space))
                     {
                         this.SetupNewGame();
@@ -242,6 +259,32 @@ namespace SpaceShipFartrothu.Core
                 case State.Quit:
                     Thread.Sleep(200);
                     this.SetupNewGame();
+                    break;
+                case State.Register:
+
+                    MouseState mouseRegister = Mouse.GetState();
+                    userDbManager.RegisterUser(this.mainMenuForms.GetAllForms());
+                    Thread.Sleep(50);
+                    this.gameState = State.Menu;
+                    this.mainMenuForms.EraseForms();
+                    this.starfield.Update(gameTime);
+                    break;
+
+                case State.SingleLogInMenu:
+                    MouseState mouseLogin = Mouse.GetState();
+                    singleLoginForms.UpdateForms(mouseLogin);
+                    singleLoginButtons.CreateButton(new Vector2(900, 426), State.AfterSingleLogInMenu, "LogIn");
+                    this.gameState = singleLoginButtons.ReturnButtonState(mouseLogin, gameState);
+                    this.starfield.Update(gameTime);
+                    break;
+                case State.AfterSingleLogInMenu:
+
+                    MouseState mouseAfterLogin = Mouse.GetState();
+                    singleLoginButtons.CreateButton(new Vector2(500, 300), State.OnePlayer, "New Game");
+                    singleLoginButtons.CreateButton(new Vector2(500, 400), State.LoadGame, "Load Game");
+                    this.gameState = singleLoginButtons.ReturnButtonState(mouseAfterLogin, gameState);
+                    this.starfield.Update(gameTime);
+                    this.ChoosePlayerModeByStateMenu(gameTime);
                     break;
             }
 
@@ -297,7 +340,7 @@ namespace SpaceShipFartrothu.Core
         private void SetupNewGame()
         {
             MediaPlayer.Stop();
-            
+
             this.db.Enemies.Dispose();
             this.db.Asteroids.Dispose();
             this.db.Explosions.Dispose();
@@ -390,7 +433,7 @@ namespace SpaceShipFartrothu.Core
 
         protected override void Draw(GameTime gameTime)
         {
-            this.GraphicsDevice.Clear(Color.CornflowerBlue);
+            this.GraphicsDevice.Clear(Color.Black);
 
             this.spriteBatch.Begin();
             switch (this.gameState)
@@ -424,6 +467,7 @@ namespace SpaceShipFartrothu.Core
                         this.DrawStarfield(TexturesManager.MenuImage);
                         this.mainMenuButtons.DrawButtons(this.spriteBatch);
                         this.mainMenuButtons.RemoveAllButtons();
+                        this.mainMenuForms.DrawForms(this.spriteBatch);
                         break;
                     }
                 case State.Pause:
@@ -433,6 +477,17 @@ namespace SpaceShipFartrothu.Core
                         this.pauseMenuButtons.RemoveAllButtons();
                         break;
                     }
+                case State.SingleLogInMenu:
+                    this.DrawStarfield(TexturesManager.MenuImage);
+                    this.singleLoginButtons.DrawButtons(this.spriteBatch);
+                    this.singleLoginForms.DrawForms(this.spriteBatch);
+                    this.singleLoginButtons.RemoveAllButtons();
+                    break;
+                case State.AfterSingleLogInMenu:
+                    this.DrawStarfield(TexturesManager.MenuImage);
+                    this.singleLoginButtons.DrawButtons(this.spriteBatch);
+                    this.singleLoginButtons.RemoveAllButtons();
+                    break;
                 // DRAWING GAMEOVER STATE
                 case State.GameOver:
                     {

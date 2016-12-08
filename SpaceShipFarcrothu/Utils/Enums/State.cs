@@ -10,8 +10,12 @@
         TwoPlayers,
         LoadGame,
         SaveGame,
-        HighScores,
+        Register,
+        SingleLogInMenu,
+        MultiLogIn,
         Quit,
         Pause,
+        HighScores,
+        AfterSingleLogInMenu,
     }
 }
