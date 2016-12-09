@@ -13,10 +13,10 @@ namespace SpaceShipFartrothu.Services
             IRepository<IAsteroid> asteroids)
         {
             var context = new SpaceShipFarcrothuContext();
-            var game = new GameModel();
+            var game = new SpaceShipFarcrothu.Models.ModelEntities.Game();
             foreach (var player in players.GetAll())
             {
-                var playerModel = new PlayerModel()
+                var playerModel = new SpaceShipFarcrothu.Models.ModelEntities.Player()
                 {
                     Armor = player.Armor,
                     BulletDamage = player.BulletDamage,
@@ -36,7 +36,7 @@ namespace SpaceShipFartrothu.Services
             }
             foreach (var enemy in enemies.GetAll())
             {
-                var enemyModel = new EnemyModel()
+                var enemyModel = new SpaceShipFarcrothu.Models.ModelEntities.Enemy()
                 {
                     PositionX = enemy.Position.X,
                     PositionY = enemy.Position.Y
@@ -45,7 +45,7 @@ namespace SpaceShipFartrothu.Services
             }
             foreach (var asteroid in asteroids.GetAll())
             {
-                var asteroidModel = new AsteroidModel()
+                var asteroidModel = new SpaceShipFarcrothu.Models.ModelEntities.Asteroid()
                 {
                     PositionX = asteroid.Position.X,
                     PositionY = asteroid.Position.Y
@@ -63,7 +63,7 @@ namespace SpaceShipFartrothu.Services
             var game = context.Games.Find(2);
             foreach (var player in game.Players)
             {
-                IPlayer playerEntity = new Player(new Vector2(player.PositionX,
+                IPlayer playerEntity = new GameObjects.Player(new Vector2(player.PositionX,
                     player.PositionY), handler, player.PlayerIdentity)
                 {
                     Armor = player.Armor,
@@ -83,12 +83,12 @@ namespace SpaceShipFartrothu.Services
             }
             foreach (var enemy in game.Enemies)
             {
-                IEnemy enemyEntity = new Enemy(new Vector2(enemy.PositionX, enemy.PositionY));
+                IEnemy enemyEntity = new GameObjects.Enemy(new Vector2(enemy.PositionX, enemy.PositionY));
                 enemies.AddEntity(enemyEntity);
             }
             foreach (var asteroid in game.Asteroids)
             {
-                IAsteroid asteroidEntity = new Asteroid(new Vector2(asteroid.PositionX,
+                IAsteroid asteroidEntity = new GameObjects.Asteroid(new Vector2(asteroid.PositionX,
                     asteroid.PositionY));
                 asteroids.AddEntity(asteroidEntity);
             }

@@ -24,3 +24,9 @@ E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\bin
 E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.csprojResolveAssemblyReference.cache
 E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.dll
 E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.pdb
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\bin\Debug\SpaceShipFarcrothu.Models.dll.config
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\bin\Debug\SpaceShipFarcrothu.Models.dll
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\bin\Debug\SpaceShipFarcrothu.Models.pdb
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.csprojResolveAssemblyReference.cache
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.dll
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.pdb

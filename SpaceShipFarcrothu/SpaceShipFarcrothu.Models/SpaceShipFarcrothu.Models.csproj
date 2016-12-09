@@ -50,11 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModelEntities\AsteroidModel.cs" />
-    <Compile Include="ModelEntities\EnemyModel.cs" />
-    <Compile Include="ModelEntities\GameModel.cs" />
-    <Compile Include="ModelEntities\PlayerModel.cs" />
-    <Compile Include="ModelEntities\UserModel.cs" />
+    <Compile Include="ModelEntities\Asteroid.cs" />
+    <Compile Include="ModelEntities\Enemy.cs" />
+    <Compile Include="ModelEntities\Game.cs" />
+    <Compile Include="ModelEntities\Player.cs" />
+    <Compile Include="ModelEntities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

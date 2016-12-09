@@ -1,7 +1,6 @@
-﻿namespace SpaceShipFartrothu.Core
+﻿namespace SpaceShipFartrothu.Interfaces
 {
     using Microsoft.Xna.Framework.Graphics;
-    using Interfaces;
 
     public interface IHUD
     {

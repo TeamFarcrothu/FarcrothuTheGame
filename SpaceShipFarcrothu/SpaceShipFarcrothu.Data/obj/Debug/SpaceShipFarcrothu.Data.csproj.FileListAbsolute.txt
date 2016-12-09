@@ -22,3 +22,15 @@ E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\D
 E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.csprojResolveAssemblyReference.cache
 E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.dll
 E:\Programing\VS\06122016\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.pdb
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\SpaceShipFarcrothu.Data.dll.config
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\SpaceShipFarcrothu.Data.dll
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\SpaceShipFarcrothu.Data.pdb
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\EntityFramework.dll
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\SpaceShipFarcrothu.Models.dll
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\SpaceShipFarcrothu.Models.pdb
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\EntityFramework.xml
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.csprojResolveAssemblyReference.cache
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.dll
+C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Data\obj\Debug\SpaceShipFarcrothu.Data.pdb

@@ -1,9 +1,7 @@
 namespace SpaceShipFarcrothu.Data
 {
     using Models.ModelEntities;
-    using System;
     using System.Data.Entity;
-    using System.Linq;
 
     public class SpaceShipFarcrothuContext : DbContext
     {
@@ -11,10 +9,10 @@ namespace SpaceShipFarcrothu.Data
             : base("name=SpaceShipFarcrothuContext")
         {
         }
-        public virtual DbSet<PlayerModel> Players { get; set; }
-        public virtual DbSet<AsteroidModel> Asteroids { get; set; }
-        public virtual DbSet<EnemyModel> Enemies { get; set; }
-        public virtual DbSet<GameModel> Games { get; set; }
-        public virtual DbSet<UserModel> Users { get; set; }
+        public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<Asteroid> Asteroids { get; set; }
+        public virtual DbSet<Enemy> Enemies { get; set; }
+        public virtual DbSet<Game> Games { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }
