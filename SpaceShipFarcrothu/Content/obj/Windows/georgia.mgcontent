@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/milensk1/Desktop/SpaceShipFarcrothu/Content/georgia.spritefont</SourceFile>
-  <SourceTime>2016-12-09T23:19:08.9921403+02:00</SourceTime>
-  <DestFile>C:/Users/milensk1/Desktop/SpaceShipFarcrothu/Content/bin/Windows/georgia.xnb</DestFile>
-  <DestTime>2016-12-10T00:04:01.9055285+02:00</DestTime>
+  <SourceFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/georgia.spritefont</SourceFile>
+  <SourceTime>2016-12-12T10:57:22.8106022+02:00</SourceTime>
+  <DestFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/bin/Windows/georgia.xnb</DestFile>
+  <DestTime>2016-12-12T10:59:07.6640905+02:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

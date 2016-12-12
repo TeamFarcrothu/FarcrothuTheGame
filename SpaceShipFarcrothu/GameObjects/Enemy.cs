@@ -21,8 +21,6 @@
 
         private int health, bulletDelay, currentDifficultyLevel;
 
-        private int bulletDamage;
-
         public Enemy(Vector2 position)
             : base(position)
         {
@@ -37,8 +35,6 @@
             this.currentDifficultyLevel = 1;
             this.ShooterId = DefaultShooterId;
         }
-
-        public int Health { get; set; }
 
         public void AddScore(int score)
         {
@@ -85,7 +81,7 @@
         public override void ReactOnColission(IGameObject target = null)
         {
             this.Health -= (target as Player).BulletDamage;
-            if (Health <= 0)
+            if (this.Health <= 0)
             {
                 this.IsVisible = false;
             }

@@ -4,15 +4,15 @@
 
     public interface IUnitOfWork
     {
-        IRepository<Asteroid> Asteroids { get; }
+        IRepository<AsteroidModel> Asteroids { get; }
 
-        IRepository<Enemy> Enemies { get; }
+        IRepository<EnemyModel> Enemies { get; }
 
-        IRepository<Game> Games { get; }
+        IRepository<GameModel> Games { get; }
 
-        IRepository<Player> Players { get; }
+        IRepository<PlayerModel> Players { get; }
 
-        IRepository<User> User { get; }
+        IRepository<UserModel> User { get; }
 
         void Commit();
     }

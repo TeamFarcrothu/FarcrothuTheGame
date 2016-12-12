@@ -41,7 +41,7 @@ namespace SpaceShipFartrothu.Services
 
             if (password == confirmedPassword && isUsernameFree)
             {
-                var user = new User
+                var user = new UserModel
                 {
                     Username = username,
                     Password = password

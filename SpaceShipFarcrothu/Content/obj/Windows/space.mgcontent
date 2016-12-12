@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/milensk1/Desktop/SpaceShipFarcrothu/Content/space.jpg</SourceFile>
-  <SourceTime>2016-12-09T23:19:09.1377598+02:00</SourceTime>
-  <DestFile>C:/Users/milensk1/Desktop/SpaceShipFarcrothu/Content/bin/Windows/space.xnb</DestFile>
-  <DestTime>2016-12-10T00:04:03.3417539+02:00</DestTime>
+  <SourceFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/space.jpg</SourceFile>
+  <SourceTime>2016-12-12T10:57:25.6116827+02:00</SourceTime>
+  <DestFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/bin/Windows/space.xnb</DestFile>
+  <DestTime>2016-12-12T10:59:12.0427548+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

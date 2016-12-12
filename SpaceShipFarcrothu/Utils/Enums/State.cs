@@ -17,5 +17,6 @@
         Pause,
         HighScores,
         AfterSingleLogInMenu,
+        LoadGameMenu,
     }
 }

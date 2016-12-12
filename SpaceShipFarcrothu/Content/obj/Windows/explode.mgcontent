@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/milensk1/Desktop/SpaceShipFarcrothu/Content/explode.wav</SourceFile>
-  <SourceTime>2016-12-09T23:19:08.9756266+02:00</SourceTime>
-  <DestFile>C:/Users/milensk1/Desktop/SpaceShipFarcrothu/Content/bin/Windows/explode.xnb</DestFile>
-  <DestTime>2016-12-10T00:04:01.2316261+02:00</DestTime>
+  <SourceFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/explode.wav</SourceFile>
+  <SourceTime>2016-12-12T10:57:22.7793098+02:00</SourceTime>
+  <DestFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/bin/Windows/explode.xnb</DestFile>
+  <DestTime>2016-12-12T10:59:05.618735+02:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>

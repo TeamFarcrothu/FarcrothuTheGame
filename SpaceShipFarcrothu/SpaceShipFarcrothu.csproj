@@ -49,11 +49,13 @@
     <Compile Include="Factories\ExplosionFactory.cs" />
     <Compile Include="Factories\FormFactory.cs" />
     <Compile Include="Factories\ItemFactory.cs" />
+    <Compile Include="Factories\LoadButtonFactory.cs" />
     <Compile Include="GameObjects\Items\ArmorItem.cs" />
     <Compile Include="GameObjects\Items\BulletSpeedItem.cs" />
     <Compile Include="GameObjects\Items\ShipSpeedItem.cs" />
-    <Compile Include="GameUsers\Users.cs" />
+    <Compile Include="GameUsers\User.cs" />
     <Compile Include="Handlers\Buttons\Button.cs" />
+    <Compile Include="Handlers\Buttons\LoadButton.cs" />
     <Compile Include="Handlers\CollisionHandler.cs" />
     <Compile Include="Core\HUD.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

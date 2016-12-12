@@ -21,10 +21,14 @@
                     if (player.BoundingBox.Intersects(currentTarget.BoundingBox))
                     {
 
-                        player.Score += (currentTarget as EnemyEntity).ScorePoints;
-
                         player.ReactOnColission(currentTarget);
                         currentTarget.ReactOnColission(player);
+
+                        if (currentTarget.Health <= 0)
+                        {
+                            player.Score += (currentTarget as EnemyEntity).ScorePoints;
+                        }
+
                         //(currentTarget as EnemyEntity).ColideAndExplode(explosions);
                         if (currentTarget is Item)
                         {
@@ -55,10 +59,14 @@
                         {
                             //player.ReactOnColission(currentTarget);
                             //TODO: increase player points
-                            player.Score += (currentTarget as EnemyEntity).ScorePoints;
 
                             playerBullet.ReactOnColission();
                             currentTarget.ReactOnColission(player);
+                            if (currentTarget.Health <= 0)
+                            {
+                                player.Score += (currentTarget as EnemyEntity).ScorePoints;
+                            }
+
                             //(currentTarget as EnemyEntity).ColideAndExplode(explosions);
 
                         }

@@ -19,6 +19,7 @@ namespace SpaceShipFartrothu.Core
     using System.Threading;
     using Services;
     using Handlers.Forms;
+    using GameUsers;
 
     public class GameEngine : Game
     {
@@ -37,6 +38,7 @@ namespace SpaceShipFartrothu.Core
 
         private Player player;
         private Player player2;
+        private StatsManager statsManager;
         private readonly InputHandler inputHandler;
 
         private Boss boss;
@@ -49,13 +51,14 @@ namespace SpaceShipFartrothu.Core
         private ButtonFactory mainMenuButtons;
         private ButtonFactory pauseMenuButtons;
         private ButtonFactory singleLoginButtons;
+        private LoadButtonFactory loadButtons;
 
         private FormFactory mainMenuForms;
         private FormFactory singleLoginForms;
 
         private SaveAndLoadDbManager databaseManager;
         private UserDbManager userDbManager;
-        private UsersRepository users;
+        private UsersRepository usersRepository;
 
         public GameEngine()
         {
@@ -74,11 +77,12 @@ namespace SpaceShipFartrothu.Core
             this.mainMenuButtons = new ButtonFactory();
             this.pauseMenuButtons = new ButtonFactory();
             this.singleLoginButtons = new ButtonFactory();
+            this.loadButtons = new LoadButtonFactory(new Vector2(900, 300));
             this.mainMenuForms = new FormFactory();
             this.singleLoginForms = new FormFactory();
             this.databaseManager = new SaveAndLoadDbManager();
             this.userDbManager = new UserDbManager();
-            this.users = new UsersRepository();
+            this.usersRepository = new UsersRepository();
 
         }
 
@@ -234,15 +238,14 @@ namespace SpaceShipFartrothu.Core
                     break;
 
                 case State.SaveGame:
-                    this.databaseManager.SaveGame(db.Players, db.Enemies, db.Asteroids);
+                    this.databaseManager.SaveGame(db.Players, db.Enemies, db.Asteroids, usersRepository);
                     this.gameState = State.Pause;
                     Thread.Sleep(200);
                     break;
 
                 case State.LoadGame:
-                    this.databaseManager.LoadGame(db.Players, db.Enemies, db.Asteroids,
-                        inputHandler);
-                    gameState = State.TwoPlayers;
+                    
+
                     break;
                 //UPDATING GAMEOVER STATE or WINNING STATE
                 case State.GameOver:
@@ -275,16 +278,31 @@ namespace SpaceShipFartrothu.Core
                     singleLoginForms.UpdateForms(mouseLogin);
                     singleLoginButtons.CreateButton(new Vector2(900, 426), State.AfterSingleLogInMenu, "LogIn");
                     this.gameState = singleLoginButtons.ReturnButtonState(mouseLogin, gameState);
+                    if (gameState == State.AfterSingleLogInMenu)
+                    {
+                        usersRepository.AddUser(singleLoginForms);
+                    }
+
                     this.starfield.Update(gameTime);
                     break;
                 case State.AfterSingleLogInMenu:
 
                     MouseState mouseAfterLogin = Mouse.GetState();
                     singleLoginButtons.CreateButton(new Vector2(500, 300), State.OnePlayer, "New Game");
-                    singleLoginButtons.CreateButton(new Vector2(500, 400), State.LoadGame, "Load Game");
+                    singleLoginButtons.CreateButton(new Vector2(500, 400), State.LoadGameMenu, "Load Game");
                     this.gameState = singleLoginButtons.ReturnButtonState(mouseAfterLogin, gameState);
                     this.starfield.Update(gameTime);
                     this.ChoosePlayerModeByStateMenu(gameTime);
+                    break;
+                case State.LoadGameMenu:
+                    int gameId = 0;
+                    MouseState mouseLoadGame = Mouse.GetState();
+                    this.loadButtons.CreateButtons(databaseManager.GetUserGamesId(usersRepository.GetAll()));
+                    gameId = this.loadButtons.ReturnGameId(mouseLoadGame);
+                    gameState = this.databaseManager.LoadGame(db.Players, db.Enemies, db.Asteroids,
+                        inputHandler, usersRepository, gameId);
+                    this.starfield.Update(gameTime);
+
                     break;
             }
 
@@ -307,7 +325,7 @@ namespace SpaceShipFartrothu.Core
         private void ChoosePlayerModeByStateMenu(GameTime gameTime)
         {
             this.keyState = Keyboard.GetState();
-
+            this.statsManager = new StatsManager();
             //Setup two players game
             if (this.gameState == State.TwoPlayers)
             {
@@ -347,6 +365,7 @@ namespace SpaceShipFartrothu.Core
             this.db.Players.Dispose();
             this.db.Bullets.Dispose();
             this.db.Items.Dispose();
+            this.statsManager = new StatsManager();
 
             this.bossHasInstance = false;
             gameState = State.Menu;
@@ -355,7 +374,7 @@ namespace SpaceShipFartrothu.Core
         private void Play(GameTime gameTime)
         {
             //Enable boss mode if some of players have enough points   ## its 150 just for testing
-            if (this.db.Players.GetAll().Any(s => s.Score >= 1000))
+            if (this.db.Players.GetAll().Any(s => s.Score >= 10000))
             {
                 this.EnableBossMode(gameTime);
             }
@@ -400,7 +419,7 @@ namespace SpaceShipFartrothu.Core
             this.db.Explosions.GetAll().ForEach(e => e.Update(gameTime));
 
 
-            StatsManager.UpdatePlayersStats(this.db.Players.GetAll());
+            this.statsManager.UpdatePlayersStats(this.db.Players.GetAll());
 
             //Handle collisions between bullets and gameobjects
             CollisionHandler.CheckPlayerBulletsCollisions(this.db.Enemies.GetAll().Cast<IGameObject>().ToList(), this.db.Bullets.GetAll(), this.db.Players.GetAll(), this.db.Explosions.GetAll());
@@ -487,6 +506,11 @@ namespace SpaceShipFartrothu.Core
                     this.DrawStarfield(TexturesManager.MenuImage);
                     this.singleLoginButtons.DrawButtons(this.spriteBatch);
                     this.singleLoginButtons.RemoveAllButtons();
+                    break;
+                case State.LoadGameMenu:
+                    this.DrawStarfield(TexturesManager.MenuImage);
+                    this.loadButtons.DrawButtons(this.spriteBatch);
+                    this.loadButtons.RemoveAllButtons();
                     break;
                 // DRAWING GAMEOVER STATE
                 case State.GameOver:

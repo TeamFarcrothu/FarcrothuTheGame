@@ -3,20 +3,23 @@
     using System.Collections.Generic;
     using Interfaces;
 
-    public static class StatsManager
+    public class StatsManager
     {
-        private static bool player1HasEnoughToNextLevel;
-        private static bool player2HasEnoughToNextLevel;
+        private bool player1HasEnoughToNextLevel;
+        private bool player2HasEnoughToNextLevel;
 
-        private static int player1PointsToNextLevel = 150;
-        private static int player2PointsToNextLevel = 150;
+        private int player1PointsToNextLevel = 150;
+        private int player2PointsToNextLevel = 150;
 
-        private static int player1CurrentScores;
-        private static int player2CurrentScores;
+        private int player1CurrentScores;
+        private int player2CurrentScores;
 
-        private static int currentPlayerID;
+        private bool isPlayer1Loaded = true;
+        private bool isPlayer2Loaded = true;
 
-        public static void UpdatePlayersStats(IList<IPlayer> players)
+        private int currentPlayerID;
+
+        public void UpdatePlayersStats(IList<IPlayer> players)
         {
 
             for (int i = 0; i < players.Count; i++)
@@ -25,6 +28,18 @@
 
                 if (currentPlayerID == 1)
                 {
+                    if (isPlayer1Loaded && players[i].Score > player1PointsToNextLevel)
+                    {
+                        int multiplier = (players[i].Score / 150);
+
+                        for (int j = 0; j < multiplier; j++)
+                        {
+                            player1PointsToNextLevel += player1PointsToNextLevel;
+                        }
+
+                        isPlayer1Loaded = false;
+                    }
+
                     player1CurrentScores = players[i].Score;
                     if (player1CurrentScores >= player1PointsToNextLevel)
                     {
@@ -46,6 +61,19 @@
                 }
                 else if (currentPlayerID == 2)
                 {
+                    if (isPlayer2Loaded && players[i].Score > player2PointsToNextLevel)
+                    {
+
+                        int multiplier = (players[i].Score / 150);
+
+                        for (int j = 0; j < multiplier; j++)
+                        {
+                            player2PointsToNextLevel += player2PointsToNextLevel;
+                        }
+
+                        isPlayer2Loaded = false;
+                    }
+
                     player2CurrentScores = players[i].Score;
                     if (player2CurrentScores >= player2PointsToNextLevel)
                     {

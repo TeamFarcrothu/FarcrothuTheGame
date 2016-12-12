@@ -31,7 +31,7 @@
 
         public int Damage { get; protected set; }
 
-        public int Health { get; protected set; }
+        public virtual int Health { get; set; }
 
         public abstract void Update(GameTime gameTime);
 

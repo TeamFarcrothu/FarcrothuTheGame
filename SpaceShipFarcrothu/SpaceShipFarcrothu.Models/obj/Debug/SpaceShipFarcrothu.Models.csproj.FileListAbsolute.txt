@@ -30,3 +30,9 @@ C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\bin\Debug
 C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.csprojResolveAssemblyReference.cache
 C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.dll
 C:\Users\milensk1\Desktop\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.pdb
+E:\VALERI\GitHubUpdated\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\bin\Debug\SpaceShipFarcrothu.Models.dll.config
+E:\VALERI\GitHubUpdated\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\bin\Debug\SpaceShipFarcrothu.Models.dll
+E:\VALERI\GitHubUpdated\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\bin\Debug\SpaceShipFarcrothu.Models.pdb
+E:\VALERI\GitHubUpdated\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.csprojResolveAssemblyReference.cache
+E:\VALERI\GitHubUpdated\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.dll
+E:\VALERI\GitHubUpdated\trunk\SpaceShipFarcrothu\SpaceShipFarcrothu.Models\obj\Debug\SpaceShipFarcrothu.Models.pdb
