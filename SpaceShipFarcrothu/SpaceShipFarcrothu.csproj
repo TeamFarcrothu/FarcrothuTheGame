@@ -87,9 +87,12 @@
     <Compile Include="GameObjects\Items\DamageItem.cs" />
     <Compile Include="GameObjects\Items\HealthItem.cs" />
     <Compile Include="GameObjects\Items\Item.cs" />
+    <Compile Include="Handlers\DrawGameObjectsManager.cs" />
     <Compile Include="Handlers\EntityCleanerHandler.cs" />
     <Compile Include="Handlers\Forms\Form.cs" />
     <Compile Include="Handlers\InputHandler.cs" />
+    <Compile Include="Handlers\PlayGameManager.cs" />
+    <Compile Include="Handlers\UpdateStateManager.cs" />
     <Compile Include="Handlers\StatsManager.cs" />
     <Compile Include="Interfaces\IAsteroid.cs" />
     <Compile Include="Interfaces\IBullet.cs" />

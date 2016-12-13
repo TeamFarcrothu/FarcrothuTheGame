@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/playershoot.wav</SourceFile>
-  <SourceTime>2016-12-12T10:57:25.5960403+02:00</SourceTime>
-  <DestFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/bin/Windows/playershoot.xnb</DestFile>
-  <DestTime>2016-12-12T10:59:11.4473708+02:00</DestTime>
+  <SourceFile>E:/VALERI/LatestGitHub/trunk/SpaceShipFarcrothu/Content/playershoot.wav</SourceFile>
+  <SourceTime>2016-12-12T21:12:42.4501737+02:00</SourceTime>
+  <DestFile>E:/VALERI/LatestGitHub/trunk/SpaceShipFarcrothu/Content/bin/Windows/playershoot.xnb</DestFile>
+  <DestTime>2016-12-12T21:14:36.4264352+02:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>

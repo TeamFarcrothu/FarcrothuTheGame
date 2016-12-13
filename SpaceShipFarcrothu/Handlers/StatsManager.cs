@@ -30,11 +30,15 @@
                 {
                     if (isPlayer1Loaded && players[i].Score > player1PointsToNextLevel)
                     {
-                        int multiplier = (players[i].Score / 150);
+                        
+                        int loadLevelPoint = 0;
+
+                        int multiplier = players[i].Level;
 
                         for (int j = 0; j < multiplier; j++)
                         {
-                            player1PointsToNextLevel += player1PointsToNextLevel;
+                            player1PointsToNextLevel += loadLevelPoint;
+                            loadLevelPoint = player1PointsToNextLevel;
                         }
 
                         isPlayer1Loaded = false;
@@ -63,12 +67,14 @@
                 {
                     if (isPlayer2Loaded && players[i].Score > player2PointsToNextLevel)
                     {
+                        int loadLevelPoint = 0;
 
-                        int multiplier = (players[i].Score / 150);
+                        int multiplier = players[i].Level;
 
                         for (int j = 0; j < multiplier; j++)
                         {
-                            player2PointsToNextLevel += player2PointsToNextLevel;
+                            player2PointsToNextLevel += loadLevelPoint;
+                            loadLevelPoint = player2PointsToNextLevel;
                         }
 
                         isPlayer2Loaded = false;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/winning_image.png</SourceFile>
-  <SourceTime>2016-12-12T10:57:25.6585419+02:00</SourceTime>
-  <DestFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/bin/Windows/winning_image.xnb</DestFile>
-  <DestTime>2016-12-12T10:59:18.9502415+02:00</DestTime>
+  <SourceFile>E:/VALERI/LatestGitHub/trunk/SpaceShipFarcrothu/Content/winning_image.png</SourceFile>
+  <SourceTime>2016-12-12T21:12:42.5001242+02:00</SourceTime>
+  <DestFile>E:/VALERI/LatestGitHub/trunk/SpaceShipFarcrothu/Content/bin/Windows/winning_image.xnb</DestFile>
+  <DestTime>2016-12-12T21:14:42.3014346+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

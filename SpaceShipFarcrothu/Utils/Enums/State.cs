@@ -16,7 +16,7 @@
         Quit,
         Pause,
         HighScores,
-        AfterSingleLogInMenu,
+        SingleLoadGameMenu,
         LoadGameMenu,
     }
 }

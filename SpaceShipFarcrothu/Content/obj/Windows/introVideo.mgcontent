@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/introVideo.wmv</SourceFile>
-  <SourceTime>2016-12-12T10:57:22.8948839+02:00</SourceTime>
-  <DestFile>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/bin/Windows/introVideo.xnb</DestFile>
-  <DestTime>2016-12-12T10:59:10.8472812+02:00</DestTime>
+  <SourceFile>E:/VALERI/LatestGitHub/trunk/SpaceShipFarcrothu/Content/introVideo.wmv</SourceFile>
+  <SourceTime>2016-12-12T21:12:37.8964978+02:00</SourceTime>
+  <DestFile>E:/VALERI/LatestGitHub/trunk/SpaceShipFarcrothu/Content/bin/Windows/introVideo.xnb</DestFile>
+  <DestTime>2016-12-12T21:14:35.9739767+02:00</DestTime>
   <Importer>WmvImporter</Importer>
   <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
   <Processor>VideoProcessor</Processor>
@@ -11,6 +11,6 @@
   <Dependencies />
   <BuildAsset />
   <BuildOutput>
-    <string>E:/VALERI/GitHubUpdated/trunk/SpaceShipFarcrothu/Content/bin/Windows/introVideo.wmv</string>
+    <string>E:/VALERI/LatestGitHub/trunk/SpaceShipFarcrothu/Content/bin/Windows/introVideo.wmv</string>
   </BuildOutput>
 </PipelineBuildEvent>
